@@ -1,0 +1,12 @@
+
+<div>
+    <div class="container">
+        <app-graph-menu 
+            (menuExpanded)="expandMenu()"
+            (menuCollapsed)="collapseMenu()"
+            class="menu"
+            [ngClass]="{'expanded': expandedMenu}"></app-graph-menu>
+        
+        <app-graph-editor class="panel"></app-graph-editor>
+    </div>
+</div>

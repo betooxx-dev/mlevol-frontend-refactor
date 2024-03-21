@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.menu {
+    width: 50px;
+    background-color: white;
+    transition: width .5s ease; /* Add transition effect for smooth animation */
+    box-shadow: 10px 0px 20px 0px rgba(0,0,0,0.1);
+    z-index: 0;
+    border-right: 1px solid lightgray;
+    
+}
+.panel {
+    flex: 1;
+    background-color: lightgray;
+}
+
+.expanded {
+    width: 350px;
+}

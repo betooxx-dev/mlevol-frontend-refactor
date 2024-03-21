@@ -1,0 +1,9 @@
+.clickable-component{
+    margin: 1em;
+    padding: 1em;
+}
+
+.icon {
+    font-size: 2.5em;
+    color: var(--primary-color);
+}

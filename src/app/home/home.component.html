@@ -1,0 +1,29 @@
+<app-header></app-header>
+<div class="content">
+    <div class="container">
+        <h1>Welcome to the MLS Toolkit</h1>
+    <p>MLS Toolkit is a collection of tools for MLOps mantaining good software engineering practices.</p>
+    </div>
+</div>
+<!-- button that goes to the graph page-->
+<div class="features">
+    <ul class="features-list">
+        <li>
+            <app-feature-button 
+                [iconClass]="'pi-sitemap'"
+                [header]="'Code generator'" 
+                [text]="'Node-based code generator'"
+                [routePath]="'/graph'"> <!-- Provide the route path -->
+            </app-feature-button>
+        </li>
+
+        <li>
+            <app-feature-button 
+                [iconClass]="'pi-map'"
+                [header]="'No Feature'" 
+                [text]="'Future feature'"
+                [routePath]="'/'"> <!-- Provide the route path -->
+            </app-feature-button>
+        </li>
+    </ul>
+</div>

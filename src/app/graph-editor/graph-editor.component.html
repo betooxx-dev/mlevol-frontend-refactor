@@ -1,1 +1,28 @@
 <div class="rete" #rete></div>
+<div class="node-in">
+    {{moduleImIn}}
+</div>
+<ul class="config-buttons">
+    <li>
+        <button (click)="homeZoom()">
+            <i class="pi pi-home"></i>
+        </button>
+    </li>
+    
+    <li>
+        <button (click)="zoomIn()">
+            <i class="pi pi-plus"></i>
+        </button>
+    </li>
+
+    <li>
+        <button (click)="zoomOut()">
+            <i class="pi pi-minus"></i>
+        </button>
+    </li>
+    <li>
+        <button (click)="toggleMap()" [ngClass]="{active: !showMap}">
+            <i class="pi pi-map"></i>
+        </button>
+    </li>
+</ul>

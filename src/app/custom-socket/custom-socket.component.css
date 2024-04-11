@@ -1,0 +1,18 @@
+:host{
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid grey;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  background: #fff;
+  z-index: 2;
+  box-sizing: border-box;
+  border-radius: 50%;
+  
+}
+
+:host:hover{
+  background: #ddd;
+
+}

@@ -8,7 +8,7 @@
     background-color: white;
     transition: width .5s ease; /* Add transition effect for smooth animation */
     box-shadow: 10px 0px 20px 0px rgba(0,0,0,0.1);
-    z-index: 0;
+    z-index: 1;
     border-right: 1px solid lightgray;
     
 }

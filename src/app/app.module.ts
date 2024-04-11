@@ -14,11 +14,18 @@ import { FeatureButtonComponent } from './feature-button/feature-button.componen
 
 import { GraphComponent } from './graph/graph.component';
 import { GraphMenuComponent } from './graph-menu/graph-menu.component';
-import { GraphEditorComponent } from './graph-editor/graph-editor.component';
+import { DialogComponent, GraphEditorComponent } from './graph-editor/graph-editor.component';
 import { GraphLayersComponent } from './graph-layers/graph-layers.component';
 import { GraphSettingsComponent } from './graph-settings/graph-settings.component';
 
 import { ReteModule } from 'rete-angular-plugin/17';
+import { CustomNodeComponent } from './custom-node/custom-node.component';
+
+import {MatDialogModule, MatDialog} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CustomSocketComponent } from './custom-socket/custom-socket.component';
+import { CustomConnectionComponent } from './custom-connection/custom-connection.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +39,10 @@ import { ReteModule } from 'rete-angular-plugin/17';
     GraphLayersComponent,
     GraphSettingsComponent,
     FeatureButtonComponent,
+    CustomNodeComponent,
+    CustomSocketComponent,
+    CustomConnectionComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,8 +50,13 @@ import { ReteModule } from 'rete-angular-plugin/17';
     ButtonModule,
     BrowserAnimationsModule,
     ReteModule,
+    MatButtonModule,
+    MatDialogModule,
+
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

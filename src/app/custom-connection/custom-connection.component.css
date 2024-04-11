@@ -1,0 +1,15 @@
+svg {
+  overflow: visible;
+  position: absolute;
+  pointer-events: none;
+
+}
+
+svg path {
+
+  fill: none;
+  stroke-width: 5px;
+  stroke: gray;
+  pointer-events: auto;
+  
+}

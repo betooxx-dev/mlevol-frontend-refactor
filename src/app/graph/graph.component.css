@@ -20,3 +20,17 @@
 .expanded {
     width: 350px;
 }
+
+.properties {
+    position: relative;
+    transition: all .5s ease;
+    width: 0;
+    overflow: hidden;
+    box-shadow: 10px 0px 20px 0px rgba(0,0,0,0.1);
+    z-index: 1;
+    border-left: 1px solid lightgray;
+}
+
+.shown {
+    width: 350px;
+}

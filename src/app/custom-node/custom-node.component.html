@@ -1,19 +1,22 @@
+
 <div class="node-title" data-testid="title" [ngStyle]="{'background':data.color}">{{data.label}} </div>
+<div class="node-descrpition" *ngIf="data.info.inputs['description']!= undefined;">
+{{data.info.inputs['description'].value}}</div>
 <div class="output" *ngFor="let output of data.outputs | keyvalue: sortByIndex"
-  [attr.data-testid]="'output-'+output.key">
+[attr.data-testid]="'output-'+output.key">
   <div class="output-title" data-testid="output-title">
     {{output.value?.label}}
   </div>
   <div class="output-socket" refComponent
-    [data]="{type: 'socket', side: 'output', key: output.key, nodeId: data.id, payload: output.value?.socket, seed: seed }"
-    [emit]="emit" data-testid="output-socket"></div>
+  [data]="{type: 'socket', side: 'output',key: output.key, nodeId: data.id, payload: output.value?.socket, seed: seed }"
+  [emit]="emit" data-testid="output-socket"></div>
 </div>
 <div class="control" *ngFor="let control of data.controls | keyvalue: sortByIndex" refComponent
-  [data]="{type: 'control', payload: control.value }" [emit]="emit" [attr.data-testid]="'control-'+control.key"></div>
+[data]="{type: 'control', payload: control.value }" [emit]="emit" [attr.data-testid]="'control-'+control.key"></div>
 <div class="input" *ngFor="let input of data.inputs | keyvalue: sortByIndex" [attr.data-testid]="'input-'+input.key">
   <div class="input-socket" refComponent
-    [data]="{type: 'socket', side: 'input', key: input.key, nodeId: data.id, payload: input.value?.socket, seed: seed }"
-    [emit]="emit" data-testid="input-socket"></div>
+  [data]="{type: 'socket', side: 'input', key: input.key, nodeId: data.id, payload: input.value?.socket, seed: seed }"
+  [emit]="emit" data-testid="input-socket"></div>
   <div class="input-title" data-testid="input-title" *ngIf="!input.value?.control || !input.value?.showControl">
     {{input.value?.label}}
   </div>

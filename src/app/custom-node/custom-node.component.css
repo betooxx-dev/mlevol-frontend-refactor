@@ -7,24 +7,23 @@
     height: auto;
     padding: 0px;
     position: relative;
-    user-select: none;
     background-color: rgba(255, 255, 255, .2);
     transition: all .5s ease;
     backdrop-filter: blur(5px);
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    min-width: 120px;
 }
 
 :host:hover {
     background-color: rgba(255, 255, 255, .5);
 }
 
-:host:selected{
-    border-color: red;
+:host.selected{
+    background-color: rgba(0, 0, 0, .05);
 }
 
 .node-title {
     color: black;
-    font-family: sans-serif;
     font-size: 18px;
     font-weight: bold;
     border-radius: 10px 10px 0px 0px;
@@ -32,6 +31,14 @@
     text-align: center;
     box-shadow: inset 0px -30px 25px -25px rgba(255, 255, 255,0.25);
     filter: opacity(75%);
+}
+
+.node-descrpition {
+    color: darkslategray;
+    font-size: 12px;
+    font-style: italic;
+    padding: 5px;
+    text-align: left;
 }
 
 :host .output {

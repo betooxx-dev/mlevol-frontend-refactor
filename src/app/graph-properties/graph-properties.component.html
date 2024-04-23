@@ -1,0 +1,35 @@
+<div class="whole">
+    <div class="container">
+        <div class="collapse-header">
+            <button (click)="closeProperties()" class="toggle-button">
+                <i class="pi pi-times" ></i>
+            </button>
+        </div>
+    </div>
+    <div class="tools">
+        <h1 style="margin: 10px;">{{selectedNode}}</h1>
+        <p style="color: gray; font-style: italic;margin: 0px;margin-left: 10px;">id: {{allNode?.id}}</p>
+        <p style="color: gray; font-style: italic;margin: 0px;margin-left: 10px;">Title: {{allNode?.info.info?.title}}</p>
+        <h2 style="margin: 10px;">Inputs</h2>
+
+        <div *ngFor="let key of nodeInputKeys">
+            <div *ngIf="allNode?.info.inputs[key]['type'] == 'string'" style="margin: 10px;">
+                <p>
+                    {{key}}
+                </p>
+                <input id="{{key}}" type="text" [(ngModel)]="allNode?.info.inputs[key].value" (ngModelChange)="updateValue(key, $event)"/>
+            </div>
+
+            <div *ngIf="allNode?.info.inputs[key]['type'] == 'number'" style="margin: 10px;">
+                <p>
+                    {{key}}
+                </p>
+                <input id="{{key}}" type="number" step="0.01" [(ngModel)]="allNode?.info.inputs[key].value" (ngModelChange)="updateValue(key, $event)"/>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 10px; display: flex; justify-content: center;">
+        <p-button label="Delete" (click)="deleteNode()">
+        </p-button>
+    </div>
+</div>

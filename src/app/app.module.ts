@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { FormsModule } from '@angular/forms';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ButtonModule } from 'primeng/button';
 
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
@@ -21,11 +22,19 @@ import { GraphSettingsComponent } from './graph-settings/graph-settings.componen
 import { ReteModule } from 'rete-angular-plugin/17';
 import { CustomNodeComponent } from './custom-node/custom-node.component';
 
-import {MatDialogModule, MatDialog} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
 import { CustomSocketComponent } from './custom-socket/custom-socket.component';
 import { CustomConnectionComponent } from './custom-connection/custom-connection.component';
+
+import { DialogModule } from 'primeng/dialog';
+import { AccordionModule } from 'primeng/accordion';
+import { TooltipModule } from 'primeng/tooltip';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ButtonModule } from 'primeng/button';
+
+
+import { GraphPropertiesComponent } from './graph-properties/graph-properties.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +52,7 @@ import { CustomConnectionComponent } from './custom-connection/custom-connection
     CustomSocketComponent,
     CustomConnectionComponent,
     DialogComponent,
+    GraphPropertiesComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,9 +60,11 @@ import { CustomConnectionComponent } from './custom-connection/custom-connection
     ButtonModule,
     BrowserAnimationsModule,
     ReteModule,
-    MatButtonModule,
-    MatDialogModule,
-
+    DialogModule,
+    AccordionModule,
+    TooltipModule,
+    FloatLabelModule,
+    FormsModule,
   ],
   providers: [
     provideAnimationsAsync()

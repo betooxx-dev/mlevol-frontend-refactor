@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class GraphComponent {
   expandedMenu: boolean = false;
+  propertiesShown: boolean = false;
+
 
   expandMenu() {
     this.expandedMenu = true;

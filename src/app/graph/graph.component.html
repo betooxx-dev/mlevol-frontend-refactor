@@ -8,5 +8,6 @@
             [ngClass]="{'expanded': expandedMenu}"></app-graph-menu>
         
         <app-graph-editor class="panel"></app-graph-editor>
+        <app-graph-properties class="properties" (propertiesClose)="propertiesShown=!$event;" [ngClass]="{'shown': propertiesShown}"></app-graph-properties>
     </div>
 </div>

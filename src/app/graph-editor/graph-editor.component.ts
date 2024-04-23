@@ -1,7 +1,6 @@
-import { MatDialog, MatDialogConfig, MatDialogModule} from '@angular/material/dialog';
-import { AfterViewInit, Component, ElementRef, HostBinding, HostListener, Injector, ViewChild } from '@angular/core'
+import { AddNode } from './../nodes/add';
+import { Component, ElementRef, HostListener, Injector, OnInit, ViewChild } from '@angular/core'
 import { GraphEditorService } from '../graph-editor.service';
-import { Observable } from 'rxjs';
 
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean; }) => {
   // Recommended
@@ -21,35 +20,15 @@ export class GraphEditorComponent {
   showMap: boolean = true;
   moduleImIn: string = 'General Editor';
   showPopup: boolean = false;
+  showConfirmArrange: boolean = false;
+
 
   constructor(
     private injector: Injector,
-    private graphEditorService: GraphEditorService,
-    public dialog: MatDialog) { 
+    private graphEditorService: GraphEditorService) { 
       //window.addEventListener("beforeunload", beforeUnloadHandler); FIXME
     }
 
-  @HostListener('document:keyup', ['$event'])
-  keyEvent(event: KeyboardEvent){
-    if (event.key === ' ' && this.showPopup === false) {
-      this.showPopup = true;
-      this.openDialog();
-    }
-  }
-
-  openDialog() {
-    const dialogConfig = new MatDialogConfig();
-    
-    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.showPopup = false;
-      if (result!="") {
-        this.graphEditorService.addNode(result); 
-      }
-      
-    });
-  }
 
   async ngAfterViewInit() {
     await this.graphEditorService.createEditor(this.container.nativeElement,this.injector);
@@ -76,6 +55,10 @@ export class GraphEditorComponent {
       this.container.nativeElement.classList.add('hide-minimap');
     }
   }
+
+  async arrangeNodes() {
+    await this.graphEditorService.arrangeNodes();
+  }
 }
 
 @Component({
@@ -84,13 +67,43 @@ export class GraphEditorComponent {
   styleUrl: './add-node-dialog.css',
 })
 export class DialogComponent {
-  availableNodes: string[] = [];
-
+  availableNodes: Map<string, string[]> = new Map<string, string[]>();
+  availableCategories : string[] = [];
+  openSections : number | number[] = [];
+  visible: boolean = false;
   constructor(private graphEditorService: GraphEditorService) {
-    graphEditorService.getAvailableNodes().then((nodes) => {
+    this.graphEditorService.getAvailableNodes().then((nodes)=>{
       this.availableNodes = nodes;
+      for(const value of nodes.keys()){
+        this.availableCategories.push(value);
+      }
+    })
+    
+  }
+
+  activeIndexChange(index: number | number[]) {
+    this.openSections= index;
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent){
+    if (event.key === ' ') {
+      this.visible = true;
     }
-    );
+  }
+
+  addNode(nodeName :string) {
+    this.graphEditorService.addNode(nodeName);
+    this.closeAddDialog();
+  }
+
+  showAddDialog() {
+    this.visible = true;
+  }
+
+  closeAddDialog() {
+    this.activeIndexChange([]);
+    this.visible = false;
   }
 
 }

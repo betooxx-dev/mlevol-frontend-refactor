@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, HostBinding, Input, OnChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, HostBinding, Input, KeyValueDiffer, KeyValueDiffers, OnChanges } from '@angular/core';
 import { MyNode } from '../CustomNode';
 
 @Component({
@@ -21,7 +21,9 @@ export class CustomNodeComponent implements OnChanges{
     this.cdr.detach();
   }
 
+  
   ngOnChanges(): void {
+
     this.cdr.detectChanges();
     requestAnimationFrame(() => this.rendered());
     this.seed++; // force render sockets
@@ -32,5 +34,14 @@ export class CustomNodeComponent implements OnChanges{
     const bi = b.value.index || 0;
 
     return ai - bi;
+  }
+
+  whoAmI(){
+    console.log(this);
+  }
+
+  handleDivClick() {
+    // Logic to execute when the div is clicked
+    console.log('Div clicked!');
   }
 }

@@ -4,25 +4,32 @@
 </div>
 <ul class="config-buttons">
     <li>
-        <button (click)="homeZoom()">
+        <button pTooltip="Auto home" (click)="homeZoom()">
             <i class="pi pi-home"></i>
         </button>
     </li>
     
     <li>
-        <button (click)="zoomIn()">
+        <button pTooltip="Zoom in" (click)="zoomIn()">
             <i class="pi pi-plus"></i>
         </button>
     </li>
 
     <li>
-        <button (click)="zoomOut()">
+        <button pTooltip="Zoom out" (click)="zoomOut()">
             <i class="pi pi-minus"></i>
         </button>
     </li>
     <li>
-        <button (click)="toggleMap()" [ngClass]="{active: !showMap}">
+        <button pTooltip="Toggle minimap" (click)="toggleMap()" [ngClass]="{active: !showMap}">
             <i class="pi pi-map"></i>
         </button>
     </li>
+    <li>
+        <button pTooltip="Arrange nodes" (click)="arrangeNodes()">
+            <i class="pi pi-share-alt"></i>
+        </button>
+    </li>
 </ul>
+
+<dialog-content-example-dialog></dialog-content-example-dialog>

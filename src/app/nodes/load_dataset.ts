@@ -9,7 +9,7 @@ export class LoadDatasetNode extends Classic.Node<
     width = 190;
     height = 120;
     color = "rgba(132, 132, 0, 0.5)";
-    name: string = "Load dataset";
+    public static nodeName: string = "Load dataset";
     info = {
       info: {
           title: 'Load dataset from disc',
@@ -30,5 +30,9 @@ export class LoadDatasetNode extends Classic.Node<
 
     data() {
       return this.info;
+    }
+
+    getNodeName() {
+      return LoadDatasetNode.nodeName;
     }
   }

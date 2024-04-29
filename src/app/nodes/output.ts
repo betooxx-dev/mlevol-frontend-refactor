@@ -11,7 +11,7 @@ export class OutputNode
   width = 180;
   height = 140;
   color : string = "rgb(0, 192, 255)";
-  name : string = "Output";
+  public static nodeName : string = "Output";
   info = {
     info: {
         title: 'Output of module',
@@ -33,6 +33,10 @@ export class OutputNode
 
   data() {
     return this.info;
+  }
+
+  getNodeName() {
+    return OutputNode.nodeName;
   }
 
 }

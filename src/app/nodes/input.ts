@@ -13,7 +13,7 @@ implements Classic.Node
   height = 140;
   value: any = null;
   color: string = "rgb(0, 192, 255)";
-  name: string = "Input";
+  public static nodeName: string = "Input";
   info: any = {
     info: {
         title: 'Input of module',
@@ -41,5 +41,8 @@ implements Classic.Node
 
   data() {
     return this.info;
+  }
+  getNodeName() {
+    return InputNode.nodeName;
   }
 }

@@ -9,7 +9,7 @@ export class SelectNode extends Classic.Node<
     width = 190;
     height = 100;
     color = "rgba(132, 132, 0, 0.5)";
-    name: string = "Select";
+    public static nodeName: string = "Select";
     info = {
       info: {
           title: 'Select query',
@@ -36,4 +36,9 @@ export class SelectNode extends Classic.Node<
     data() {
       return this.info;
     }
+
+    getNodeName() {
+      return SelectNode.nodeName;
+    }
+    
   }

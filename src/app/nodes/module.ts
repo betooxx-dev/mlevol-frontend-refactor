@@ -13,7 +13,7 @@ export class ModuleNode
   height = 140;
   module: null | Module<Schemes> = null;
   color: string = "rgba(123, 235, 12, 0.5)";
-  name: string = "Module";
+  public static nodeName: string = "Module";
   info = {
     info: {
         title: 'Contains Module',
@@ -75,5 +75,9 @@ export class ModuleNode
 
   data() {
     return this.info;
+  }
+
+  getNodeName() {
+    return ModuleNode.nodeName;
   }
 }

@@ -36,6 +36,7 @@ export class GraphPropertiesComponent implements OnInit {
 
   @HostListener('document:keyup', ['$event'])
   keyEvent(event: KeyboardEvent){
+    console.log(event);
     if (event.key === 'Delete' && this.allNode) {
       this.deleteNode();
     }
@@ -50,7 +51,13 @@ export class GraphPropertiesComponent implements OnInit {
     }
 
     if (event.key === 'v' && event.ctrlKey && this.copyNode) {
-      this.data.addNode(this.copyNode.name, undefined, this.copyNode.data());
+      let a =  this.copyNode;
+      let b = a.constructor;
+      this.data.addNode(this.copyNode.getNodeName(), undefined, this.copyNode.data());
+    }
+
+    if (event.key === 'Escape') {
+      this.closeProperties();
     }
   }
 

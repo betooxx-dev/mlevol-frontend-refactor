@@ -5,7 +5,7 @@ export class NumberNode extends Classic.Node {
     width = 190;
     height = 100;
     color = "rgba(255, 0, 0, 0.5)";
-    name = "Number";
+    public static nodeName: string = "Number";
     info = {
       info: {
           title: 'Inputs a number',
@@ -24,5 +24,9 @@ export class NumberNode extends Classic.Node {
 
     data() {
       return this.info;
+    }
+
+    getNodeName() {
+      return NumberNode.nodeName;
     }
   }

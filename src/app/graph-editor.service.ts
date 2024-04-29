@@ -176,39 +176,18 @@ export class GraphEditorService {
     if(!this.area) return;
 
     let node: Node | undefined = undefined;
-    if (nodeName === 'Number') {
-      node = new NumberNode(1);
-    }
-    else if (nodeName === 'Add') {
-      node = new AddNode();
-    }
-    else if (nodeName === 'Input'){
-      node = new InputNode();
-    }
-    else if (nodeName === 'Output'){
-      node = new OutputNode();
-    }
-    else if (nodeName === 'Module'){
-      node = new ModuleNode("Module");
-    }
-    else if (nodeName === 'Join'){
-      node = new JoinNode();
-    }
-    else if (nodeName === 'Load dataset'){
-      node = new LoadDatasetNode();
-    }
-    else if (nodeName === 'Select'){
-      node = new SelectNode();
-    }
-    else if (nodeName === 'Replace Nan'){
-      node = new ReplaceNaNNode();
-    }
-    else if (nodeName === 'Split train test'){
-      node = new SplitTrainTestNode();
-    }
-    else if (nodeName === 'Replace Null'){
-      node = new ReplaceNullNode();
-    }
+
+    if      (nodeName === NumberNode.nodeName)  node = new NumberNode(1);
+    else if (nodeName === AddNode.nodeName)     node = new AddNode();
+    else if (nodeName === InputNode.nodeName)   node = new InputNode();
+    else if (nodeName === OutputNode.nodeName)  node = new OutputNode();
+    else if (nodeName === ModuleNode.nodeName)  node = new ModuleNode("Module");
+    else if (nodeName === JoinNode.nodeName)    node = new JoinNode();
+    else if (nodeName === LoadDatasetNode.nodeName) node = new LoadDatasetNode();
+    else if (nodeName === SelectNode.nodeName)  node = new SelectNode();
+    else if (nodeName === ReplaceNaNNode.nodeName) node = new ReplaceNaNNode();
+    else if (nodeName === SplitTrainTestNode.nodeName) node = new SplitTrainTestNode();
+    else if (nodeName === ReplaceNullNode.nodeName) node = new ReplaceNullNode();
     else {
       console.log("Node not found");
       return;
@@ -233,17 +212,18 @@ export class GraphEditorService {
   async getAvailableNodes() : Promise<Map<string, string[]>> {
     return new Map<string, string[]>([
       ['Data adquisition', 
-        [ 'Load dataset', 'Join', 'Select', 'Replace Nan', 'Replace Null']
+        [ LoadDatasetNode.nodeName, JoinNode.nodeName, SelectNode.nodeName, 
+          ReplaceNaNNode.nodeName, ReplaceNullNode.nodeName]
       ],
       ['Misc', 
-        [ 'Add', 'Number']
+        [ AddNode.nodeName, NumberNode.nodeName]
       ],
       [
         'Model training',
-        ['Split train test']
+        [SplitTrainTestNode.nodeName]
       ],
       [ 'Modules',
-        ['Input', 'Output', 'Module']
+        [InputNode.nodeName, OutputNode.nodeName, ModuleNode.nodeName]
       ]
     ]);
   }

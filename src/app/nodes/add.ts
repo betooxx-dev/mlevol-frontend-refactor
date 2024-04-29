@@ -5,7 +5,7 @@ export class AddNode extends Classic.Node {
     width = 190;
     height = 150;
     color = "rgba(0, 0, 255, 0.5)";
-
+    name = "Add";
     info: any = {
       info : {
           title: 'Add two numbers',
@@ -26,6 +26,6 @@ export class AddNode extends Classic.Node {
     }
 
     data() {
-      return {};
+      return this.info;
     }
   }

@@ -10,7 +10,7 @@ export class JoinNode extends Classic.Node<
     width = 190;
     height = 140;
     color = "rgba(132, 132, 0, 0.5)";
-
+    name: string = "Join";
     info = {
       info: {
           title: 'Joins two tables',
@@ -36,6 +36,6 @@ export class JoinNode extends Classic.Node<
     }
 
     data() {
-      return {};
+      return this.info;
     }
   }

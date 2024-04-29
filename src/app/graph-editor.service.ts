@@ -84,8 +84,6 @@ export class GraphEditorService {
     this.editor.use(this.area);
     
     this.area.use(this.minimap);
-
-    
     
     this.area.use(angularRender);
     
@@ -97,7 +95,6 @@ export class GraphEditorService {
 
     AreaExtensions.selectableNodes(this.area, this.selector, { accumulating: accumulateOnCtrl()});
     
-
     angularRender.addPreset(AngularPresets.classic.setup(
       {
         customize: {
@@ -115,7 +112,7 @@ export class GraphEditorService {
     ));
 
     connection.addPreset(ConnectionPresets.classic.setup(
-      ));
+    ));
 
     angularRender.addPreset(AngularPresets.minimap.setup({ size: 200 }));
 
@@ -174,7 +171,7 @@ export class GraphEditorService {
     AreaExtensions.zoomAt(this.area, this.editor.getNodes());
   }
 
-  async addNode(nodeName: string){
+  async addNode(nodeName: string, nodeId?: string, nodeData?: any){
     if(!this.editor) return;
     if(!this.area) return;
 
@@ -186,10 +183,10 @@ export class GraphEditorService {
       node = new AddNode();
     }
     else if (nodeName === 'Input'){
-      node = new InputNode("key");
+      node = new InputNode();
     }
     else if (nodeName === 'Output'){
-      node = new OutputNode("key");
+      node = new OutputNode();
     }
     else if (nodeName === 'Module'){
       node = new ModuleNode("Module");
@@ -218,6 +215,14 @@ export class GraphEditorService {
     }
 
     if (!node) return;
+
+    if (nodeId) {
+      node.id = nodeId;
+    }
+
+    if (nodeData) {
+      node.info = nodeData;
+    }
 
     await this.editor.addNode(node);
     
@@ -273,7 +278,7 @@ export class GraphEditorService {
     for (const node of this.editor.getNodes()){
       nodes.push({
         id: node.id,
-        data: node.data,
+        data: node.data(),
         name: node.label,
         className: node.constructor.name,
       });
@@ -293,7 +298,7 @@ export class GraphEditorService {
         connections: connections
       }
     );
-    var blob = new Blob([JSON.stringify({nodes: nodes, connections : connections})], {type: "text/plain;charset=utf-8"});
+    var blob = new Blob([JSON.stringify({nodes: nodes, connections : connections}, null, 2)], {type: "text/plain;charset=utf-8"});
     saveAs(blob, "editor.json");
     
   }

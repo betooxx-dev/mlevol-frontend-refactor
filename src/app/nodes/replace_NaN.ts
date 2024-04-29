@@ -9,7 +9,7 @@ export class ReplaceNaNNode extends Classic.Node<
     width = 190;
     height = 90;
     color = "rgba(132, 132, 0, 0.5)";
-
+    name: string = "Replace Nan";
     info = {
       info: {
           title: 'Replace NaN values',
@@ -29,6 +29,6 @@ export class ReplaceNaNNode extends Classic.Node<
     }
 
     data() {
-      return {};
+      return this.info;
     }
   }

@@ -11,7 +11,7 @@ export class OutputNode
   width = 180;
   height = 140;
   color : string = "rgb(0, 192, 255)";
-
+  name : string = "Output";
   info = {
     info: {
         title: 'Output of module',
@@ -19,19 +19,20 @@ export class OutputNode
     inputs: {},
   };
 
-  constructor(initial: string) {
+  constructor(initial?: string) {
     super("Output");
 
-    this.addControl("key", new Classic.InputControl("text", { initial }));
+    if (initial){
+      this.addControl("key", new Classic.InputControl("text", { initial }));
+    }
+    else {
+      this.addControl("key", new Classic.InputControl("text", { initial: "key" }));
+    }
     this.addInput("value", new Classic.Input(socket, "output"));
   }
 
   data() {
-    return {};
-  }
-
-  serialize() {
-    return {};
+    return this.info;
   }
 
 }

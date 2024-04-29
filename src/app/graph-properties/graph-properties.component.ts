@@ -15,6 +15,7 @@ export class GraphPropertiesComponent implements OnInit {
   allNode: Node | undefined;
   nodeInfo : any;
   nodeInputKeys : any;
+  copyNode : Node | undefined;
 
   subscription: Subscription | undefined;
 
@@ -37,6 +38,19 @@ export class GraphPropertiesComponent implements OnInit {
   keyEvent(event: KeyboardEvent){
     if (event.key === 'Delete' && this.allNode) {
       this.deleteNode();
+    }
+
+    if (event.key === 'c' && event.ctrlKey && this.allNode) {
+      this.copyNode = this.allNode;
+    }
+
+    if (event.key === 'x' && event.ctrlKey && this.allNode) {
+      this.copyNode = this.allNode;
+      this.deleteNode();
+    }
+
+    if (event.key === 'v' && event.ctrlKey && this.copyNode) {
+      this.data.addNode(this.copyNode.name, undefined, this.copyNode.data());
     }
   }
 

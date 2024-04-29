@@ -1,6 +1,7 @@
 import { AddNode } from './../nodes/add';
 import { Component, ElementRef, HostListener, Injector, OnInit, ViewChild } from '@angular/core'
 import { GraphEditorService } from '../graph-editor.service';
+import { Node } from '../editor';
 
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean; }) => {
   // Recommended
@@ -22,13 +23,11 @@ export class GraphEditorComponent {
   showPopup: boolean = false;
   showConfirmArrange: boolean = false;
 
-
   constructor(
     private injector: Injector,
     private graphEditorService: GraphEditorService) { 
       //window.addEventListener("beforeunload", beforeUnloadHandler); FIXME
     }
-
 
   async ngAfterViewInit() {
     await this.graphEditorService.createEditor(this.container.nativeElement,this.injector);
@@ -71,6 +70,7 @@ export class DialogComponent {
   availableCategories : string[] = [];
   openSections : number | number[] = [];
   visible: boolean = false;
+  showTip: boolean = true;
   constructor(private graphEditorService: GraphEditorService) {
     this.graphEditorService.getAvailableNodes().then((nodes)=>{
       this.availableNodes = nodes;
@@ -87,14 +87,16 @@ export class DialogComponent {
 
   @HostListener('document:keyup', ['$event'])
   keyEvent(event: KeyboardEvent){
-    if (event.key === ' ') {
+    if (event.key === ' ' && event.shiftKey) {
       this.visible = true;
     }
   }
 
   addNode(nodeName :string) {
+    this.showTip = false;
     this.graphEditorService.addNode(nodeName);
     this.closeAddDialog();
+    console.log(this);
   }
 
   showAddDialog() {

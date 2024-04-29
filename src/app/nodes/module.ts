@@ -13,7 +13,7 @@ export class ModuleNode
   height = 140;
   module: null | Module<Schemes> = null;
   color: string = "rgba(123, 235, 12, 0.5)";
-  
+  name: string = "Module";
   info = {
     info: {
         title: 'Contains Module',
@@ -23,6 +23,20 @@ export class ModuleNode
         type: "string",
         value: "Module description",
       },
+      color :{
+        type: "color",
+        value: 1,
+        options: [
+          "rgb(0, 192, 255)",
+          "rgb(255, 0, 0)",
+          "rgb(0, 255, 0)",
+          "rgb(255, 255, 0)",
+          "rgb(255, 0, 255)",
+          "rgb(0, 255, 255)",
+          "rgb(255, 255, 255)",
+          "rgb(0, 0, 0)",
+        ]
+      }
     },
   };
 
@@ -60,12 +74,6 @@ export class ModuleNode
   }
 
   data() {
-    return {};
-  }
-
-  
-
-  serialize() {
-    return;
+    return this.info;
   }
 }

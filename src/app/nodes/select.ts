@@ -7,9 +7,9 @@ export class SelectNode extends Classic.Node<
 {}
 > implements Classic.Node{
     width = 190;
-    height = 80;
+    height = 100;
     color = "rgba(132, 132, 0, 0.5)";
-
+    name: string = "Select";
     info = {
       info: {
           title: 'Select query',

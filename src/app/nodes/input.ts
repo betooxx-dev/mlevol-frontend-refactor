@@ -13,21 +13,33 @@ implements Classic.Node
   height = 140;
   value: any = null;
   color: string = "rgb(0, 192, 255)";
+  name: string = "Input";
   info: any = {
     info: {
         title: 'Input of module',
     },
-    inputs: {},
+    inputs: {
+      key: {
+        type: "string",
+        value: "key",
+      },
+    },
   };
 
-  constructor(initial: string) {
+  constructor(initial?: string) {
     super("Input");
 
-    this.addControl("key", new Classic.InputControl("text", { initial }));
+    if (!initial){
+      this.addControl("key", new Classic.InputControl("text", { initial}));
+    }
+    else {
+      this.addControl("key", new Classic.InputControl("text", { initial: "key"}));
+    }
+    
     this.addOutput("value", new Classic.Output(socket, "Number"));
   }
 
   data() {
-    return {};
+    return this.info;
   }
 }

@@ -35,4 +35,6 @@ export class LoadDatasetNode extends Classic.Node<
     getNodeName() {
       return LoadDatasetNode.nodeName;
     }
+    update() {
+    }
   }

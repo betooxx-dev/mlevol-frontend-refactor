@@ -32,4 +32,7 @@ export class AddNode extends Classic.Node {
     getNodeName() {
       return AddNode.nodeName;
     }
+
+    update() {
+    }
   }

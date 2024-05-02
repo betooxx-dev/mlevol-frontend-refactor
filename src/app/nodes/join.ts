@@ -38,8 +38,9 @@ export class JoinNode extends Classic.Node<
     data() {
       return this.info;
     }
-
     getNodeName() {
       return JoinNode.nodeName;
+    }
+    update() {
     }
   }

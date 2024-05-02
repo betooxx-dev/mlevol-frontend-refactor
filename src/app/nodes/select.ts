@@ -40,5 +40,8 @@ export class SelectNode extends Classic.Node<
     getNodeName() {
       return SelectNode.nodeName;
     }
+
+    update() {
+    }
     
   }

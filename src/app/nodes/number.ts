@@ -29,4 +29,6 @@ export class NumberNode extends Classic.Node {
     getNodeName() {
       return NumberNode.nodeName;
     }
+    update() {
+    }
   }

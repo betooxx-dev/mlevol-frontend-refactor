@@ -12,7 +12,7 @@ export class ModuleNode
   width = 180;
   height = 140;
   module: null | Module<Schemes> = null;
-  color: string = "rgba(123, 235, 12, 0.5)";
+  color: string = "rgba(255, 99, 132, 0.5)";
   public static nodeName: string = "Module";
   info = {
     info: {
@@ -25,16 +25,14 @@ export class ModuleNode
       },
       color :{
         type: "color",
-        value: 1,
+        value: "rgba(255, 99, 132, 0.5)",
         options: [
-          "rgb(0, 192, 255)",
-          "rgb(255, 0, 0)",
-          "rgb(0, 255, 0)",
-          "rgb(255, 255, 0)",
-          "rgb(255, 0, 255)",
-          "rgb(0, 255, 255)",
-          "rgb(255, 255, 255)",
-          "rgb(0, 0, 0)",
+          { key : "rgba(255, 99, 132, 0.5)"},
+          { key : "rgba(54, 162, 235, 0.5)"},
+          { key : "rgba(255, 206, 86, 0.5)"},
+          { key : "rgba(75, 192, 192, 0.5)"},
+          { key : "rgba(153, 102, 255, 0.5)"},
+          { key : "rgba(255, 159, 64, 0.5)"},
         ]
       }
     },
@@ -50,8 +48,8 @@ export class ModuleNode
     this.addOutput("output", new Classic.Input(socket, "base_output"));
 
   }
-
-  async update() {
+  update() {
+    this.color = this.info.inputs.color.value;
   }
 
   syncPorts(inputs: string[], outputs: string[]) {

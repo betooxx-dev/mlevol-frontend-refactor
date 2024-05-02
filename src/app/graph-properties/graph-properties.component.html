@@ -26,6 +26,24 @@
                 </p>
                 <input id="{{key}}" type="number" step="0.01" [(ngModel)]="allNode?.info.inputs[key].value" (ngModelChange)="updateValue(key, $event)"/>
             </div>
+
+            <div *ngIf="allNode?.info.inputs[key]['type'] == 'color'" style="margin: 10px;">
+                <p>
+                    {{key}}
+                </p>
+                    <p-dropdown [options]="allNode?.info.inputs[key].options" optionLabel="color" (onChange)="updateValue(key, $event)">
+                        <ng-template pTemplate="selectedItem">
+                            <div class="flex align-items-center gap-2" *ngIf="allNode?.info.inputs[key].value">
+                                <div style="width: 40px; height: 20px; border-radius: 5px;" [ngStyle]="{background: allNode?.info.inputs[key].value}"></div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                <div style="width: 40px; height: 20px; border-radius: 5px;" [ngStyle]="{background: option.key}"></div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+            </div>
         </div>
     </div>
     <div style="margin: 10px; display: flex; justify-content: center;">

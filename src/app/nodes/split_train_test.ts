@@ -45,4 +45,7 @@ export class SplitTrainTestNode extends Classic.Node<
     getNodeName() {
         return SplitTrainTestNode.nodeName;
     }
+
+    update() {
+    }
   }

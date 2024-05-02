@@ -38,5 +38,6 @@ export class OutputNode
   getNodeName() {
     return OutputNode.nodeName;
   }
-
+  update() {
+  }
 }

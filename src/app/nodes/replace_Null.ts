@@ -35,4 +35,6 @@ export class ReplaceNullNode extends Classic.Node<
     getNodeName() {
       return ReplaceNullNode.nodeName;
     }
+    update() {
+    }
   }

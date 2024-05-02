@@ -45,4 +45,6 @@ implements Classic.Node
   getNodeName() {
     return InputNode.nodeName;
   }
+  update() {
+  }
 }

@@ -35,4 +35,6 @@ export class ReplaceNaNNode extends Classic.Node<
     getNodeName() {
       return ReplaceNaNNode.nodeName;
     }
+    update() {
+    }
   }

@@ -16,11 +16,10 @@ export class GraphPropertiesComponent implements OnInit {
   nodeInfo : any;
   nodeInputKeys : any;
   copyNode : Node | undefined;
-
+  colors: [] | any;
   subscription: Subscription | undefined;
 
   constructor(private data : GraphEditorService){
-
   }
 
   ngOnInit(): void {
@@ -62,8 +61,14 @@ export class GraphPropertiesComponent implements OnInit {
   }
 
   updateValue(key: string, value: any) {
-    this.allNode!.info.inputs[key].value = value;
+    if (typeof value != "string")
+    {
+      this. allNode!.info.inputs[key].value = value.value.key;
+    }else{
+      this.allNode!.info.inputs[key].value = value;
+    }
     console.log(this.allNode);
+    this.allNode!.update();
     this.data.updateNode(this.allNode!);
   }
 

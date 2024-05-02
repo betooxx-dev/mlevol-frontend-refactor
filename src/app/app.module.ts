@@ -32,6 +32,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { TooltipModule } from 'primeng/tooltip';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 import { GraphPropertiesComponent } from './graph-properties/graph-properties.component';
@@ -65,6 +66,7 @@ import { GraphPropertiesComponent } from './graph-properties/graph-properties.co
     TooltipModule,
     FloatLabelModule,
     FormsModule,
+    DropdownModule,
   ],
   providers: [
     provideAnimationsAsync()

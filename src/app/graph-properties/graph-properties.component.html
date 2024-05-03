@@ -44,6 +44,12 @@
                         </ng-template>
                     </p-dropdown>
             </div>
+            
+            
+        </div>
+
+        <div *ngIf="allNode?.getNodeName() == moduleNodeName;" style="margin: 10px;">
+            <p-button label="Edit module" (click)="changeEditor()"></p-button>
         </div>
     </div>
     <div style="margin: 10px; display: flex; justify-content: center;">

@@ -2,6 +2,7 @@ import { AddNode } from './../nodes/add';
 import { Component, ElementRef, HostListener, Injector, OnInit, ViewChild } from '@angular/core'
 import { GraphEditorService } from '../graph-editor.service';
 import { Node } from '../editor';
+import { Subscription } from 'rxjs';
 
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean; }) => {
   // Recommended
@@ -22,11 +23,15 @@ export class GraphEditorComponent {
   moduleImIn: string = 'General Editor';
   showPopup: boolean = false;
   showConfirmArrange: boolean = false;
+  subscription: Subscription | undefined;
 
   constructor(
     private injector: Injector,
     private graphEditorService: GraphEditorService) { 
       //window.addEventListener("beforeunload", beforeUnloadHandler); FIXME
+      this.subscription = this.graphEditorService.selectedEditor.subscribe((message) => {
+        this.moduleImIn = message;
+      } );
     }
 
   async ngAfterViewInit() {

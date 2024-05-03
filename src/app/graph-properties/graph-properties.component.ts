@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { Subscription } from 'rxjs';
 import { GraphEditorService } from '../graph-editor.service';
 import { Node } from '../editor';
+import { ModuleNode } from '../nodes';
 @Component({
   selector: 'app-graph-properties',
   templateUrl: './graph-properties.component.html',
@@ -18,6 +19,7 @@ export class GraphPropertiesComponent implements OnInit {
   copyNode : Node | undefined;
   colors: [] | any;
   subscription: Subscription | undefined;
+  moduleNodeName = ModuleNode.nodeName;
 
   constructor(private data : GraphEditorService){
   }
@@ -52,7 +54,7 @@ export class GraphPropertiesComponent implements OnInit {
     if (event.key === 'v' && event.ctrlKey && this.copyNode) {
       let a =  this.copyNode;
       let b = a.constructor;
-      this.data.addNode(this.copyNode.getNodeName(), undefined, this.copyNode.data());
+      this.data.addNode(this.copyNode.getNodeName(), undefined, JSON.parse(JSON.stringify(this.copyNode.data())));
     }
 
     if (event.key === 'Escape') {
@@ -94,5 +96,12 @@ export class GraphPropertiesComponent implements OnInit {
 
   showEditor(){
     this.data.generateJsonOfEditor();
+  }
+
+  changeEditor(){
+    if (this.allNode == undefined) return;
+    this.data.changeEditor(this.allNode!, true);
+    this.closeProperties();
+    
   }
 }

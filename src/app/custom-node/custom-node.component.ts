@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, HostBinding, Input, KeyValueDiffer, KeyValueDiffers, OnChanges } from '@angular/core';
-import { MyNode } from '../CustomNode';
+import { Node } from '../editor';
 
 @Component({
   selector: 'app-custom-node',
@@ -7,7 +7,7 @@ import { MyNode } from '../CustomNode';
   styleUrl: './custom-node.component.css'
 })
 export class CustomNodeComponent implements OnChanges{
-  @Input() data!: MyNode;
+  @Input() data!: Node;
   @Input() emit!: (data: any) => void;
   @Input() rendered!: () => void;
   
@@ -34,14 +34,5 @@ export class CustomNodeComponent implements OnChanges{
     const bi = b.value.index || 0;
 
     return ai - bi;
-  }
-
-  whoAmI(){
-    console.log(this);
-  }
-
-  handleDivClick() {
-    // Logic to execute when the div is clicked
-    console.log('Div clicked!');
   }
 }

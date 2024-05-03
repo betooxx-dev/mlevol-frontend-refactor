@@ -19,6 +19,11 @@ export class LoadDatasetNode extends Classic.Node<
           type: "string",
           value: "Dataset description",
         },
+        path : {
+          type: "string",
+          value: "Dataset path",
+          show: true,
+        },
       },
     };
 

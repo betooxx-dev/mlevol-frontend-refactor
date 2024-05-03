@@ -16,19 +16,22 @@ export class OutputNode
     info: {
         title: 'Output of module',
     },
-    inputs: {},
+    inputs: {
+      description: {
+        type: "string",
+        value: "Input description",
+      },
+      key: {
+        type: "string",
+        value: "key",
+      },
+    },
   };
 
   constructor(initial?: string) {
     super("Output");
 
-    if (initial){
-      this.addControl("key", new Classic.InputControl("text", { initial }));
-    }
-    else {
-      this.addControl("key", new Classic.InputControl("text", { initial: "key" }));
-    }
-    this.addInput("value", new Classic.Input(socket, "output"));
+    this.addInput("value", new Classic.Input(socket, "out"));
   }
 
   data() {

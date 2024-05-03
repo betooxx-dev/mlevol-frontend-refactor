@@ -1,7 +1,5 @@
 import { ClassicPreset as Classic, NodeEditor } from "rete";
 import { socket } from "../sockets/sockets";
-import { Module, Modules } from "../modules";
-import { Schemes } from "../editor";
 
 export class ModuleNode
   extends Classic.Node<
@@ -11,7 +9,6 @@ export class ModuleNode
   implements Classic.Node {
   width = 180;
   height = 140;
-  module: null | Module<Schemes> = null;
   color: string = "rgba(255, 99, 132, 0.5)";
   public static nodeName: string = "Module";
   info = {
@@ -41,11 +38,8 @@ export class ModuleNode
   constructor(
     public path: string,
   ) {
-    super("Module");
-
-    this.addInput("input", new Classic.Input(socket, "base_input"));
-
-    this.addOutput("output", new Classic.Input(socket, "base_output"));
+    super("Step");
+    this.syncPorts([],  []);
 
   }
   update() {

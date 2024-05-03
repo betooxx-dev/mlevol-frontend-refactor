@@ -19,6 +19,10 @@ implements Classic.Node
         title: 'Input of module',
     },
     inputs: {
+      description: {
+        type: "string",
+        value: "Input description",
+      },
       key: {
         type: "string",
         value: "key",
@@ -28,15 +32,8 @@ implements Classic.Node
 
   constructor(initial?: string) {
     super("Input");
-
-    if (!initial){
-      this.addControl("key", new Classic.InputControl("text", { initial}));
-    }
-    else {
-      this.addControl("key", new Classic.InputControl("text", { initial: "key"}));
-    }
     
-    this.addOutput("value", new Classic.Output(socket, "Number"));
+    this.addOutput("value", new Classic.Output(socket, this.info.inputs.key.value));
   }
 
   data() {
@@ -46,5 +43,6 @@ implements Classic.Node
     return InputNode.nodeName;
   }
   update() {
+    this.outputs.value!.label = this.info.inputs.key.value;
   }
 }

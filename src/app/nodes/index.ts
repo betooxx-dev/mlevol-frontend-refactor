@@ -1,5 +1,3 @@
-export { AddNode } from "./add";
-export { NumberNode } from "./number";
 export { InputNode } from "./input";
 export { OutputNode } from "./output";
 export { ModuleNode } from "./module";
@@ -9,3 +7,6 @@ export { ReplaceNaNNode } from "./replace_NaN";
 export { ReplaceNullNode } from "./replace_Null";
 export { SelectNode } from "./select";
 export { SplitTrainTestNode } from "./split_train_test";
+export { TrainModelNode } from "./train_model";
+export { EvaluateModelNode } from "./evaluate_model";
+export { MakeCategoricalBinaryNode } from "./make_categorical_binary";

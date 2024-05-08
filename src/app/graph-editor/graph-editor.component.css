@@ -47,6 +47,7 @@ a:hover {
     color: #125699;
 }
 
+
 .rete {
     position: relative;
     width: 100%;
@@ -58,8 +59,6 @@ a:hover {
     left: 0;
     background: transparent;
 }
-
-
 
 .rete ::ng-deep rete-minimap{
     backdrop-filter: blur(5px);
@@ -74,6 +73,22 @@ a:hover {
 
 .rete.hide-minimap ::ng-deep rete-minimap{
     transform: translate(0, 200%);
+}
+
+  
+.rete ::ng-deep custom_background {
+    display: table;
+    z-index: 0;
+    position: absolute;
+    top: -320000px;
+    left: -320000px;
+    width: 640000px;
+    height: 640000px;
+    background-color: transparent;
+    opacity: 1;
+    background-image: radial-gradient(gray, 1.9px, transparent 2px);
+    background-size: 62px 62px;
+    background-position: 0 0, 31px 31px;
 }
 
 

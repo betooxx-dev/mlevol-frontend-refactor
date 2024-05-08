@@ -1,7 +1,5 @@
-import { AddNode } from './../nodes/add';
-import { Component, ElementRef, HostListener, Injector, OnInit, ViewChild } from '@angular/core'
+import { Component, ElementRef, HostListener, Injector, ViewChild } from '@angular/core'
 import { GraphEditorService } from '../graph-editor.service';
-import { Node } from '../editor';
 import { Subscription } from 'rxjs';
 
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean; }) => {

@@ -8,7 +8,7 @@ import {
 
 @Component({
   template: ``,
-  styleUrls: ["./custom-socket.component.sass"]
+  styleUrls: ["./custom-socket.component.css"]
 })
 export class CustomSocketComponent implements OnChanges {
   @Input() data!: any;

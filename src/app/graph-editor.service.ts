@@ -1,4 +1,4 @@
-import { AddNode, InputNode, ModuleNode, NumberNode, OutputNode} from './nodes';
+import { EvaluateModelNode, InputNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, TrainModelNode} from './nodes';
 // graph-editor.service.ts
 import { Injectable, OnChanges, input } from '@angular/core';
 import { Schemes, Connection, Node} from './editor';
@@ -32,6 +32,7 @@ import { SplitTrainTestNode } from './nodes/split_train_test';
 import { ReplaceNullNode } from './nodes/replace_Null';
 import { AutoArrangePlugin, Presets as ArrangePresets } from "rete-auto-arrange-plugin";
 import { saveAs } from 'file-saver';
+import { addCustomBackground } from './custom-background/background';
 
 
 type AreaExtra = Area2D<Schemes> | AngularArea2D<Schemes>  | MinimapExtra;
@@ -107,6 +108,8 @@ export class GraphEditorService {
     AreaExtensions.simpleNodesOrder(this.area);
 
     AreaExtensions.selectableNodes(this.area, this.selector, { accumulating: accumulateOnCtrl()});
+
+    addCustomBackground(this.area);
     
     angularRender.addPreset(AngularPresets.classic.setup(
       {
@@ -128,21 +131,6 @@ export class GraphEditorService {
     ));
 
     angularRender.addPreset(AngularPresets.minimap.setup({ size: 200 }));
-
-    const a = new NumberNode(1);
-    const b = new NumberNode(1);
-    const add = new AddNode();
-
-    await this.editor.addNode(a);
-    await this.editor.addNode(b);
-    await this.editor.addNode(add);
-    
-    await this.editor.addConnection(new Connection(a, 'value', add, 'a'));
-    await this.editor.addConnection(new Connection(b, 'value', add, 'b'));
-
-    await this.area.nodeViews.get(a.id)?.translate(100, 100);
-    await this.area.nodeViews.get(b.id)?.translate(100, 300);
-    await this.area.nodeViews.get(add.id)?.translate(400, 150); 
     
     this.area.addPipe(
       context => {
@@ -190,9 +178,7 @@ export class GraphEditorService {
 
     let node: Node | undefined = undefined;
 
-    if      (nodeName === NumberNode.nodeName)  node = new NumberNode(1);
-    else if (nodeName === AddNode.nodeName)     node = new AddNode();
-    else if (nodeName === InputNode.nodeName)   node = new InputNode();
+    if (nodeName === InputNode.nodeName)   node = new InputNode();
     else if (nodeName === OutputNode.nodeName)  node = new OutputNode();
     else if (nodeName === JoinNode.nodeName)    node = new JoinNode();
     else if (nodeName === LoadDatasetNode.nodeName) node = new LoadDatasetNode();
@@ -200,6 +186,9 @@ export class GraphEditorService {
     else if (nodeName === ReplaceNaNNode.nodeName) node = new ReplaceNaNNode();
     else if (nodeName === SplitTrainTestNode.nodeName) node = new SplitTrainTestNode();
     else if (nodeName === ReplaceNullNode.nodeName) node = new ReplaceNullNode();
+    else if (nodeName === MakeCategoricalBinaryNode.nodeName) node = new MakeCategoricalBinaryNode();
+    else if (nodeName === TrainModelNode.nodeName) node = new TrainModelNode();
+    else if (nodeName === EvaluateModelNode.nodeName) node = new EvaluateModelNode();
     else if (nodeName === ModuleNode.nodeName) {
       node = new ModuleNode("Module");
       this.modules[node.id] = {
@@ -236,14 +225,15 @@ export class GraphEditorService {
     return new Map<string, string[]>([
       ['Data adquisition', 
         [ LoadDatasetNode.nodeName, JoinNode.nodeName, SelectNode.nodeName, 
-          ReplaceNaNNode.nodeName, ReplaceNullNode.nodeName]
-      ],
-      ['Misc', 
-        [ AddNode.nodeName, NumberNode.nodeName]
+          ReplaceNaNNode.nodeName, ReplaceNullNode.nodeName, MakeCategoricalBinaryNode.nodeName]
       ],
       [
         'Model training',
-        [SplitTrainTestNode.nodeName]
+        [SplitTrainTestNode.nodeName, TrainModelNode.nodeName]
+      ],
+      [
+        'Evaluation',
+        [EvaluateModelNode.nodeName]
       ],
       [ 'Modules',
         [InputNode.nodeName, OutputNode.nodeName, ModuleNode.nodeName]
@@ -316,9 +306,27 @@ export class GraphEditorService {
       outputs: outputs,
     };
 
-    var blob = new Blob([JSON.stringify({modules: this.modules})], {type: "text/plain;charset=utf-8"});
+    this.cleanModules();
+
+    var blob = new Blob([JSON.stringify({modules: this.modules}, null, 2)], {type: "text/plain;charset=utf-8"});
     saveAs(blob, "editor.json");
     
+  }
+
+  cleanModules() {
+    let allNodesIds = [];
+    for (let module in this.modules) {
+      let nodes = this.modules[module].nodes;
+      for (let node of nodes) {
+        allNodesIds.push(node.id);
+      }
+    }
+    console.log("All nodes", allNodesIds);
+    for (let module in this.modules) {
+      if (!(allNodesIds.includes(module)) && !(module === 'root')) {
+        delete this.modules[module];
+      }
+    }
   }
 
   async updateNode(node: Node) {

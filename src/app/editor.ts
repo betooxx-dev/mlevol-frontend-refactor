@@ -1,16 +1,13 @@
 import { ClassicPreset as Classic, GetSchemes } from "rete";
-import { AddNode, InputNode, JoinNode, ModuleNode, NumberNode, OutputNode, ReplaceNaNNode, ReplaceNullNode, SelectNode, SplitTrainTestNode } from "./nodes";
+import { EvaluateModelNode, InputNode, JoinNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, ReplaceNaNNode, ReplaceNullNode, SelectNode, SplitTrainTestNode, TrainModelNode } from "./nodes";
 import { CurveFactory } from "d3-shape";
 
-export type Node = NumberNode | AddNode | InputNode | OutputNode | ModuleNode
+export type Node = InputNode | OutputNode | ModuleNode
                  | SplitTrainTestNode | ReplaceNaNNode | ReplaceNullNode | SelectNode
-                 | JoinNode;
+                 | JoinNode | EvaluateModelNode | MakeCategoricalBinaryNode | TrainModelNode;
 
 //type Node =  | ;
-type Conn =
-  | Connection<NumberNode, AddNode>
-  | Connection<AddNode, AddNode>
-  | Connection<AddNode, NumberNode>;
+type Conn = Connection<Node, Node>;
   
 export type Schemes = GetSchemes<Node, Conn>;
 

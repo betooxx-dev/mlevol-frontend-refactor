@@ -4,7 +4,7 @@ import { MyNode } from "../CustomNode";
 export class InputNode   extends Classic.Node<
 {},
 { value: Classic.Socket },
-{ key: Classic.InputControl<"text"> }
+{}
 >
 implements Classic.Node
 

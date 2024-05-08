@@ -61,7 +61,7 @@ export class ModuleNode
       this.addOutput(key, new Classic.Output(socket, key));
     });
     this.height =
-      110 +
+      80 +
       25 * (Object.keys(this.inputs).length + Object.keys(this.outputs).length);
   }
 

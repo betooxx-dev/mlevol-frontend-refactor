@@ -1,5 +1,7 @@
-<p-button label="Create Editor graph" (onClick)="downloadEditor()"></p-button>
-<p-button label="Back to root" (onClick)="backToRoot()"></p-button>
-<input style="display: none" type="file" accept=".json" 
-       (change)="onFileLoad($event)" #fileinput>
-<p-button label="Load Editor graph" (onClick)="fileinput.click()"></p-button>
+<div style="width: 250px; overflow: hidden;">
+       <p-button label="Create Editor graph" (onClick)="downloadEditor()"></p-button>
+       <p-button label="Back to root" (onClick)="backToRoot()"></p-button>
+       <input style="display: none" type="file" accept=".json" 
+              (change)="onFileLoad($event)" #fileinput>
+       <p-button label="Load Editor graph" (onClick)="fileinput.click()"></p-button>
+</div>

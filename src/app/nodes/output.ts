@@ -5,7 +5,7 @@ export class OutputNode
   extends Classic.Node<
     { value: Classic.Socket },
     {},
-    { key: Classic.InputControl<"text"> }
+    {}
   >
   implements Classic.Node {
   width = 180;
@@ -31,7 +31,7 @@ export class OutputNode
   constructor(initial?: string) {
     super("Output");
 
-    this.addInput("value", new Classic.Input(socket, "out"));
+    this.addInput("value", new Classic.Input(socket, this.info.inputs.key.value));
   }
 
   data() {
@@ -42,5 +42,6 @@ export class OutputNode
     return OutputNode.nodeName;
   }
   update() {
+    this.inputs.value!.label = this.info.inputs.key.value;
   }
 }

@@ -1,5 +1,5 @@
 import { ClassicPreset as Classic } from "rete";
-import { socket } from "../sockets/sockets";
+import { DataFrameSocket, socket } from "../sockets/sockets";
 
 export class SelectNode extends Classic.Node<
 { origin_table: Classic.Socket },
@@ -19,6 +19,10 @@ export class SelectNode extends Classic.Node<
               type: "string",
               value: "select nothing"
           },
+          key: {
+              type: "string",
+              value: "",
+          },
           columns: {
               type: "string",
               value: "",
@@ -29,8 +33,8 @@ export class SelectNode extends Classic.Node<
     constructor() {
       super('Select');
   
-      this.addInput('origin_table', new Classic.Input(socket, ''));
-      this.addOutput('resulting_table', new Classic.Output(socket, ''));
+      this.addInput('origin_table', new Classic.Input(new DataFrameSocket(), ''));
+      this.addOutput('resulting_table', new Classic.Output(new DataFrameSocket(), ''));
     }
 
     data() {

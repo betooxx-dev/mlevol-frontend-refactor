@@ -1,5 +1,5 @@
 import { ClassicPreset as Classic } from "rete";
-import { socket } from "../sockets/sockets";
+import { DataFrameSocket, socket } from "../sockets/sockets";
 
 export class LoadDatasetNode extends Classic.Node<
 { },
@@ -30,7 +30,7 @@ export class LoadDatasetNode extends Classic.Node<
     
     constructor() {
       super('Load Dataset');
-      this.addOutput('resulting_table', new Classic.Output(socket, ''));
+      this.addOutput('resulting_table', new Classic.Output(new DataFrameSocket(), ''));
     }
 
     data() {

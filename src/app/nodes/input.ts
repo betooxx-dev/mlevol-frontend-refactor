@@ -1,5 +1,5 @@
 import { ClassicPreset as Classic } from "rete";
-import { socket } from "../sockets/sockets";
+import { AnySocket, socket } from "../sockets/sockets";
 import { MyNode } from "../CustomNode";
 export class InputNode   extends Classic.Node<
 {},
@@ -33,7 +33,7 @@ implements Classic.Node
   constructor(initial?: string) {
     super("Input");
     
-    this.addOutput("value", new Classic.Output(socket, this.info.inputs.key.value));
+    this.addOutput("value", new Classic.Output(new AnySocket(), this.info.inputs.key.value));
   }
 
   data() {

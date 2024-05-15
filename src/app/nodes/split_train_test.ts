@@ -1,5 +1,5 @@
 import { ClassicPreset as Classic } from "rete";
-import { socket } from "../sockets/sockets";
+import { DataFrameSocket, socket } from "../sockets/sockets";
 
 export class SplitTrainTestNode extends Classic.Node<
 {   source: Classic.Socket,
@@ -29,13 +29,13 @@ export class SplitTrainTestNode extends Classic.Node<
     constructor() {
         super('Split train test');
   
-        this.addInput('source', new Classic.Input(socket, 'X'));
-        this.addInput('tags', new Classic.Input(socket, 'Y'));
+        this.addInput('source', new Classic.Input(new DataFrameSocket(), 'X'));
+        this.addInput('tags', new Classic.Input(new DataFrameSocket(), 'Y'));
 
-        this.addOutput('source_train', new Classic.Output(socket, 'X_train'));
-        this.addOutput('source_test', new Classic.Output(socket, 'X_test'));
-        this.addOutput('tags_train', new Classic.Output(socket, 'Y_train'));
-        this.addOutput('tags_test', new Classic.Output(socket, 'Y_test'));
+        this.addOutput('source_train', new Classic.Output(new DataFrameSocket(), 'X_train'));
+        this.addOutput('source_test', new Classic.Output(new DataFrameSocket(), 'X_test'));
+        this.addOutput('tags_train', new Classic.Output(new DataFrameSocket(), 'Y_train'));
+        this.addOutput('tags_test', new Classic.Output(new DataFrameSocket(), 'Y_test'));
     }
 
     data() {

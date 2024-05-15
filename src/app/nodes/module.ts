@@ -1,5 +1,5 @@
 import { ClassicPreset as Classic, NodeEditor } from "rete";
-import { socket } from "../sockets/sockets";
+import { AnySocket, socket } from "../sockets/sockets";
 
 export class ModuleNode
   extends Classic.Node<
@@ -9,7 +9,7 @@ export class ModuleNode
   implements Classic.Node {
   width = 180;
   height = 140;
-  color: string = "rgba(255, 99, 132, 0.5)";
+  color: string = "rgba(255, 99, 132, 0.75)";
   public static nodeName: string = "Module";
   info = {
     info: {
@@ -22,15 +22,7 @@ export class ModuleNode
       },
       color :{
         type: "color",
-        value: "rgba(255, 99, 132, 0.5)",
-        options: [
-          { key : "rgba(255, 99, 132, 0.5)"},
-          { key : "rgba(54, 162, 235, 0.5)"},
-          { key : "rgba(255, 206, 86, 0.5)"},
-          { key : "rgba(75, 192, 192, 0.5)"},
-          { key : "rgba(153, 102, 255, 0.5)"},
-          { key : "rgba(255, 159, 64, 0.5)"},
-        ]
+        value: "rgba(255, 99, 132, 0.75)",
       }
     },
   };
@@ -55,10 +47,10 @@ export class ModuleNode
     );
 
     inputs.forEach((key) => {
-      this.addInput(key, new Classic.Input(socket, key));
+      this.addInput(key, new Classic.Input(new AnySocket(), key));
     });
     outputs.forEach((key) => {
-      this.addOutput(key, new Classic.Output(socket, key));
+      this.addOutput(key, new Classic.Output(new AnySocket(), key));
     });
     this.height =
       80 +

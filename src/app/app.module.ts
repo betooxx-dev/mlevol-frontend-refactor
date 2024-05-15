@@ -20,11 +20,12 @@ import { GraphLayersComponent } from './graph-layers/graph-layers.component';
 import { GraphSettingsComponent } from './graph-settings/graph-settings.component';
 
 import { ReteModule } from 'rete-angular-plugin/17';
+
 import { CustomNodeComponent } from './custom-node/custom-node.component';
+import { ModelNodeComponent } from './custom-node/model-node.component';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import { CustomSocketComponent } from './custom-socket/custom-socket.component';
 import { CustomConnectionComponent } from './custom-connection/custom-connection.component';
 
 import { DialogModule } from 'primeng/dialog';
@@ -34,8 +35,11 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 
-
 import { GraphPropertiesComponent } from './graph-properties/graph-properties.component';
+
+// Sockets
+import { CustomSocketComponent, ModelSocketComponent } from './custom-socket';
+import { DataFrameSocketComponent } from './custom-socket';
 
 @NgModule({
   declarations: [
@@ -50,7 +54,10 @@ import { GraphPropertiesComponent } from './graph-properties/graph-properties.co
     GraphSettingsComponent,
     FeatureButtonComponent,
     CustomNodeComponent,
+    ModelNodeComponent,
     CustomSocketComponent,
+    DataFrameSocketComponent,
+    ModelSocketComponent,
     CustomConnectionComponent,
     DialogComponent,
     GraphPropertiesComponent,

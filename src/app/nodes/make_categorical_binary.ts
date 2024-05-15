@@ -1,5 +1,5 @@
 import { ClassicPreset as Classic } from "rete";
-import { socket } from "../sockets/sockets";
+import { DataFrameSocket, socket } from "../sockets/sockets";
 
 export class MakeCategoricalBinaryNode extends Classic.Node {
     width = 190;
@@ -25,8 +25,8 @@ export class MakeCategoricalBinaryNode extends Classic.Node {
     constructor() {
       super('Make Categorical Binary');
   
-      this.addInput('input_dataset', new Classic.Input(socket, 'dataset'));
-      this.addOutput('output_dataset', new Classic.Output(socket, 'binarized'));
+      this.addInput('input_dataset', new Classic.Input(new DataFrameSocket(), 'dataset'));
+      this.addOutput('output_dataset', new Classic.Output(new DataFrameSocket(), 'binarized'));
     }
 
     data() {

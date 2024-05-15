@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 import { ClassicPreset } from "rete";
 
 @Component({
-  selector: "connection",
+  selector: "custom-connection",
   template: `
     <svg data-testid="connection">
       <path [attr.d]="path" />

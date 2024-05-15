@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { GraphEditorService } from '../graph-editor.service';
 import { Node } from '../editor';
 import { ModuleNode } from '../nodes';
+import {InputOptions} from "../dropbox.options";
 @Component({
   selector: 'app-graph-properties',
   templateUrl: './graph-properties.component.html',
@@ -20,8 +21,9 @@ export class GraphPropertiesComponent implements OnInit {
   colors: [] | any;
   subscription: Subscription | undefined;
   moduleNodeName = ModuleNode.nodeName;
-
-  constructor(private data : GraphEditorService){
+  options = InputOptions;
+  constructor(private data : GraphEditorService,
+  ){
   }
 
   ngOnInit(): void {
@@ -65,7 +67,7 @@ export class GraphPropertiesComponent implements OnInit {
   updateValue(key: string, value: any) {
     if (typeof value != "string")
     {
-      this. allNode!.info.inputs[key].value = value.value.key;
+      this. allNode!.info.inputs[key].value = value.value;
     }else{
       this.allNode!.info.inputs[key].value = value;
     }

@@ -7,7 +7,8 @@ import {
 } from "@angular/core";
 
 @Component({
-  template: ``,
+  selector: "app-custom-socket",
+  template: `<div></div>`,
   styleUrls: ["./custom-socket.component.css"]
 })
 export class CustomSocketComponent implements OnChanges {

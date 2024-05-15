@@ -31,7 +31,7 @@
                 <p>
                     {{key}}
                 </p>
-                    <p-dropdown [options]="allNode?.info.inputs[key].options" optionLabel="color" (onChange)="updateValue(key, $event)">
+                    <p-dropdown [options]="options['color']" optionLabel="color" (onChange)="updateValue(key, $event)">
                         <ng-template pTemplate="selectedItem">
                             <div class="flex align-items-center gap-2" *ngIf="allNode?.info.inputs[key].value">
                                 <div style="width: 40px; height: 20px; border-radius: 5px;" [ngStyle]="{background: allNode?.info.inputs[key].value}"></div>
@@ -39,7 +39,25 @@
                         </ng-template>
                         <ng-template let-option pTemplate="item">
                             <div class="flex align-items-center gap-2">
-                                <div style="width: 40px; height: 20px; border-radius: 5px;" [ngStyle]="{background: option.key}"></div>
+                                <div style="width: 40px; height: 20px; border-radius: 5px;" [ngStyle]="{background: option}"></div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+            </div>
+
+            <div *ngIf="allNode?.info.inputs[key]['type'] == 'option'" style="margin: 10px;">
+                <p>
+                    {{key}}
+                </p>
+                    <p-dropdown [options]="options[allNode?.info.inputs[key].optionId]" optionLabel="color" (onChange)="updateValue(key, $event)">
+                        <ng-template pTemplate="selectedItem">
+                            <div class="flex align-items-center gap-2" *ngIf="allNode?.info.inputs[key].value">
+                                {{allNode?.info.inputs[key].value}}
+                            </div>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                {{option}}
                             </div>
                         </ng-template>
                     </p-dropdown>

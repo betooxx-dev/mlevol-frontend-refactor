@@ -1,5 +1,5 @@
 import { ClassicPreset as Classic } from "rete";
-import { socket } from "../sockets/sockets";
+import { DataFrameSocket, ModelSocket, socket } from "../sockets/sockets";
 
 export class TrainModelNode extends Classic.Node<
 { labels: Classic.Socket,
@@ -34,9 +34,9 @@ export class TrainModelNode extends Classic.Node<
     constructor() {
       super('Train model');
   
-      this.addInput('labels', new Classic.Input(socket, 'labels'));
-      this.addInput('truth', new Classic.Input(socket, 'truth'));
-      this.addOutput('model', new Classic.Output(socket, 'model'));
+      this.addInput('labels', new Classic.Input(new DataFrameSocket(), 'labels'));
+      this.addInput('truth', new Classic.Input(new DataFrameSocket(), 'truth'));
+      this.addOutput('model', new Classic.Output(new ModelSocket(), 'model'));
     }
 
     data() {

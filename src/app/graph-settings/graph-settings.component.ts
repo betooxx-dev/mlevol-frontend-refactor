@@ -23,6 +23,7 @@ export class GraphSettingsComponent {
   backToRoot(){
     let node = new ModuleNode("root");
     node.id = "root";
+    node.info.inputs.description.value = "General editor";
     this.data.changeEditor(node, true);
   }
 

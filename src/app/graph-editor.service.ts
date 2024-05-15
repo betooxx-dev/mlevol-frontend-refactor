@@ -1,7 +1,7 @@
 import { EvaluateModelNode, InputNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, TrainModelNode} from './nodes';
 // graph-editor.service.ts
 import { Injectable, OnChanges, input } from '@angular/core';
-import { Schemes, Connection, Node} from './editor';
+import { Schemes, Connection, Node, getConnectionSockets} from './editor';
 
 import { ClassicPreset as Classic,  NodeEditor } from 'rete';
 import { Area, Area2D, AreaExtensions, AreaPlugin } from 'rete-area-plugin';
@@ -13,15 +13,16 @@ import {
 } from 'rete-angular-plugin/17';
 
 import {
+  ClassicFlow,
   ConnectionPlugin,
   Presets as ConnectionPresets,
+  getSourceTarget,
 } from 'rete-connection-plugin';
 
 import { ConnectionPathPlugin } from "rete-connection-path-plugin";
 
 import { MinimapExtra, MinimapPlugin } from "rete-minimap-plugin";
 import { CustomNodeComponent } from './custom-node/custom-node.component';
-import { CustomSocketComponent } from './custom-socket/custom-socket.component';
 import { CustomConnectionComponent } from './custom-connection/custom-connection.component';
 import { BehaviorSubject, connect } from 'rxjs';
 import { JoinNode } from './nodes/join';
@@ -33,6 +34,9 @@ import { ReplaceNullNode } from './nodes/replace_Null';
 import { AutoArrangePlugin, Presets as ArrangePresets } from "rete-auto-arrange-plugin";
 import { saveAs } from 'file-saver';
 import { addCustomBackground } from './custom-background/background';
+import { DataFrameSocket, ModelSocket } from './sockets/sockets';
+import { DataFrameSocketComponent, ModelSocketComponent, CustomSocketComponent} from './custom-socket';
+import { ModelNodeComponent } from './custom-node/model-node.component';
 
 
 type AreaExtra = Area2D<Schemes> | AngularArea2D<Schemes>  | MinimapExtra;
@@ -91,15 +95,64 @@ export class GraphEditorService {
     const pathPlugin = new ConnectionPathPlugin<Schemes, Area2D<Schemes>>();
     this.arrange = new AutoArrangePlugin<Schemes>();
 
-   this.arrange.addPreset(ArrangePresets.classic.setup());
+    this.arrange.addPreset(ArrangePresets.classic.setup());
 
     angularRender.use(pathPlugin)
     
     this.editor.use(this.area);
     
+    this.area.use(angularRender);
+
     this.area.use(this.minimap);
     
-    this.area.use(angularRender);
+    const editor = this.editor;
+    connection.addPreset(
+      () =>
+        new ClassicFlow({
+          canMakeConnection(from, to) {
+            // this function checks if the old connection should be removed
+            const [source, target] = getSourceTarget(from, to) || [null, null];
+  
+            if (!source || !target || from === to) return false;
+  
+            const sockets = getConnectionSockets(
+              editor,
+              new Connection(
+                editor.getNode(source.nodeId),
+                source.key as never,
+                editor.getNode(target.nodeId),
+                target.key as never
+              )
+            );
+            console.log(sockets);
+  
+            if (!sockets.source.isCompatibleWith(sockets.target)) {
+              connection.drop();
+              return false;
+            }
+  
+            return Boolean(source && target);
+          },
+          makeConnection(from, to, context) {
+            const [source, target] = getSourceTarget(from, to) || [null, null];
+            const { editor } = context;
+
+            if (source && target) {
+              editor.addConnection(
+                new Connection(
+                  editor.getNode(source.nodeId),
+                  source.key as never,
+                  editor.getNode(target.nodeId),
+                  target.key as never
+                )
+              );
+              return true;
+            }
+
+            return false; // Add this line
+          },
+        })
+    );
     
     this.area.use(connection);
     
@@ -114,10 +167,16 @@ export class GraphEditorService {
     angularRender.addPreset(AngularPresets.classic.setup(
       {
         customize: {
-          node() {
+          node(data) {
+            if (data.payload instanceof ModuleNode) return ModelNodeComponent;
             return CustomNodeComponent;
           },
-          socket() {
+          socket(data) {
+            
+            if (data.payload instanceof DataFrameSocket) return DataFrameSocketComponent;
+            
+            if (data.payload instanceof ModelSocket) return ModelSocketComponent;
+            
             return CustomSocketComponent;
           },
           connection() {
@@ -127,8 +186,6 @@ export class GraphEditorService {
       }
     ));
 
-    connection.addPreset(ConnectionPresets.classic.setup(
-    ));
 
     angularRender.addPreset(AngularPresets.minimap.setup({ size: 200 }));
     
@@ -436,8 +493,6 @@ export class GraphEditorService {
         let outputs = this.modules[node.id].outputs;
         let inputStrings = [];
         let outputStrings = [];
-        console.log("Inputs", inputs);
-        console.log("Outputs", outputs);
         for (let input of inputs) {
           inputStrings.push(input.data.inputs.key.value);
         }
@@ -461,8 +516,6 @@ export class GraphEditorService {
     catch (e) {
       console.log("Error", e);
     }
-
-    console.log("Current editor", this.editor);
 
     await this.arrangeNodes();
   }

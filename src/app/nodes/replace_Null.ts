@@ -1,5 +1,5 @@
 import { ClassicPreset as Classic } from "rete";
-import { socket } from "../sockets/sockets";
+import { DataFrameSocket, socket } from "../sockets/sockets";
 
 export class ReplaceNullNode extends Classic.Node<
 { origin_table: Classic.Socket },
@@ -24,8 +24,8 @@ export class ReplaceNullNode extends Classic.Node<
     constructor() {
       super('Replace Null');
   
-      this.addInput('origin_table', new Classic.Input(socket, ''));
-      this.addOutput('resulting_table', new Classic.Output(socket, ''));
+      this.addInput('origin_table', new Classic.Input(new DataFrameSocket(), ''));
+      this.addOutput('resulting_table', new Classic.Output(new DataFrameSocket(), ''));
     }
 
     data() {

@@ -1,5 +1,5 @@
 import { ClassicPreset as Classic } from "rete";
-import { socket } from "../sockets/sockets";
+import { DataFrameSocket, socket } from "../sockets/sockets";
 
 export class JoinNode extends Classic.Node<
 { left_table: Classic.Socket,
@@ -21,7 +21,8 @@ export class JoinNode extends Classic.Node<
           value: "Join description",
         },
         type :{
-          type: "string",
+          type: "option",
+          optionId: "join_type",
           value: "inner",
         },
       },
@@ -30,9 +31,9 @@ export class JoinNode extends Classic.Node<
     constructor() {
       super('Join');
   
-      this.addInput('left_table', new Classic.Input(socket, 'left'));
-      this.addInput('right_table', new Classic.Input(socket, 'right'));
-      this.addOutput('resulting_table', new Classic.Output(socket, ''));
+      this.addInput('left_table', new Classic.Input(new DataFrameSocket(), 'left'));
+      this.addInput('right_table', new Classic.Input(new DataFrameSocket(), 'right'));
+      this.addOutput('resulting_table', new Classic.Output(new DataFrameSocket(), 'resulting'));
     }
 
     data() {

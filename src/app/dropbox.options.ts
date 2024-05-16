@@ -17,5 +17,29 @@ export const InputOptions: { [key: string]: string[] } = {
         "rgba(75, 192, 192, 0.75)",
         "rgba(153, 102, 255, 0.75)",
         "rgba(255, 159, 64, 0.75)",
-    ]
+    ],
+    "dataset_source":
+    [
+        "local disk",
+        "url",
+    ],
+    "model_source":
+    [
+        "local disk",
+        "url",
+    ],
+    "decompose_type":
+    [
+        "PCA",
+        "ICA",
+        "LDA",
+        "t-SNE",
+    ],
+    "scale_type":
+    [
+        "Standard",
+        "MinMax",
+        "MaxAbs",
+        "Robust",
+    ],
 }

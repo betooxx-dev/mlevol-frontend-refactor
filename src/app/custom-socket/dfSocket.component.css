@@ -1,16 +1,8 @@
-div{
-	display: inline-block;
-	cursor: pointer;
-	border: 1px solid darkolivegreen;
-	width: 20px;
-	height: 20px;
-	vertical-align: middle;
-	border-radius: 50%;
-	background: palegreen;
-	z-index: 2;
-	box-sizing: border-box;
+@import './custom-socket.component.css';
 
-    transition: all .5s ease;
+div{
+	border: 1px solid darkolivegreen;
+	background: palegreen;
 }
   
 div:hover{

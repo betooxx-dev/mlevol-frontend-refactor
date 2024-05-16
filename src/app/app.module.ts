@@ -38,7 +38,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { GraphPropertiesComponent } from './graph-properties/graph-properties.component';
 
 // Sockets
-import { CustomSocketComponent, ModelSocketComponent } from './custom-socket';
+import { CustomSocketComponent, ModelSocketComponent, ResultSocketComponent} from './custom-socket';
 import { DataFrameSocketComponent } from './custom-socket';
 
 @NgModule({
@@ -58,6 +58,7 @@ import { DataFrameSocketComponent } from './custom-socket';
     CustomSocketComponent,
     DataFrameSocketComponent,
     ModelSocketComponent,
+    ResultSocketComponent,
     CustomConnectionComponent,
     DialogComponent,
     GraphPropertiesComponent,

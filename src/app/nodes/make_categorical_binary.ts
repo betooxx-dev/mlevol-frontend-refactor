@@ -1,7 +1,12 @@
 import { ClassicPreset as Classic } from "rete";
-import { DataFrameSocket, socket } from "../sockets/sockets";
+import { DataFrameSocket } from "../sockets";
 
-export class MakeCategoricalBinaryNode extends Classic.Node {
+export class MakeCategoricalBinaryNode extends Classic.Node<
+  { input_dataset:  DataFrameSocket},
+  { output_dataset: DataFrameSocket},
+  {}
+  >
+  {
     width = 190;
     height = 150;
     color = "rgba(132, 132, 0, 0.5)";
@@ -13,7 +18,7 @@ export class MakeCategoricalBinaryNode extends Classic.Node {
       inputs : {
         description: {
           type: "string",
-          value: "select nothing"
+          value: "change nothing"
         },
         columns: {
             type: "string",

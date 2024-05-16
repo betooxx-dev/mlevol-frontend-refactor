@@ -1,13 +1,13 @@
 import { ClassicPreset as Classic } from "rete";
-import { DataFrameSocket, socket } from "../sockets/sockets";
+import { DataFrameSocket } from "../sockets";
 
 export class SplitTrainTestNode extends Classic.Node<
-{   source: Classic.Socket,
-    tags : Classic.Socket },
-{   source_train : Classic.Socket,
-    source_test : Classic.Socket,
-    tags_train : Classic.Socket,
-    tags_test : Classic.Socket},
+{   source: DataFrameSocket,
+    tags : DataFrameSocket },
+{   source_train : DataFrameSocket,
+    source_test : DataFrameSocket,
+    tags_train : DataFrameSocket,
+    tags_test : DataFrameSocket},
 {}
 > implements Classic.Node{
     width = 190;

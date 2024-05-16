@@ -1,18 +1,10 @@
+@import './custom-socket.component.css';
+
 div{
-    display: inline-block;
-    cursor: pointer;
     border: 1px solid darkgoldenrod;
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
     background: palegoldenrod;
-    z-index: 2;
-    box-sizing: border-box;
-    border-radius: 50%;
-    transition: all .5s ease;
-  }
-  
-  div:hover{
-    border: yellow;
-  
-  }
+}  
+
+div:hover{
+  border: yellow;
+}

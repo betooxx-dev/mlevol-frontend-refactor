@@ -1,9 +1,9 @@
 import { ClassicPreset as Classic } from "rete";
-import { AnySocket, socket } from "../sockets/sockets";
+import { AnySocket } from "../sockets";
 
 export class OutputNode
   extends Classic.Node<
-    { value: Classic.Socket },
+    { value: AnySocket},
     {},
     {}
   >

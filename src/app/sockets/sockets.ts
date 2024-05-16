@@ -1,6 +1,14 @@
 import { ClassicPreset } from "rete";
 
-export const socket = new ClassicPreset.Socket("socket");
+export class ResultSocket extends ClassicPreset.Socket {
+	constructor() {
+		super("Result");
+	}
+
+	isCompatibleWith(socket: ClassicPreset.Socket) {
+		return (socket instanceof ResultSocket) || (socket instanceof AnySocket);
+	}
+}
 
 export class DataFrameSocket extends ClassicPreset.Socket {
 	constructor() {

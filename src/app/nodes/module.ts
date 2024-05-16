@@ -1,5 +1,5 @@
 import { ClassicPreset as Classic, NodeEditor } from "rete";
-import { AnySocket, socket } from "../sockets/sockets";
+import { AnySocket } from "../sockets";
 
 export class ModuleNode
   extends Classic.Node<

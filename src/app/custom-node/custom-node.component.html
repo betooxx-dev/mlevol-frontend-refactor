@@ -2,7 +2,11 @@
 <div class="node-title" data-testid="title" [ngStyle]="{'background':data.color}">{{data.label}} </div>
 
 <div class="node-descrpition" *ngIf="data.info.inputs['description']!= undefined;">
-{{data.info.inputs['description'].value}}</div>
+  {{data.info.inputs['description'].value}}
+</div>
+<div class="node-descrpition" *ngFor="let input of inputs_to_show;">
+  {{input}}
+</div>
 
 <div class="output" *ngFor="let output of data.outputs | keyvalue: sortByIndex"
 [attr.data-testid]="'output-'+output.key">

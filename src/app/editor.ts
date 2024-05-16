@@ -1,12 +1,14 @@
 import { ClassicPreset as Classic, ClassicPreset, GetSchemes, NodeEditor } from "rete";
-import { EvaluateModelNode, InputNode, JoinNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, ReplaceNaNNode, ReplaceNullNode, SelectNode, SplitTrainTestNode, TrainModelNode } from "./nodes";
+import { DecomposeNode, EvaluateModelNode, FeatureUnionNode, InputNode, JoinNode, LoadDatasetNode, LoadModelNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, ReplaceNaNNode, ReplaceNullNode, ScaleDataNode, SelectNode, SplitTrainTestNode, TrainModelNode } from "./nodes";
 import { CurveFactory } from "d3-shape";
 import { DataFrameSocket, ModelSocket } from "./sockets/sockets";
 
 
 export type Node = InputNode | OutputNode | ModuleNode
                  | SplitTrainTestNode | ReplaceNaNNode | ReplaceNullNode | SelectNode
-                 | JoinNode | EvaluateModelNode | MakeCategoricalBinaryNode | TrainModelNode;
+                 | JoinNode | EvaluateModelNode | MakeCategoricalBinaryNode | TrainModelNode
+                 | LoadModelNode | LoadDatasetNode | ScaleDataNode | DecomposeNode
+                 | FeatureUnionNode;
 
 
 type Sockets = DataFrameSocket | ModelSocket;

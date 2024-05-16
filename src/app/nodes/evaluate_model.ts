@@ -1,11 +1,11 @@
 import { ClassicPreset as Classic } from "rete";
-import { DataFrameSocket, ModelSocket, socket } from "../sockets/sockets";
+import { DataFrameSocket, ModelSocket, ResultSocket } from "../sockets";
 
 export class EvaluateModelNode extends Classic.Node<
-{ model: Classic.Socket,
-  label: Classic.Socket,
-  truth: Classic.Socket },
-{ },
+{ model: ModelSocket,
+  label: DataFrameSocket,
+  truth: DataFrameSocket },
+{ results: ResultSocket},
 {}
 > implements Classic.Node{
     width = 190;
@@ -32,6 +32,8 @@ export class EvaluateModelNode extends Classic.Node<
       this.addInput('label', new Classic.Input(new DataFrameSocket(), 'label'));
 
       this.addInput('truth', new Classic.Input(new DataFrameSocket(), 'truth'));
+
+      this.addOutput('results', new Classic.Input(new ResultSocket(), 'truth'));
     }
 
     data() {

@@ -1,4 +1,4 @@
-import { EvaluateModelNode, InputNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, TrainModelNode} from './nodes';
+import { DecomposeNode, EvaluateModelNode, FeatureUnionNode, InputNode, LoadModelNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, ScaleDataNode, TrainModelNode} from './nodes';
 // graph-editor.service.ts
 import { Injectable, OnChanges, input } from '@angular/core';
 import { Schemes, Connection, Node, getConnectionSockets} from './editor';
@@ -34,8 +34,8 @@ import { ReplaceNullNode } from './nodes/replace_Null';
 import { AutoArrangePlugin, Presets as ArrangePresets } from "rete-auto-arrange-plugin";
 import { saveAs } from 'file-saver';
 import { addCustomBackground } from './custom-background/background';
-import { DataFrameSocket, ModelSocket } from './sockets/sockets';
-import { DataFrameSocketComponent, ModelSocketComponent, CustomSocketComponent} from './custom-socket';
+import { DataFrameSocket, ModelSocket, ResultSocket } from './sockets/sockets';
+import { DataFrameSocketComponent, ModelSocketComponent, CustomSocketComponent, ResultSocketComponent} from './custom-socket';
 import { ModelNodeComponent } from './custom-node/model-node.component';
 
 
@@ -176,6 +176,8 @@ export class GraphEditorService {
             if (data.payload instanceof DataFrameSocket) return DataFrameSocketComponent;
             
             if (data.payload instanceof ModelSocket) return ModelSocketComponent;
+
+            if (data.payload instanceof ResultSocket) return ResultSocketComponent;
             
             return CustomSocketComponent;
           },
@@ -246,6 +248,10 @@ export class GraphEditorService {
     else if (nodeName === MakeCategoricalBinaryNode.nodeName) node = new MakeCategoricalBinaryNode();
     else if (nodeName === TrainModelNode.nodeName) node = new TrainModelNode();
     else if (nodeName === EvaluateModelNode.nodeName) node = new EvaluateModelNode();
+    else if (nodeName === LoadModelNode.nodeName) node = new LoadModelNode();
+    else if (nodeName === ScaleDataNode.nodeName) node = new ScaleDataNode();
+    else if (nodeName === DecomposeNode.nodeName) node = new DecomposeNode();
+    else if (nodeName === FeatureUnionNode.nodeName) node = new FeatureUnionNode();
     else if (nodeName === ModuleNode.nodeName) {
       node = new ModuleNode("Module");
       this.modules[node.id] = {
@@ -280,13 +286,23 @@ export class GraphEditorService {
 
   async getAvailableNodes() : Promise<Map<string, string[]>> {
     return new Map<string, string[]>([
+      ['Data preprocessing',
+        [ ScaleDataNode.nodeName, MakeCategoricalBinaryNode.nodeName,
+          ReplaceNaNNode.nodeName, ReplaceNullNode.nodeName]
+      ],
+      [
+        'Feature engineering',
+        [DecomposeNode.nodeName, FeatureUnionNode.nodeName]
+      ],
+      [ 'Data transformation',
+        [JoinNode.nodeName, SelectNode.nodeName, SplitTrainTestNode.nodeName]
+      ],
       ['Data adquisition', 
-        [ LoadDatasetNode.nodeName, JoinNode.nodeName, SelectNode.nodeName, 
-          ReplaceNaNNode.nodeName, ReplaceNullNode.nodeName, MakeCategoricalBinaryNode.nodeName]
+        [ LoadDatasetNode.nodeName]
       ],
       [
         'Model training',
-        [SplitTrainTestNode.nodeName, TrainModelNode.nodeName]
+        [TrainModelNode.nodeName, LoadModelNode.nodeName]
       ],
       [
         'Evaluation',
@@ -506,15 +522,15 @@ export class GraphEditorService {
       }
     }
 
-    try{
-      for (let connection of this.modules[this.currentModule].connections) {
+    for (let connection of this.modules[this.currentModule].connections) {
+        try{
         let sourceNode = await this.editor.getNode(connection.source);
         let targetNode = await this.editor.getNode(connection.target);
         await this.editor.addConnection(new Connection(sourceNode, connection.sourceOutput as never, targetNode, connection.targetInput as never));
       }
-    }
-    catch (e) {
-      console.log("Error", e);
+      catch (e) {
+        console.log("Error", e);
+      }
     }
 
     await this.arrangeNodes();

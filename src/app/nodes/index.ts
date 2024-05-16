@@ -10,3 +10,7 @@ export { SplitTrainTestNode } from "./split_train_test";
 export { TrainModelNode } from "./train_model";
 export { EvaluateModelNode } from "./evaluate_model";
 export { MakeCategoricalBinaryNode } from "./make_categorical_binary";
+export { LoadModelNode } from "./load_model";
+export { ScaleDataNode} from './scale_data';
+export { DecomposeNode } from './decompose';
+export { FeatureUnionNode} from './feature_union';

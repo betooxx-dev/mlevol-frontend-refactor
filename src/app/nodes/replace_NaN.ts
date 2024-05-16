@@ -1,9 +1,9 @@
 import { ClassicPreset as Classic } from "rete";
-import { DataFrameSocket, socket } from "../sockets/sockets";
+import { DataFrameSocket } from "../sockets";
 
 export class ReplaceNaNNode extends Classic.Node<
-{ origin_table: Classic.Socket },
-{ resulting_table: Classic.Socket},
+{ origin_table: DataFrameSocket },
+{ resulting_table: DataFrameSocket},
 {}
 > implements Classic.Node{
     width = 190;

@@ -1,7 +1,7 @@
 import { ClassicPreset as Classic } from "rete";
 import { DataFrameSocket } from "../sockets";
 
-export class JoinNode extends Classic.Node<
+export class FeatureUnionNode extends Classic.Node<
 { left_table: DataFrameSocket,
     right_table: DataFrameSocket },
 { resulting_table: DataFrameSocket},
@@ -10,15 +10,15 @@ export class JoinNode extends Classic.Node<
     width = 190;
     height = 140;
     color = "rgba(132, 132, 0, 0.5)";
-    public static nodeName: string = "Join";
+    public static nodeName: string = "Feature Union";
     info = {
       info: {
-          title: 'Joins two tables',
+          title: 'Joins two features',
       },
       inputs: {
         description :{
           type: "string",
-          value: "Join description",
+          value: "Feature Union description",
         },
         type :{
           type: "option",
@@ -30,18 +30,18 @@ export class JoinNode extends Classic.Node<
     };
   
     constructor() {
-      super('Join');
+      super(FeatureUnionNode.nodeName);
   
-      this.addInput('left_table', new Classic.Input(new DataFrameSocket(), 'left'));
-      this.addInput('right_table', new Classic.Input(new DataFrameSocket(), 'right'));
-      this.addOutput('resulting_table', new Classic.Output(new DataFrameSocket(), 'resulting'));
+      this.addInput('left_table', new Classic.Input(new DataFrameSocket(), ''));
+      this.addInput('right_table', new Classic.Input(new DataFrameSocket(), ''));
+      this.addOutput('resulting_table', new Classic.Output(new DataFrameSocket(), ''));
     }
 
     data() {
       return this.info;
     }
     getNodeName() {
-      return JoinNode.nodeName;
+      return FeatureUnionNode.nodeName;
     }
     update() {
     }

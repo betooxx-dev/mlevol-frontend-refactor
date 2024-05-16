@@ -2,18 +2,18 @@ import { ClassicPreset as Classic } from "rete";
 import { DataFrameSocket } from "../sockets";
 import { InputOptions } from "../dropbox.options";
 
-export class LoadDatasetNode extends Classic.Node<
+export class StoreDatasetNode extends Classic.Node<
+{ origin_table: DataFrameSocket},
 { },
-{ resulting_table: DataFrameSocket},
 {}
 > implements Classic.Node{
     width = 190;
     height = 120;
     color = "rgba(132, 132, 0, 0.5)";
-    public static nodeName: string = "Load dataset";
+    public static nodeName: string = "Store dataset";
     info = {
       info: {
-          title: 'Load dataset from disc',
+          title: 'Store dataset to disc',
       },
       inputs: {
         description :{
@@ -28,13 +28,14 @@ export class LoadDatasetNode extends Classic.Node<
         path : {
           type: "string",
           value: "Dataset path",
+          show: true,
         },
       },
     };
 
     
     constructor() {
-      super('Load Dataset');
+      super('Store Dataset');
       this.addOutput('resulting_table', new Classic.Output(new DataFrameSocket(), ''));
     }
 
@@ -43,7 +44,7 @@ export class LoadDatasetNode extends Classic.Node<
     }
 
     getNodeName() {
-      return LoadDatasetNode.nodeName;
+      return StoreDatasetNode.nodeName;
     }
     update() {
     }

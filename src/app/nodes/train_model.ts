@@ -1,10 +1,10 @@
 import { ClassicPreset as Classic } from "rete";
-import { DataFrameSocket, ModelSocket, socket } from "../sockets/sockets";
+import { DataFrameSocket, ModelSocket } from "../sockets";
 
 export class TrainModelNode extends Classic.Node<
-{ labels: Classic.Socket,
-  truth: Classic.Socket },
-{ model: Classic.Socket},
+{ labels: DataFrameSocket,
+  truth: DataFrameSocket },
+{ model: ModelSocket },
 {}
 > implements Classic.Node{
     width = 190;

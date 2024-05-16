@@ -54,9 +54,8 @@ export class GraphPropertiesComponent implements OnInit {
     }
 
     if (event.key === 'v' && event.ctrlKey && this.copyNode) {
-      let a =  this.copyNode;
-      let b = a.constructor;
       this.data.addNode(this.copyNode.getNodeName(), undefined, JSON.parse(JSON.stringify(this.copyNode.data())));
+      this.copyNode = undefined;
     }
 
     if (event.key === 'Escape') {

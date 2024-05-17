@@ -1,12 +1,9 @@
 import { ClassicPreset as Classic } from "rete";
 import { AnySocket } from "../sockets";
+import { getSocket } from "../utils";
 
 export class OutputNode
-  extends Classic.Node<
-    { value: AnySocket},
-    {},
-    {}
-  >
+  extends Classic.Node
   implements Classic.Node {
   width = 180;
   height = 140;
@@ -19,19 +16,29 @@ export class OutputNode
     inputs: {
       description: {
         type: "string",
-        value: "Input description",
+        value: "",
       },
       key: {
         type: "string",
         value: "key",
       },
+      type: {
+        type: "option",
+        value: "Any",
+        optionId: "socket_type",
+      }
     },
   };
+
+  
+  pre_type:string;
 
   constructor(initial?: string) {
     super("Output");
 
-    this.addInput("value", new Classic.Input(new AnySocket(), this.info.inputs.key.value));
+    this.addInput("value", new Classic.Input(getSocket(this.info.inputs.type.value), this.info.inputs.key.value));
+    this.pre_type = this.info.inputs.type.value;
+
   }
 
   data() {
@@ -42,6 +49,12 @@ export class OutputNode
     return OutputNode.nodeName;
   }
   update() {
-    this.inputs.value!.label = this.info.inputs.key.value;
+    this.inputs["value"]!.label = this.info.inputs.key.value;
+    if (this.pre_type != this.info.inputs.type.value)
+    {
+      this.removeInput("value");
+      this.addInput("value", new Classic.Input(getSocket(this.info.inputs.type.value), this.info.inputs.key.value));
+      this.pre_type = this.info.inputs.type.value;
+    }
   }
 }

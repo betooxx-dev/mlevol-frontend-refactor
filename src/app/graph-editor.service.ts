@@ -1,4 +1,4 @@
-import { DecomposeNode, EvaluateModelNode, FeatureUnionNode, InputNode, LoadModelNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, ScaleDataNode, TrainModelNode} from './nodes';
+import { InputNode, ModuleNode, OutputNode} from './nodes';
 // graph-editor.service.ts
 import { Injectable, OnChanges, input } from '@angular/core';
 import { Schemes, Connection, Node, getConnectionSockets} from './editor';
@@ -25,18 +25,13 @@ import { MinimapExtra, MinimapPlugin } from "rete-minimap-plugin";
 import { CustomNodeComponent } from './custom-node/custom-node.component';
 import { CustomConnectionComponent } from './custom-connection/custom-connection.component';
 import { BehaviorSubject, connect } from 'rxjs';
-import { JoinNode } from './nodes/join';
-import { LoadDatasetNode } from './nodes/load_dataset';
-import { SelectNode } from './nodes/select';
-import { ReplaceNaNNode } from './nodes/replace_NaN';
-import { SplitTrainTestNode } from './nodes/split_train_test';
-import { ReplaceNullNode } from './nodes/replace_Null';
 import { AutoArrangePlugin, Presets as ArrangePresets } from "rete-auto-arrange-plugin";
 import { saveAs } from 'file-saver';
 import { addCustomBackground } from './custom-background/background';
 import { DataFrameSocket, ModelSocket, ResultSocket } from './sockets/sockets';
 import { DataFrameSocketComponent, ModelSocketComponent, CustomSocketComponent, ResultSocketComponent} from './custom-socket';
 import { ModelNodeComponent } from './custom-node/model-node.component';
+import { getAvailableNodes, getNewNode } from './utils';
 
 
 type AreaExtra = Area2D<Schemes> | AngularArea2D<Schemes>  | MinimapExtra;
@@ -235,25 +230,12 @@ export class GraphEditorService {
     if(!this.editor) return;
     if(!this.area) return;
 
-    let node: Node | undefined = undefined;
-
-    if (nodeName === InputNode.nodeName)   node = new InputNode();
-    else if (nodeName === OutputNode.nodeName)  node = new OutputNode();
-    else if (nodeName === JoinNode.nodeName)    node = new JoinNode();
-    else if (nodeName === LoadDatasetNode.nodeName) node = new LoadDatasetNode();
-    else if (nodeName === SelectNode.nodeName)  node = new SelectNode();
-    else if (nodeName === ReplaceNaNNode.nodeName) node = new ReplaceNaNNode();
-    else if (nodeName === SplitTrainTestNode.nodeName) node = new SplitTrainTestNode();
-    else if (nodeName === ReplaceNullNode.nodeName) node = new ReplaceNullNode();
-    else if (nodeName === MakeCategoricalBinaryNode.nodeName) node = new MakeCategoricalBinaryNode();
-    else if (nodeName === TrainModelNode.nodeName) node = new TrainModelNode();
-    else if (nodeName === EvaluateModelNode.nodeName) node = new EvaluateModelNode();
-    else if (nodeName === LoadModelNode.nodeName) node = new LoadModelNode();
-    else if (nodeName === ScaleDataNode.nodeName) node = new ScaleDataNode();
-    else if (nodeName === DecomposeNode.nodeName) node = new DecomposeNode();
-    else if (nodeName === FeatureUnionNode.nodeName) node = new FeatureUnionNode();
-    else if (nodeName === ModuleNode.nodeName) {
-      node = new ModuleNode("Module");
+    let node = getNewNode(nodeName);
+    if (!node) {
+      console.log("Node not found");
+      return;
+    }
+    if (nodeName === ModuleNode.nodeName) {
       this.modules[node.id] = {
           'nodes' : [],
           'connections' : [],
@@ -261,21 +243,16 @@ export class GraphEditorService {
           'outputs' : [],
       };
     }
-    else {
-      console.log("Node not found");
-      return;
-    }
-
-    if (!node) return;
 
     if (nodeId) {
       node.id = nodeId;
     }
-
-    if (nodeData) {
-      node.info = nodeData;
-    }
     
+    if (nodeData) {
+      node.info = nodeData; // FIXME: This should not work this way
+    }
+
+
     node.update();
 
     await this.editor.addNode(node);
@@ -284,34 +261,8 @@ export class GraphEditorService {
     await this.area.nodeViews.get(node.id)?.translate(centerOfScreen.x, centerOfScreen.y);
   }
 
-  async getAvailableNodes() : Promise<Map<string, string[]>> {
-    return new Map<string, string[]>([
-      ['Data preprocessing',
-        [ ScaleDataNode.nodeName, MakeCategoricalBinaryNode.nodeName,
-          ReplaceNaNNode.nodeName, ReplaceNullNode.nodeName]
-      ],
-      [
-        'Feature engineering',
-        [DecomposeNode.nodeName, FeatureUnionNode.nodeName]
-      ],
-      [ 'Data transformation',
-        [JoinNode.nodeName, SelectNode.nodeName, SplitTrainTestNode.nodeName]
-      ],
-      ['Data adquisition', 
-        [ LoadDatasetNode.nodeName]
-      ],
-      [
-        'Model training',
-        [TrainModelNode.nodeName, LoadModelNode.nodeName]
-      ],
-      [
-        'Evaluation',
-        [EvaluateModelNode.nodeName]
-      ],
-      [ 'Modules',
-        [InputNode.nodeName, OutputNode.nodeName, ModuleNode.nodeName]
-      ]
-    ]);
+  getAvailableNodes() {
+    return getAvailableNodes();
   }
 
   getNode(id : string) : Node {
@@ -507,13 +458,13 @@ export class GraphEditorService {
       if (node.nodeName === ModuleNode.nodeName) {
         let inputs = this.modules[node.id].inputs;
         let outputs = this.modules[node.id].outputs;
-        let inputStrings = [];
-        let outputStrings = [];
+        let inputStrings: [string, string][] = [];
+        let outputStrings: [string, string][] = [];
         for (let input of inputs) {
-          inputStrings.push(input.data.inputs.key.value);
+          inputStrings.push([input.data.inputs.key.value, input.data.inputs.type.value]);
         }
         for (let output of outputs) {
-          outputStrings.push(output.data.inputs.key.value);
+          outputStrings.push([output.data.inputs.key.value, output.data.inputs.type.value]);
         }
         
         let nodeModule = await this.editor.getNode(node.id) as ModuleNode;

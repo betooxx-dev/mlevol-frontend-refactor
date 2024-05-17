@@ -75,13 +75,10 @@ export class DialogComponent {
   visible: boolean = false;
   showTip: boolean = true;
   constructor(private graphEditorService: GraphEditorService) {
-    this.graphEditorService.getAvailableNodes().then((nodes)=>{
-      this.availableNodes = nodes;
-      for(const value of nodes.keys()){
-        this.availableCategories.push(value);
-      }
-    })
-    
+    this.availableNodes = this.graphEditorService.getAvailableNodes();
+    for(const value of this.availableNodes.keys()){
+      this.availableCategories.push(value);
+    }
   }
 
   activeIndexChange(index: number | number[]) {

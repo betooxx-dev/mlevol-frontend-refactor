@@ -26,6 +26,10 @@ export class JoinNode extends Classic.Node<
           value: "inner",
           show: true,
         },
+        index :  {
+          type: "string",
+          value: "",
+        },
       },
     };
   

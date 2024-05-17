@@ -41,6 +41,9 @@ import { GraphPropertiesComponent } from './graph-properties/graph-properties.co
 import { CustomSocketComponent, ModelSocketComponent, ResultSocketComponent} from './custom-socket';
 import { DataFrameSocketComponent } from './custom-socket';
 
+import { CascadeSelectModule } from 'primeng/cascadeselect';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,6 +78,7 @@ import { DataFrameSocketComponent } from './custom-socket';
     FloatLabelModule,
     FormsModule,
     DropdownModule,
+    CascadeSelectModule,
   ],
   providers: [
     provideAnimationsAsync()

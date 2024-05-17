@@ -1,4 +1,40 @@
-
+ 
+export const MultipleOptions: {[key:string] : any[]| undefined}  = {
+    "model_type":
+    [
+        {
+            type : "Linear Models",
+            models: [
+                {name:"Linear Regression"},
+                {name:"Logistic Regression"},
+                {name:"Ridge Regression"},
+                {name:"Lasso Regression"},
+                {name:"Elastic Net"},
+            ],
+        },
+        {
+            type: "Tree Models",
+            models: [
+                {name:"Decision Tree"},
+                {name:"Random Forest"},
+                {name:"Gradient Boosting"},
+                {name:"AdaBoost"},
+            ],
+        },
+        {
+            type: "Support Vector Machines",
+            models: [
+                {name:"SVM"},
+            ],   
+        },
+        {
+            type : "Stochastic Gradient Descent",
+            models: [
+                {name:"SGD"},
+            ],
+        }
+    ],
+}
 export const InputOptions: { [key: string]: string[] } = {
     "join_type": 
     [
@@ -41,5 +77,11 @@ export const InputOptions: { [key: string]: string[] } = {
         "MinMax",
         "MaxAbs",
         "Robust",
+    ],
+    "socket_type":
+    [
+        "DataFrame",
+        "Any",
+        "Model",
     ],
 }

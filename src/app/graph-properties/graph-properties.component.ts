@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { GraphEditorService } from '../graph-editor.service';
 import { Node } from '../editor';
 import { ModuleNode } from '../nodes';
-import {InputOptions} from "../dropbox.options";
+import {InputOptions, MultipleOptions} from "../dropbox.options";
 @Component({
   selector: 'app-graph-properties',
   templateUrl: './graph-properties.component.html',
@@ -22,6 +22,7 @@ export class GraphPropertiesComponent implements OnInit {
   subscription: Subscription | undefined;
   moduleNodeName = ModuleNode.nodeName;
   options = InputOptions;
+  options_of_options = MultipleOptions;
   constructor(private data : GraphEditorService,
   ){
   }

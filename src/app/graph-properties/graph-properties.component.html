@@ -62,8 +62,21 @@
                         </ng-template>
                     </p-dropdown>
             </div>
-            
-            
+
+            <div *ngIf="allNode?.info.inputs[key]['type'] == 'option_of_options'" style="margin: 10px;">
+                <p>
+                    {{key}}
+                </p>
+                <p-cascadeSelect 
+                    [options]="options_of_options[allNode?.info.inputs[key].optionId]"
+                    optionGroupLabel="type"
+                    optionGroupChildren="models"
+                    optionLabel="name"
+                    (onChange)="updateValue(key, $event)">
+                    <ng-template pTemplate="item" let-option>
+                            <span>{{ option.type || option.name }}</span>
+                    </ng-template>
+                </p-cascadeSelect>
         </div>
 
         <div *ngIf="allNode?.getNodeName() == moduleNodeName;" style="margin: 10px;">

@@ -1,5 +1,6 @@
 import { ClassicPreset as Classic, NodeEditor } from "rete";
 import { AnySocket } from "../sockets";
+import { getSocket } from "../utils";
 
 export class ModuleNode
   extends Classic.Node<
@@ -38,7 +39,8 @@ export class ModuleNode
     this.color = this.info.inputs.color.value;
   }
 
-  syncPorts(inputs: string[], outputs: string[]) {
+  syncPorts(inputs: [string, string][], outputs: [string, string][]) {
+    console.log("syncPorts", inputs, outputs);
     Object.keys(this.inputs).forEach((key: keyof typeof this.inputs) =>
       this.removeInput(key)
     );
@@ -47,10 +49,10 @@ export class ModuleNode
     );
 
     inputs.forEach((key) => {
-      this.addInput(key, new Classic.Input(new AnySocket(), key));
+      this.addInput(key[0], new Classic.Input(getSocket(key[1]), key[0]));
     });
     outputs.forEach((key) => {
-      this.addOutput(key, new Classic.Output(new AnySocket(), key));
+      this.addOutput(key[0], new Classic.Output(getSocket(key[1]), key[0]));
     });
     this.height =
       80 +

@@ -30,8 +30,8 @@ export class MakeCategoricalBinaryNode extends Classic.Node<
     constructor() {
       super('Make Categorical Binary');
   
-      this.addInput('input_dataset', new Classic.Input(new DataFrameSocket(), 'dataset'));
-      this.addOutput('output_dataset', new Classic.Output(new DataFrameSocket(), 'binarized'));
+      this.addInput('input_dataset', new Classic.Input(new DataFrameSocket(), ''));
+      this.addOutput('output_dataset', new Classic.Output(new DataFrameSocket(), ''));
     }
 
     data() {

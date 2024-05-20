@@ -7,7 +7,7 @@ export class ReplaceNullNode extends Classic.Node<
 {}
 > implements Classic.Node{
     width = 190;
-    height = 90;
+    height = 110;
     color = "rgba(132, 132, 0, 0.5)";
     public static nodeName: string = "Replace Null";
     info = {

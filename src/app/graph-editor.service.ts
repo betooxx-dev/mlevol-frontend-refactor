@@ -28,7 +28,7 @@ import { BehaviorSubject, connect } from 'rxjs';
 import { AutoArrangePlugin, Presets as ArrangePresets } from "rete-auto-arrange-plugin";
 import { saveAs } from 'file-saver';
 import { addCustomBackground } from './custom-background/background';
-import { DataFrameSocket, ModelSocket, ResultSocket } from './sockets/sockets';
+import { DataFrameSocket, ModelSocket, ObjectSocket, ResultSocket } from './sockets/sockets';
 import { DataFrameSocketComponent, ModelSocketComponent, CustomSocketComponent, ResultSocketComponent} from './custom-socket';
 import { ModelNodeComponent } from './custom-node/model-node.component';
 import { getAvailableNodes, getNewNode } from './utils';
@@ -177,6 +177,8 @@ export class GraphEditorService {
             if (data.payload instanceof ModelSocket) return ModelSocketComponent;
 
             if (data.payload instanceof ResultSocket) return ResultSocketComponent;
+
+            if (data.payload instanceof ObjectSocket) return CustomSocketComponent;
             
             return CustomSocketComponent;
           },
@@ -440,8 +442,6 @@ export class GraphEditorService {
         inputs: inputs,
         outputs: outputs,
       };
-  
-      console.log("Stored module: ", this.modules[this.currentModule]);
       
       for (let node of this.editor.getNodes()) {
         await this.editor.removeNode(node.id);
@@ -455,9 +455,6 @@ export class GraphEditorService {
     }
 
     this.currentModule = targetModule.id;
-
-    console.log("Module to load", this.modules[this.currentModule]);
-
 
     for (let node of this.modules[this.currentModule].nodes) {
       await this.addNode(node.nodeName, node.id, node.data);

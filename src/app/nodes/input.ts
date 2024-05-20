@@ -5,8 +5,8 @@ export class InputNode   extends Classic.Node
 implements Classic.Node
 
 {
-  width = 180;
-  height = 140;
+  width = 190;
+  height = 110;
   value: any = null;
   color: string = "rgb(0, 192, 255)";
   public static nodeName: string = "Input";

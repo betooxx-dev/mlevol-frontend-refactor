@@ -41,8 +41,7 @@ import { GraphPropertiesComponent } from './graph-properties/graph-properties.co
 import { CustomSocketComponent, ModelSocketComponent, ResultSocketComponent} from './custom-socket';
 import { DataFrameSocketComponent } from './custom-socket';
 
-import { TreeSelectModule } from 'primeng/treeselect';
-
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -78,7 +77,7 @@ import { TreeSelectModule } from 'primeng/treeselect';
     FloatLabelModule,
     FormsModule,
     DropdownModule,
-    TreeSelectModule,
+    InputTextModule,
   ],
   providers: [
     provideAnimationsAsync()

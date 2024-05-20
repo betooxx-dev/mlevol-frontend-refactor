@@ -7,7 +7,7 @@ export class ReplaceNaNNode extends Classic.Node<
 {}
 > implements Classic.Node{
     width = 190;
-    height = 90;
+    height = 110;
     color = "rgba(132, 132, 0, 0.5)";
     public static nodeName: string = "Replace Nan";
     info = {
@@ -18,6 +18,7 @@ export class ReplaceNaNNode extends Classic.Node<
           value: {
               type: "string",
               value: "0",
+              show: true,
           },
       },
     };

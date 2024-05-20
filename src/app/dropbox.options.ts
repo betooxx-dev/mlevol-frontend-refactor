@@ -84,8 +84,10 @@ export const InputOptions: { [key: string]: string[] } = {
     ],
     "socket_type":
     [
-        "DataFrame",
         "Any",
+        "DataFrame",
         "Model",
+        "Result",
+        "Object",
     ],
 }

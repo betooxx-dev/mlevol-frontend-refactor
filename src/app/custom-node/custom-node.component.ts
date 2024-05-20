@@ -12,7 +12,8 @@ export class CustomNodeComponent implements OnChanges{
   @Input() rendered!: () => void;
   
   seed : number = 0;
-  inputs_to_show : string[] = [];
+  inputs_to_show : {[key:string]:string[]} = {};
+  inputs_keys : string[] = [];
   @HostBinding("class.selected") get selected() {
     return this.data.selected;
 
@@ -27,12 +28,13 @@ export class CustomNodeComponent implements OnChanges{
   ngOnChanges(): void {
 
     const inputs = this.data.info.inputs;
-    this.inputs_to_show = [];
+    this.inputs_to_show = {};
     for (const key in inputs) {
       if (inputs[key].show) {
-        this.inputs_to_show.push(inputs[key].value);
+        this.inputs_to_show[key] =  inputs[key].value;
       }
     }
+    this.inputs_keys = Object.keys(this.inputs_to_show);
 
     this.cdr.detectChanges();
     requestAnimationFrame(() => this.rendered());

@@ -40,3 +40,13 @@ export class AnySocket extends ClassicPreset.Socket {
 	}
 }
   
+
+export class ObjectSocket extends ClassicPreset.Socket {
+	constructor() {
+		super("Object");
+	}
+
+	isCompatibleWith(socket: ClassicPreset.Socket) {
+		return (socket instanceof ObjectSocket) || (socket instanceof AnySocket);
+	}
+}

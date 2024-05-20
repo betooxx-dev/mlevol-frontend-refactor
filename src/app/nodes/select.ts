@@ -7,7 +7,7 @@ export class SelectNode extends Classic.Node<
 {}
 > implements Classic.Node{
     width = 190;
-    height = 100;
+    height = 120;
     color = "rgba(132, 132, 0, 0.5)";
     public static nodeName: string = "Select";
     info = {
@@ -18,10 +18,6 @@ export class SelectNode extends Classic.Node<
           description: {
               type: "string",
               value: "select nothing"
-          },
-          key: {
-              type: "string",
-              value: "",
           },
           columns: {
               type: "string",

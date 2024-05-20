@@ -16,7 +16,8 @@ import { ScaleDataNode } from "./nodes"
 import { DecomposeNode } from "./nodes"
 import { FeatureUnionNode } from "./nodes"
 import { ModuleNode } from "./nodes"
-import { AnySocket, DataFrameSocket, ModelSocket } from "./sockets"
+import { AnySocket, DataFrameSocket, ModelSocket, ResultSocket } from "./sockets"
+import { ObjectSocket } from "./sockets/sockets"
 
 
 export function getNewNode(nodeName: string) : Node | undefined {
@@ -70,14 +71,18 @@ export function getAvailableNodes() : Map<string, string[]> {
     ]);
 }
 
-export function getSocket(sockeName : string) : ClassicPreset.Socket {
+export function getSocket(socketName : string) : ClassicPreset.Socket {
     let socket : ClassicPreset.Socket;
-    if (sockeName === "DataFrame") {
+    if (socketName === "DataFrame") {
         socket = new DataFrameSocket();
-    } else if (sockeName === "Any") {
+    } else if (socketName === "Any") {
         socket = new AnySocket();
-    } else if (sockeName === "Model") {
+    } else if (socketName === "Model") {
         socket = new ModelSocket();
+    } else if (socketName === "Result") {
+        socket = new ResultSocket();
+    } else if (socketName === "Object") {
+        socket = new ObjectSocket();
     }
     else {
         socket = new ClassicPreset.Socket("");

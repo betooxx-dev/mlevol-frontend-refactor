@@ -20,13 +20,6 @@ export class GraphSettingsComponent {
     this.data.generateJsonOfEditor();
   }
 
-  backToRoot(){
-    let node = new ModuleNode("root");
-    node.id = "root";
-    node.info.inputs.description.value = "General editor";
-    this.data.changeEditor(node, true);
-  }
-
   onFileLoad(event : any) {
     const f = event.target.files[0];
     const reader = new FileReader();

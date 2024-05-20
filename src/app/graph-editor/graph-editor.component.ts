@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, Injector, ViewChild } from '@angular/core'
 import { GraphEditorService } from '../graph-editor.service';
 import { Subscription } from 'rxjs';
+import { ModuleNode } from '../nodes';
 
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean; }) => {
   // Recommended
@@ -61,6 +62,14 @@ export class GraphEditorComponent {
   async arrangeNodes() {
     await this.graphEditorService.arrangeNodes();
   }
+
+  backToRoot(){
+    let node = new ModuleNode("root");
+    node.id = "root";
+    node.info.inputs.description.value = "General Editor";
+    this.graphEditorService.changeEditor(node, true);
+  }
+
 }
 
 @Component({

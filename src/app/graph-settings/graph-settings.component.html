@@ -2,9 +2,6 @@
        <button (click)="downloadEditor()">
               Create Editor graph
        </button>
-       <button (click)="backToRoot()">
-              Back to root
-       </button>
        <input style="display: none" type="file" accept=".json" 
               (change)="onFileLoad($event)" #fileinput>
        <button (click)="fileinput.click()">

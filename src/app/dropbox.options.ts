@@ -1,36 +1,40 @@
- 
+ import { TreeNode } from "primeng/api"
 export const MultipleOptions: {[key:string] : any[]| undefined}  = {
     "model_type":
     [
         {
-            type : "Linear Models",
-            models: [
-                {name:"Linear Regression"},
-                {name:"Logistic Regression"},
-                {name:"Ridge Regression"},
-                {name:"Lasso Regression"},
-                {name:"Elastic Net"},
+            label : "Linear Models",
+            value: "Linear Models",
+            items: [
+                {label:"Linear Regression", value:"Linear Regression"},
+                {label:"Logistic Regression", value:"Logistic Regression"},
+                {label:"Ridge Regression", value:"Ridge Regression"},
+                {label:"Lasso Regression", value:"Lasso Regression"},
+                {label:"Elastic Net", value:"Elastic Net"},
             ],
         },
         {
-            type: "Tree Models",
-            models: [
-                {name:"Decision Tree"},
-                {name:"Random Forest"},
-                {name:"Gradient Boosting"},
-                {name:"AdaBoost"},
+            label : "Tree Models",
+            value: "Tree Models",
+            items: [
+                {label:"Decision Tree", value:"Decision Tree"},
+                {label:"Random Forest", value:"Random Forest"},
+                {label:"Gradient Boosting", value:"Gradient Boosting"},
+                {label:"AdaBoost", value:"AdaBoost"},
             ],
         },
         {
-            type: "Support Vector Machines",
-            models: [
-                {name:"SVM"},
-            ],   
+            label : "Support Vector Machines",
+            value: "Support Vector Machines",
+            items: [
+                {label:"SVM", value:"SVM"},
+            ],
         },
         {
-            type : "Stochastic Gradient Descent",
-            models: [
-                {name:"SGD"},
+            label : "Stochastic Gradient Descent",
+            value: "Stochastic Gradient Descent",
+            items: [
+                {label:"SGD", value:"SGD"},
             ],
         }
     ],

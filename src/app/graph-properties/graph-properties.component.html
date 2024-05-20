@@ -67,21 +67,24 @@
                 <p>
                     {{key}}
                 </p>
-                <p-cascadeSelect 
-                    [options]="options_of_options[allNode?.info.inputs[key].optionId]"
-                    optionGroupLabel="type"
-                    optionGroupChildren="models"
-                    optionLabel="name"
+                <p-dropdown 
+                    [options]="options_of_options[allNode?.info.inputs[key]['optionId']]"
+                    [group]="true"
+                    optionGroupLabel="category"
+                    optionLabel="label"
+                    [filter]="true"
                     (onChange)="updateValue(key, $event)">
-                    <ng-template pTemplate="item" let-option>
-                            <span>{{ option.type || option.name }}</span>
+                    <ng-template let-group pTemplate="group">
+                        <div class="flex align-items-center">
+                            <span>{{ group.label }}</span>
+                        </div>
                     </ng-template>
-                </p-cascadeSelect>
+                </p-dropdown>
         </div>
 
-        <div *ngIf="allNode?.getNodeName() == moduleNodeName;" style="margin: 10px;">
-            <p-button label="Edit module" (click)="changeEditor()"></p-button>
-        </div>
+    </div>
+    <div *ngIf="allNode?.getNodeName() == moduleNodeName;" style="margin: 10px;">
+        <p-button label="Edit module" (click)="changeEditor()"></p-button>
     </div>
     <div style="margin: 10px; display: flex; justify-content: center;">
         <p-button label="Delete" (click)="deleteNode()">

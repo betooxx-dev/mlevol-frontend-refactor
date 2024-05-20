@@ -1,9 +1,16 @@
 <div class="rete" #rete></div>
 
-
 <div class="node-in">
-    {{moduleImIn}}
+    <div >
+        {{moduleImIn}}
+    </div>
+    
+    <!--div  -->
+    <button (click)="backToRoot()" *ngIf="moduleImIn != 'General Editor'">
+        <i class="pi pi-caret-up"></i>
+    </button>
 </div>
+
 <ul class="config-buttons">
     <li>
         <button pTooltip="Auto home" (click)="homeZoom()">

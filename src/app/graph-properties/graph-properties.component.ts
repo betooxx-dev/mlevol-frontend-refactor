@@ -35,6 +35,10 @@ export class GraphPropertiesComponent implements OnInit {
       this.selectedNode = this.allNode.label;
       this.nodeInfo = this.allNode.info;
       this.nodeInputKeys = this.nodeInfo.inputs ? Object.keys(this.nodeInfo.inputs) : [];
+      for (let key of this.nodeInputKeys){
+        if (this.nodeInfo.inputs[key].optionId)
+          console.log(this.options_of_options[this.nodeInfo.inputs[key].optionId]);
+      }
     });
   }
 

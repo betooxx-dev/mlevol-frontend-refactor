@@ -157,6 +157,10 @@ export class GraphEditorService {
 
     AreaExtensions.selectableNodes(this.area, this.selector, { accumulating: accumulateOnCtrl()});
 
+    AreaExtensions.restrictor(this.area, {
+      scaling: () => ({ min: 0.3, max: 3 }),
+    });
+
     addCustomBackground(this.area);
     
     angularRender.addPreset(AngularPresets.classic.setup(
@@ -259,6 +263,8 @@ export class GraphEditorService {
     
     let centerOfScreen = this.area.area.pointer;
     await this.area.nodeViews.get(node.id)?.translate(centerOfScreen.x, centerOfScreen.y);
+    await this.area.nodeViews.get(node.id)?.resize(node.width, node.height);
+
   }
 
   getAvailableNodes() {

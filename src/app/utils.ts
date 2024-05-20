@@ -1,21 +1,10 @@
 import { ClassicPreset } from "rete"
 import { Node } from "./editor"
-import { InputNode } from "./nodes"
-import { OutputNode } from "./nodes"
-import { JoinNode } from "./nodes"
-import { LoadDatasetNode } from "./nodes"
-import { SelectNode } from "./nodes"
-import { ReplaceNaNNode } from "./nodes"
-import { SplitTrainTestNode } from "./nodes"
-import { ReplaceNullNode } from "./nodes"
-import { MakeCategoricalBinaryNode } from "./nodes"
-import { TrainModelNode } from "./nodes"
-import { EvaluateModelNode } from "./nodes"
-import { LoadModelNode } from "./nodes"
-import { ScaleDataNode } from "./nodes"
-import { DecomposeNode } from "./nodes"
-import { FeatureUnionNode } from "./nodes"
-import { ModuleNode } from "./nodes"
+import { InputNode, ReuseScaleDataNode, OutputNode, JoinNode, 
+  LoadDatasetNode, SelectNode, ReplaceNaNNode, SplitTrainTestNode, 
+  ReplaceNullNode, MakeCategoricalBinaryNode, TrainModelNode, 
+  EvaluateModelNode, LoadModelNode, ScaleDataNode, DecomposeNode, 
+  FeatureUnionNode, ModuleNode } from "./nodes"
 import { AnySocket, DataFrameSocket, ModelSocket, ResultSocket } from "./sockets"
 import { ObjectSocket } from "./sockets/sockets"
 
@@ -37,14 +26,18 @@ export function getNewNode(nodeName: string) : Node | undefined {
     else if (nodeName === ScaleDataNode.nodeName) node = new ScaleDataNode();
     else if (nodeName === DecomposeNode.nodeName) node = new DecomposeNode();
     else if (nodeName === FeatureUnionNode.nodeName) node = new FeatureUnionNode();
+    else if (nodeName === ReuseScaleDataNode.nodeName) node = new ReuseScaleDataNode();
     else if (nodeName === ModuleNode.nodeName) node = new ModuleNode("Module");
     return node;
 }
 
 export function getAvailableNodes() : Map<string, string[]> {
     return new Map<string, string[]>([
+      ['Data adquisition', 
+        [ LoadDatasetNode.nodeName]
+      ],
       ['Data preprocessing',
-        [ ScaleDataNode.nodeName, MakeCategoricalBinaryNode.nodeName,
+        [ ScaleDataNode.nodeName, ReuseScaleDataNode.nodeName, MakeCategoricalBinaryNode.nodeName,
           ReplaceNaNNode.nodeName, ReplaceNullNode.nodeName]
       ],
       [
@@ -53,9 +46,6 @@ export function getAvailableNodes() : Map<string, string[]> {
       ],
       [ 'Data transformation',
         [JoinNode.nodeName, SelectNode.nodeName, SplitTrainTestNode.nodeName]
-      ],
-      ['Data adquisition', 
-        [ LoadDatasetNode.nodeName]
       ],
       [
         'Model training',

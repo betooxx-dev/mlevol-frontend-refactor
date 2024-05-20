@@ -1,6 +1,6 @@
 import { ClassicPreset as Classic } from "rete";
-import { DataFrameSocket } from "../sockets";
-import { InputOptions } from "../dropbox.options";
+import { DataFrameSocket } from "../../sockets";
+import { InputOptions } from "../../dropbox.options";
 
 export class LoadDatasetNode extends Classic.Node<
 { },

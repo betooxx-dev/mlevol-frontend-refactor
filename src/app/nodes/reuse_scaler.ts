@@ -2,10 +2,12 @@ import { ClassicPreset as Classic } from "rete";
 import { DataFrameSocket, ObjectSocket } from "../sockets";
 import { InputOptions } from "../dropbox.options";
 
-export class ScaleDataNode extends Classic.Node<
-  { input_dataset:  DataFrameSocket},
-  { output_dataset: DataFrameSocket,
+export class ReuseScaleDataNode extends Classic.Node<
+  { input_dataset:  DataFrameSocket,
     scaler: ObjectSocket
+  },
+  { output_dataset: DataFrameSocket,
+    
   },
   {}
   >
@@ -13,35 +15,25 @@ export class ScaleDataNode extends Classic.Node<
     width = 190;
     height = 150;
     color = "rgba(132, 132, 0, 0.5)";
-    public static nodeName: string = "Scale Columns";
+    public static nodeName: string = "ReScale Columns";
     info: any = {
       info : {
-          title: 'Scales data',
+          title: 'Scales data using a pre-trained scaler',
       },
       inputs : {
         description: {
           type: "string",
           value: "scale nothing"
         },
-        columns: {
-            type: "string",
-            value: "",
-        },
-        type: {
-          type: "option",
-          optionId: "scale_type",
-          value: InputOptions["scale_type"][0],
-          show: true,
-        }
       },
     };
 
     constructor() {
       super('Scale data');
   
-      this.addInput('input_dataset', new Classic.Input(new DataFrameSocket(), ''));
+      this.addInput('input_dataset', new Classic.Input(new DataFrameSocket(), 'data'));
       this.addOutput('output_dataset', new Classic.Output(new DataFrameSocket(), ''));
-      this.addOutput('scaler', new Classic.Output(new ObjectSocket(), 'ref'));
+      this.addInput('scaler', new Classic.Input(new ObjectSocket(), 'sclaer'));
     }
 
     data() {
@@ -49,7 +41,7 @@ export class ScaleDataNode extends Classic.Node<
     }
 
     getNodeName() {
-      return ScaleDataNode.nodeName;
+      return ReuseScaleDataNode.nodeName;
     }
 
     update() {

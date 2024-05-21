@@ -24,6 +24,10 @@ export class MakeCategoricalBinaryNode extends Classic.Node<
             type: "string",
             value: "",
         },
+        dataset_tag: {
+          type: "string",
+          value: "variable_name",
+        }
       },
     };
 

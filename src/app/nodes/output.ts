@@ -1,12 +1,11 @@
 import { ClassicPreset as Classic } from "rete";
-import { AnySocket } from "../sockets";
 import { getSocket } from "../utils";
 
 export class OutputNode
   extends Classic.Node
   implements Classic.Node {
-  width = 190;
-  height = 110;
+  width = 100;
+  height = 90;
   color : string = "rgb(0, 192, 255)";
   public static nodeName : string = "Output";
   info = {

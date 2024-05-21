@@ -30,6 +30,10 @@ export class LoadModelNode extends Classic.Node<
           value: "Model path",
           show: true,
         },
+        model_tag: {
+          type: "string",
+          value: "variable_name",
+        }
       },
     };
 

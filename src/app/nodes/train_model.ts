@@ -29,6 +29,10 @@ export class TrainModelNode extends Classic.Node<
           type: "string",
           value: "",
         },
+        model_tag: {
+          type: "string",
+          value: "variable_name",
+        }
       },
     };
   

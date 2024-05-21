@@ -20,6 +20,15 @@ export class ReplaceNaNNode extends Classic.Node<
               value: "0",
               show: true,
           },
+          columns: {
+              type: "string",
+              value: "",
+              show: true,
+          },
+          dataset_tag: {
+              type: "string",
+              value: "",
+          }
       },
     };
     constructor() {

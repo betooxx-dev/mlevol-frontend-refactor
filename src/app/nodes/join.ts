@@ -30,6 +30,10 @@ export class JoinNode extends Classic.Node<
           type: "string",
           value: "",
         },
+        dataset_tag: {
+          type: "string",
+          value: "",
+        }
       },
     };
   

@@ -90,4 +90,10 @@ export const InputOptions: { [key: string]: string[] } = {
         "Result",
         "Object",
     ],
+    "encoder_type":
+    [
+        "OneHotEncoder",
+        "LabelEncoder",
+        "OrdinalEncoder",
+    ],
 }

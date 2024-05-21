@@ -9,7 +9,7 @@ export class SelectNode extends Classic.Node<
     width = 190;
     height = 120;
     color = "rgba(132, 132, 0, 0.5)";
-    public static nodeName: string = "Select";
+    public static nodeName: string = "Select Columns";
     info = {
       info: {
           title: 'Select query',
@@ -27,7 +27,7 @@ export class SelectNode extends Classic.Node<
   };
 
     constructor() {
-      super('Select');
+      super(SelectNode.nodeName);
   
       this.addInput('origin_table', new Classic.Input(new DataFrameSocket(), ''));
       this.addOutput('resulting_table', new Classic.Output(new DataFrameSocket(), ''));

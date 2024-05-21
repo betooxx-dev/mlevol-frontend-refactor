@@ -2,10 +2,11 @@ import { ClassicPreset as Classic } from "rete";
 import { DataFrameSocket, ObjectSocket } from "../sockets";
 import { InputOptions } from "../dropbox.options";
 
-export class DecomposeNode extends Classic.Node<
-  { input_dataset:  DataFrameSocket},
+export class ReuseDecomposeNode extends Classic.Node<
+  { input_dataset:  DataFrameSocket,
+    decomposer: ObjectSocket
+  },
   { output_dataset: DataFrameSocket,
-    decomposer: ObjectSocket,
   },
   
   {}
@@ -14,7 +15,7 @@ export class DecomposeNode extends Classic.Node<
     width = 190;
     height = 150;
     color = "rgba(132, 132, 0, 0.5)";
-    public static nodeName: string = "Decompose";
+    public static nodeName: string = "Reuse Decompose";
     info: any = {
       info : {
           title: 'Extracts important features',
@@ -24,16 +25,6 @@ export class DecomposeNode extends Classic.Node<
           type: "string",
           value: "select nothing"
         },
-        number_features: {
-          type: "number",
-          value: 2,
-        },
-        type: {
-          type: "option",
-          optionId: "decompose_type",
-          value: InputOptions['decompose_type'][0],
-          show: true,
-        },
         dataset_tag: {
           type: "string",
           value: "variable_name",
@@ -42,11 +33,11 @@ export class DecomposeNode extends Classic.Node<
     };
 
     constructor() {
-      super(DecomposeNode.nodeName);
+      super(ReuseDecomposeNode.nodeName);
   
       this.addInput('input_dataset', new Classic.Input(new DataFrameSocket(), 'data'));
+      this.addInput('decomposer', new Classic.Input(new ObjectSocket(), 'decomposer'));
       this.addOutput('output_dataset', new Classic.Output(new DataFrameSocket(), ''));
-      this.addOutput('decomposer', new Classic.Output(new ObjectSocket(), 'decomposer'));
     }
 
     data() {
@@ -54,7 +45,7 @@ export class DecomposeNode extends Classic.Node<
     }
 
     getNodeName() {
-      return DecomposeNode.nodeName;
+      return ReuseDecomposeNode.nodeName;
     }
 
     update() {

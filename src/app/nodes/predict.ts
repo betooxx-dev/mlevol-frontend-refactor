@@ -31,7 +31,7 @@ export class PredictNode extends Classic.Node<
 
       this.addInput('features', new Classic.Input(new DataFrameSocket(), 'features'));
 
-      this.addOutput('results', new Classic.Input(new DataFrameSocket(), 'truth'));
+      this.addOutput('results', new Classic.Input(new DataFrameSocket(), 'results'));
     }
 
     data() {

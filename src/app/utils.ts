@@ -34,6 +34,7 @@ export function getNewNode(nodeName: string) : Node | undefined {
     else if (nodeName === ReuseScaleDataNode.nodeName) node = new ReuseScaleDataNode();
     else if (nodeName === EncoderNode.nodeName) node = new EncoderNode();
     else if (nodeName === ReuseEncoderNode.nodeName) node = new ReuseEncoderNode();
+    else if (nodeName === PredictNode.nodeName) node = new PredictNode();
     else if (nodeName === ModuleNode.nodeName) node = new ModuleNode("Module");
     return node;
 }

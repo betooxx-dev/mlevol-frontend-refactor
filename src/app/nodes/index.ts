@@ -19,3 +19,4 @@ export { ReuseScaleDataNode } from './reuse_scaler';
 export { EncoderNode } from './encoder';
 export { ReuseEncoderNode } from './reuse_encoder';
 export { DropColumnsNode } from './drop_columns';
+export { PredictNode } from './predict';

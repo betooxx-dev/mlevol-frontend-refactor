@@ -19,7 +19,8 @@ export class EvaluateModelNode extends Classic.Node<
       inputs: {
           description: {
               type: "string",
-              value: "Evaluation description"
+              value: "Evaluation description",
+              show: true,
           },
       },
   };

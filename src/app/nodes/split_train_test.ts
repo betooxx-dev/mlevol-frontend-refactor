@@ -2,14 +2,16 @@ import { ClassicPreset as Classic } from "rete";
 import { DataFrameSocket } from "../sockets";
 
 export class SplitTrainTestNode extends Classic.Node<
-{   data: DataFrameSocket,},
-{   
-    train : DataFrameSocket,
-    test : DataFrameSocket},
+{   features: DataFrameSocket,
+    truth: DataFrameSocket,},
+{   features_train : DataFrameSocket,
+    features_test : DataFrameSocket,
+    truth_train : DataFrameSocket,
+    truth_test : DataFrameSocket},
 {}
 > implements Classic.Node{
     width = 190;
-    height = 150;
+    height = 210;
     color = "rgba(132, 132, 0, 0.5)";
     public static nodeName: string = "Split train test";
     info = {
@@ -17,9 +19,9 @@ export class SplitTrainTestNode extends Classic.Node<
             title: 'Split Train Test',
         },
         inputs: {
-            percentage: {
+            train_percentage: {
                 type: "number",
-                value: 0.5,
+                value: 0.25,
             },
         },
     };
@@ -27,10 +29,15 @@ export class SplitTrainTestNode extends Classic.Node<
     constructor() {
         super('Split train test');
 
-        this.addInput('data', new Classic.Input(new DataFrameSocket(), 'data'));
+        this.addInput('features', new Classic.Input(new DataFrameSocket(), 'features'));
 
-        this.addOutput('train', new Classic.Output(new DataFrameSocket(), 'train'));
-        this.addOutput('test', new Classic.Output(new DataFrameSocket(), 'test'));
+        this.addInput('truth', new Classic.Input(new DataFrameSocket(), 'truth'));
+
+        this.addOutput('features_train', new Classic.Output(new DataFrameSocket(), 'features_train'));
+        this.addOutput('features_test', new Classic.Output(new DataFrameSocket(), 'features_test'));
+
+        this.addOutput('truth_train', new Classic.Output(new DataFrameSocket(), 'truth_train'));
+        this.addOutput('truth_test', new Classic.Output(new DataFrameSocket(), 'truth_test'));
     }
 
     data() {

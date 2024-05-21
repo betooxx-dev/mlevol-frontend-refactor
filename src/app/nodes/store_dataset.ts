@@ -19,6 +19,7 @@ export class StoreDatasetNode extends Classic.Node<
         description :{
           type: "string",
           value: "Dataset description",
+          show: true,
         },
         source: {
           type: "option",
@@ -36,7 +37,7 @@ export class StoreDatasetNode extends Classic.Node<
     
     constructor() {
       super('Store Dataset');
-      this.addOutput('resulting_table', new Classic.Output(new DataFrameSocket(), ''));
+      this.addInput('origin_table', new Classic.Input(new DataFrameSocket(), 'data'));
     }
 
     data() {

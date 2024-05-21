@@ -1,5 +1,5 @@
 import { ClassicPreset as Classic, ClassicPreset, GetSchemes, NodeEditor } from "rete";
-import { DecomposeNode, EvaluateModelNode, FeatureUnionNode, InputNode, JoinNode, LoadDatasetNode, LoadModelNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, ReplaceNaNNode, ReplaceNullNode, ScaleDataNode, SelectNode, SplitTrainTestNode, TrainModelNode } from "./nodes";
+import { DecomposeNode, DropColumnsNode, EncoderNode, EvaluateModelNode, FeatureUnionNode, InputNode, JoinNode, LoadDatasetNode, LoadModelNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, ReplaceNaNNode, ReplaceNullNode, ReuseEncoderNode, ScaleDataNode, SelectNode, SplitTrainTestNode, TrainModelNode } from "./nodes";
 import { CurveFactory } from "d3-shape";
 import { DataFrameSocket, ModelSocket } from "./sockets/sockets";
 
@@ -8,7 +8,7 @@ export type Node = InputNode | OutputNode | ModuleNode
                  | SplitTrainTestNode | ReplaceNaNNode | ReplaceNullNode | SelectNode
                  | JoinNode | EvaluateModelNode | MakeCategoricalBinaryNode | TrainModelNode
                  | LoadModelNode | LoadDatasetNode | ScaleDataNode | DecomposeNode
-                 | FeatureUnionNode;
+                 | FeatureUnionNode | EncoderNode | ReuseEncoderNode | DropColumnsNode;
 
 
 type Sockets = DataFrameSocket | ModelSocket;

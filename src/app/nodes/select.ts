@@ -17,7 +17,8 @@ export class SelectNode extends Classic.Node<
       inputs: {
           description: {
               type: "string",
-              value: "select nothing"
+              value: "select nothing",
+              show: true,
           },
           columns: {
               type: "string",

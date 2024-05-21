@@ -16,6 +16,7 @@ implements Classic.Node
       description: {
         type: "string",
         value: "",
+        show: true,
       },
       key: {
         type: "string",

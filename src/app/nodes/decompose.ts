@@ -12,7 +12,7 @@ export class DecomposeNode extends Classic.Node<
   >
   {
     width = 190;
-    height = 150;
+    height = 190;
     color = "rgba(132, 132, 0, 0.5)";
     public static nodeName: string = "Decompose";
     info: any = {
@@ -22,7 +22,8 @@ export class DecomposeNode extends Classic.Node<
       inputs : {
         description: {
           type: "string",
-          value: "select nothing"
+          value: "select nothing",
+          show: true,
         },
         number_features: {
           type: "number",

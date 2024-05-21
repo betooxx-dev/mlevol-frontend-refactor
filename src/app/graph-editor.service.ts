@@ -29,7 +29,7 @@ import { AutoArrangePlugin, Presets as ArrangePresets } from "rete-auto-arrange-
 import { saveAs } from 'file-saver';
 import { addCustomBackground } from './custom-background/background';
 import { DataFrameSocket, ModelSocket, ObjectSocket, ResultSocket } from './sockets/sockets';
-import { DataFrameSocketComponent, ModelSocketComponent, CustomSocketComponent, ResultSocketComponent} from './custom-socket';
+import { DataFrameSocketComponent, ModelSocketComponent, CustomSocketComponent, ResultSocketComponent, ObjectSocketComponent} from './custom-socket';
 import { ModelNodeComponent } from './custom-node/model-node.component';
 import { getAvailableNodes, getNewNode } from './utils';
 
@@ -178,7 +178,7 @@ export class GraphEditorService {
 
             if (data.payload instanceof ResultSocket) return ResultSocketComponent;
 
-            if (data.payload instanceof ObjectSocket) return CustomSocketComponent;
+            if (data.payload instanceof ObjectSocket) return ObjectSocketComponent;
             
             return CustomSocketComponent;
           },

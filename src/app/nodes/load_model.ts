@@ -19,6 +19,7 @@ export class LoadModelNode extends Classic.Node<
         description :{
           type: "string",
           value: "Model description",
+          show: true,
         },
         source: {
           type: "option",

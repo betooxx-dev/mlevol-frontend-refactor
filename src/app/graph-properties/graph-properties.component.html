@@ -17,7 +17,12 @@
                 <p>
                     {{key}}
                 </p>
-                <input pInputText  maxlength="55" id="{{key}}" type="text" [(ngModel)]="allNode?.info.inputs[key].value" (ngModelChange)="updateValue(key, $event)"/>
+                <div *ngIf="allNode?.info.inputs[key]['show']">
+                    <input pInputText maxlength="55" id="{{key}}" type="text" [(ngModel)]="allNode?.info.inputs[key].value" (ngModelChange)="updateValue(key, $event)"/>
+                </div>
+                <div *ngIf="!allNode?.info.inputs[key]['show']">
+                    <input pInputText  id="{{key}}" type="text" [(ngModel)]="allNode?.info.inputs[key].value" (ngModelChange)="updateValue(key, $event)"/>
+                </div>
             </div>
 
             <div *ngIf="allNode?.info.inputs[key]['type'] == 'number'" style="margin: 10px;">

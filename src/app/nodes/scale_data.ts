@@ -21,7 +21,8 @@ export class ScaleDataNode extends Classic.Node<
       inputs : {
         description: {
           type: "string",
-          value: "scale nothing"
+          value: "scale nothing",
+          show: true,
         },
         columns: {
             type: "string",

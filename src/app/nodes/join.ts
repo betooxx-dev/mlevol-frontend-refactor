@@ -19,6 +19,7 @@ export class JoinNode extends Classic.Node<
         description :{
           type: "string",
           value: "Join description",
+          show: true,
         },
         type :{
           type: "option",

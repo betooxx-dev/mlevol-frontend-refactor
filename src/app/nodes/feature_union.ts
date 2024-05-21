@@ -19,6 +19,7 @@ export class FeatureUnionNode extends Classic.Node<
         description :{
           type: "string",
           value: "Feature Union description",
+          show: true,
         },
         type :{
           type: "option",

@@ -18,7 +18,8 @@ export class MakeCategoricalBinaryNode extends Classic.Node<
       inputs : {
         description: {
           type: "string",
-          value: "change nothing"
+          value: "change nothing",
+          show: true,
         },
         columns: {
             type: "string",

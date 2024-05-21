@@ -19,6 +19,7 @@ export class TrainModelNode extends Classic.Node<
         description :{
           type: "string",
           value: "Train description",
+          show: true,
         },
         type :{
           type: "option_of_options",

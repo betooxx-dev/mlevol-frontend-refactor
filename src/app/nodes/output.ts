@@ -16,6 +16,7 @@ export class OutputNode
       description: {
         type: "string",
         value: "",
+        show: true,
       },
       key: {
         type: "string",

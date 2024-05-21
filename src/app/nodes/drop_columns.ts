@@ -17,7 +17,8 @@ export class DropColumnsNode extends Classic.Node<
       inputs: {
           description: {
               type: "string",
-              value: "drop nothing"
+              value: "drop nothing",
+              show: true,
           },
           columns: {
               type: "string",

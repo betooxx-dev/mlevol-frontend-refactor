@@ -23,7 +23,8 @@ export class ReuseDecomposeNode extends Classic.Node<
       inputs : {
         description: {
           type: "string",
-          value: "select nothing"
+          value: "select nothing",
+          show: true,
         },
         dataset_tag: {
           type: "string",

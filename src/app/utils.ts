@@ -9,6 +9,7 @@ import { InputNode, ReuseScaleDataNode, OutputNode, JoinNode,
 
 import { AnySocket, DataFrameSocket, ModelSocket, ResultSocket } from "./sockets"
 import { ObjectSocket } from "./sockets/sockets"
+import { PredictNode } from "./nodes/predict"
 
 
 export function getNewNode(nodeName: string) : Node | undefined {
@@ -59,7 +60,7 @@ export function getAvailableNodes() : Map<string, string[]> {
       ],
       [
         'Evaluation',
-        [EvaluateModelNode.nodeName]
+        [EvaluateModelNode.nodeName , PredictNode.nodeName]
       ],
       [ 'Modules',
         [InputNode.nodeName, OutputNode.nodeName, ModuleNode.nodeName]

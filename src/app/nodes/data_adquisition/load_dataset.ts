@@ -8,7 +8,7 @@ export class LoadDatasetNode extends Classic.Node<
 {}
 > implements Classic.Node{
     width = 190;
-    height = 90;
+    height = 120;
     color = "rgba(132, 132, 0, 0.5)";
     public static nodeName: string = "Load dataset";
     info = {
@@ -19,6 +19,7 @@ export class LoadDatasetNode extends Classic.Node<
         description :{
           type: "string",
           value: "Dataset description",
+          show: true,
         },
         source: {
           type: "option",

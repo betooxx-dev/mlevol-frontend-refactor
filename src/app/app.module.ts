@@ -42,6 +42,7 @@ import { CustomSocketComponent, ModelSocketComponent, ResultSocketComponent} fro
 import { DataFrameSocketComponent } from './custom-socket';
 
 import { InputTextModule } from 'primeng/inputtext';
+import { FocusHandlerComponent } from './focus-handler/focus-handler.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { InputTextModule } from 'primeng/inputtext';
     CustomConnectionComponent,
     DialogComponent,
     GraphPropertiesComponent,
+    FocusHandlerComponent,
   ],
   imports: [
     BrowserModule,

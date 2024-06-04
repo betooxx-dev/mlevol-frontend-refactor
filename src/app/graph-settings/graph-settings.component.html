@@ -1,10 +1,14 @@
 <div style="width: 250px; overflow: hidden; display: flex; flex-direction: column;">
        <button (click)="downloadEditor()">
-              Create Editor graph
+              Export editor to JSON
        </button>
        <input style="display: none" type="file" accept=".json" 
               (change)="onFileLoad($event)" #fileinput>
        <button (click)="fileinput.click()">
-              Load Editor graph
+              Import editor from JSON
+       </button>
+
+       <button (click)="generateCode()">
+              Generate Code
        </button>
 </div>

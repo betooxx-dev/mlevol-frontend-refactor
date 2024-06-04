@@ -4,6 +4,7 @@ import { GraphEditorService } from '../graph-editor.service';
 import { Node } from '../editor';
 import { ModuleNode } from '../nodes';
 import {InputOptions, MultipleOptions} from "../dropbox.options";
+import { PanelFocusService } from '../panel-focus.service';
 @Component({
   selector: 'app-graph-properties',
   templateUrl: './graph-properties.component.html',
@@ -17,13 +18,14 @@ export class GraphPropertiesComponent implements OnInit {
   allNode: Node | undefined;
   nodeInfo : any;
   nodeInputKeys : any;
-  copyNode : Node | undefined;
   colors: [] | any;
   subscription: Subscription | undefined;
   moduleNodeName = ModuleNode.nodeName;
   options = InputOptions;
   options_of_options = MultipleOptions;
-  constructor(private data : GraphEditorService,
+  constructor(
+    private data : GraphEditorService,
+    private focusService: PanelFocusService
   ){
   }
 
@@ -35,33 +37,19 @@ export class GraphPropertiesComponent implements OnInit {
       this.selectedNode = this.allNode.label;
       this.nodeInfo = this.allNode.info;
       this.nodeInputKeys = this.nodeInfo.inputs ? Object.keys(this.nodeInfo.inputs) : [];
-      for (let key of this.nodeInputKeys){
-        if (this.nodeInfo.inputs[key].optionId)
-          console.log(this.options_of_options[this.nodeInfo.inputs[key].optionId]);
-      }
     });
   }
 
-  @HostListener('document:keyup', ['$event'])
+  ngOnChanges(): void {
+    this.allNode = this.data.getNode(this.selectedNode);
+    if (this.allNode == undefined) this.closeProperties();
+  }
+
+  @HostListener('mouseenter') onMouseEnter() {
+    this.focusService.mouseOver(this);
+  }
+
   keyEvent(event: KeyboardEvent){
-    console.log(event);
-    if (event.key === 'Delete' && this.allNode) {
-      this.deleteNode();
-    }
-
-    if (event.key === 'c' && event.ctrlKey && this.allNode) {
-      this.copyNode = this.allNode;
-    }
-
-    if (event.key === 'x' && event.ctrlKey && this.allNode) {
-      this.copyNode = this.allNode;
-      this.deleteNode();
-    }
-
-    if (event.key === 'v' && event.ctrlKey && this.copyNode) {
-      this.data.addNode(this.copyNode.getNodeName(), undefined, JSON.parse(JSON.stringify(this.copyNode.data())));
-      this.copyNode = undefined;
-    }
 
     if (event.key === 'Escape') {
       this.closeProperties();
@@ -91,13 +79,6 @@ export class GraphPropertiesComponent implements OnInit {
 
   openProperties(){
     this.propertiesClose.emit(false);
-  }
-
-  deleteNode(){
-    this.data.deleteNode(this.allNode!.id);
-    this.allNode = undefined;
-    this.selectedNode = "";
-    this.closeProperties();
   }
 
   showEditor(){

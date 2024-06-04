@@ -12,8 +12,8 @@
         <p style="color: gray; font-style: italic;margin: 0px;margin-left: 10px;">Title: {{allNode?.info.info?.title}}</p>
         <h2 style="margin: 10px;">Inputs</h2>
 
-        <div *ngFor="let key of nodeInputKeys">
-            <div *ngIf="allNode?.info.inputs[key]['type'] == 'string'" style="margin: 10px;">
+        <div *ngFor="let key of nodeInputKeys" >
+            <div *ngIf="allNode?.info.inputs[key]['type'] == 'string'" style="margin: 10px;" >
                 <p>
                     {{key}}
                 </p>
@@ -54,7 +54,7 @@
                 <p>
                     {{key}}
                 </p>
-                    <p-dropdown [options]="options[allNode?.info.inputs[key].optionId]" optionLabel="color" (onChange)="updateValue(key, $event)">
+                    <p-dropdown [options]="options[allNode?.info.inputs[key].optionId]" [filter]="true" (onChange)="updateValue(key, $event)" id="{{allNode?.id}}_{{key}}">
                         <ng-template pTemplate="selectedItem">
                             <div class="flex align-items-center gap-2" *ngIf="allNode?.info.inputs[key].value">
                                 {{allNode?.info.inputs[key].value}}
@@ -79,6 +79,11 @@
                     optionLabel="label"
                     [filter]="true"
                     (onChange)="updateValue(key, $event)">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="flex align-items-center gap-2" *ngIf="allNode?.info.inputs[key].value">
+                            {{allNode?.info.inputs[key].value.label}}
+                        </div>
+                    </ng-template>
                     <ng-template let-group pTemplate="group">
                         <div class="flex align-items-center">
                             <span>{{ group.label }}</span>
@@ -91,8 +96,8 @@
     <div *ngIf="allNode?.getNodeName() == moduleNodeName;" style="margin: 10px;">
         <p-button label="Edit module" (click)="changeEditor()"></p-button>
     </div>
-    <div style="margin: 10px; display: flex; justify-content: center;">
+    <!--div style="margin: 10px; display: flex; justify-content: center;">
         <p-button label="Delete" (click)="deleteNode()">
         </p-button>
-    </div>
+    </div-->
 </div>

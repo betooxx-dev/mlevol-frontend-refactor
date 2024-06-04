@@ -60,6 +60,8 @@ export class GraphEditorService {
   showMap : boolean = true;
   private nodeSource : BehaviorSubject<string> = new BehaviorSubject<string>("");
   private editorSource : BehaviorSubject<string> = new BehaviorSubject<string>("General Editor");
+  private anyChangeSource : BehaviorSubject<string> = new BehaviorSubject<string>("");
+  anyChange = this.anyChangeSource.asObservable();
   selectedSource = this.nodeSource.asObservable();
   selectedEditor = this.editorSource.asObservable();
   selector = AreaExtensions.selector();
@@ -119,7 +121,6 @@ export class GraphEditorService {
                 target.key as never
               )
             );
-            console.log(sockets);
   
             if (!sockets.source.isCompatibleWith(sockets.target)) {
               connection.drop();
@@ -195,7 +196,6 @@ export class GraphEditorService {
     this.area.addPipe(
       context => {
         if (context.type == "nodedragged"){
-          console.log(this.editor.getNode(context.data.id))
           this.nodeSource.next(context.data.id);
         }
         return context;
@@ -233,6 +233,7 @@ export class GraphEditorService {
   }
 
   async addNode(nodeName: string, nodeId?: string, nodeData?: any){
+    this.anyChangeSource.next("Node added");
     if(!this.editor) return;
     if(!this.area) return;
 
@@ -279,12 +280,14 @@ export class GraphEditorService {
   }
 
   async deleteNode(id: string) {
+
     const connections = await this.editor.getConnections();
     connections.forEach((element) => {
       if (element.source == id || element.target == id)
         this.editor.removeConnection(element.id);
     })
     await this.editor.removeNode(id);
+    this.anyChangeSource.next("Node deleted");
   }
 
   unselectNodes() {
@@ -338,6 +341,7 @@ export class GraphEditorService {
       outputs: outputs,
     };
 
+
     this.cleanModules();
 
     var blob = new Blob([JSON.stringify({modules: this.modules}, null, 2)], {type: "text/plain;charset=utf-8"});
@@ -353,16 +357,18 @@ export class GraphEditorService {
         allNodesIds.push(node.id);
       }
     }
-    console.log("All nodes", allNodesIds);
+
     for (let module in this.modules) {
       if (!(allNodesIds.includes(module)) && !(module === 'root')) {
         delete this.modules[module];
       }
     }
+    this.anyChangeSource.next("Modules cleaned");
   }
 
   async updateNode(node: Node) {
     await this.area?.update("node", node.id);
+    this.anyChangeSource.next("Node updated");
   }
 
   findInputs() {
@@ -388,14 +394,12 @@ export class GraphEditorService {
   }
 
   async loadEditor(json: string) {
-    console.log("json", json);
     await this.editor.clear();
     const data = await JSON.parse(json);
-    console.log("Loaded data", data);
     this.modules = data.modules;
-    console.log("Loaded modules", this.modules);
     let node = new ModuleNode("root");
     node.id = "root";
+    node.info.inputs.description.value = "General Editor";
     await this.changeEditor(node, false);
   }
 
@@ -488,6 +492,73 @@ export class GraphEditorService {
     }
 
     await this.arrangeNodes();
+
+    this.cleanModules();
+    this.anyChangeSource.next("Editor changed");
+  }
+
+
+  async generateAndDownloadCode() {
+
+    console.log("Generating JSON of editor");
+    let nodes = [];
+    let connections = [];
+    let inputs = [];
+    let outputs = [];
+
+    for (let node of this.editor.getNodes()) {
+      nodes.push({
+        id: node.id,
+        data: node.data(),
+        name: node.label,
+        nodeName: node.getNodeName(),
+      });
+    }
+    for (let c of this.editor.getConnections()) {
+      connections.push({
+        source: c.source,
+        sourceOutput: c.sourceOutput,
+        target: c.target,
+        targetInput: c.targetInput
+      });
+    }
+    for (let input of this.findInputs()) {
+      inputs.push({
+        id: input.id,
+        data: input.data(),
+      });
+    }
+    for (let output of this.findOutputs()) {
+      outputs.push({
+        id: output.id,
+        data: output.data(),
+      });
+    }
+    
+    this.modules[this.currentModule] = {
+      nodes: nodes,
+      connections: connections,
+      inputs: inputs,
+      outputs: outputs,
+    };
+
+    this.cleanModules();
+    const body: string = JSON.stringify({modules: this.modules});
+    const response = await fetch("http://localhost:5000/api/create_app", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: body,
+    });
+
+    console.log("Response", response);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const blob = await response.blob();
+    saveAs(blob, "app.zip");
   }
   
 }

@@ -58,6 +58,7 @@ a:hover {
     top: 0;
     left: 0;
     background: transparent;
+    user-select: none;
 }
 
 .rete ::ng-deep rete-minimap{

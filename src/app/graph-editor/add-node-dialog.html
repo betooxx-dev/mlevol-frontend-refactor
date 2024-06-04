@@ -8,7 +8,7 @@
       <h1>
         Add node
       </h1>
-      <p-accordion (activeIndexChange)="activeIndexChange($event)" [activeIndex]="openSections">
+      <p-accordion>
           <p-accordionTab *ngFor="let category of availableCategories" header="{{category}}">
               <p-button *ngFor="let node of availableNodes.get(category)" [text]="true" (click)="addNode(node)">{{node}}</p-button>
           </p-accordionTab>

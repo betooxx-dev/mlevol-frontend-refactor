@@ -4,7 +4,7 @@ import { DataFrameSocket, ModelSocket } from "../sockets";
 export class PredictNode extends Classic.Node<
 {   model: ModelSocket,
     features: DataFrameSocket},
-{   results: DataFrameSocket},
+{   },
 {}
 > implements Classic.Node{
     width = 190;
@@ -21,6 +21,11 @@ export class PredictNode extends Classic.Node<
               value: "Prediciton description",
               show: true,
           },
+          path: {
+              type: "string",
+              value: "Path to the results",
+              show: true,
+          },
       },
   };
 
@@ -28,13 +33,15 @@ export class PredictNode extends Classic.Node<
       super(PredictNode.nodeName);
   
       this.addInput('model', new Classic.Input(new ModelSocket(), 'model'));
-
       this.addInput('features', new Classic.Input(new DataFrameSocket(), 'features'));
-
-      this.addOutput('results', new Classic.Input(new DataFrameSocket(), 'results'));
     }
 
-    data() {
+  /**
+   * Returns the data stored in the `info` property of the current object.
+   *
+   * @return {any} The data stored in the `info` property.
+   */
+  data() {
       return this.info;
     }
 

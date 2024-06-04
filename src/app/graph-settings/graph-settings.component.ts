@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { GraphEditorService } from '../graph-editor.service';
 import { ModuleNode } from '../nodes';
+import { PanelFocusService } from '../panel-focus.service';
 
 @Component({
   selector: 'app-graph-settings',
@@ -8,13 +9,9 @@ import { ModuleNode } from '../nodes';
   styleUrl: './graph-settings.component.css'
 })
 export class GraphSettingsComponent {
-  data : GraphEditorService;
-
   constructor(
-    data: GraphEditorService
-  ){
-    this.data = data;
-  }
+    private data: GraphEditorService,
+    private focusService: PanelFocusService){}
 
   downloadEditor(){
     this.data.generateJsonOfEditor();
@@ -40,4 +37,16 @@ export class GraphSettingsComponent {
     reader.readAsText(f);
   }
 
+  @HostListener('mouseenter') onMouseEnter() {
+    this.focusService.mouseOver(this);
+  }
+
+  keyEvent(event: KeyboardEvent){
+    if (event.key === 'Escape') {
+    }
+  }
+
+  generateCode(){
+    this.data.generateAndDownloadCode();
+  }
 }

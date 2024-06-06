@@ -2,8 +2,8 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { Subscription } from 'rxjs';
 import { GraphEditorService } from '../graph-editor.service';
 import { Node } from '../editor';
-import { ModuleNode } from '../nodes';
-import {InputOptions, MultipleOptions} from "../dropbox.options";
+import { ModuleNode, ParameterNode } from '../nodes';
+import {InputOptions, MultipleOptions, ParamOptions} from "../dropbox.options";
 import { PanelFocusService } from '../panel-focus.service';
 @Component({
   selector: 'app-graph-properties',
@@ -14,30 +14,44 @@ export class GraphPropertiesComponent implements OnInit {
 
   @Output() propertiesClose = new EventEmitter<boolean>();
 
-  selectedNode: string = "";
-  allNode: Node | undefined;
+  selectedNode : string = "";
+  allNode : Node | undefined;
   nodeInfo : any;
   nodeInputKeys : any;
-  colors: [] | any;
-  subscription: Subscription | undefined;
+  colors : [] = [];
+  subscription : Subscription | undefined;
   moduleNodeName = ModuleNode.nodeName;
   options = InputOptions;
   options_of_options = MultipleOptions;
+  paramOptions = ParamOptions;
+  nodeParamOptions : [] | any;
+
   constructor(
     private data : GraphEditorService,
-    private focusService: PanelFocusService
+    private focusService : PanelFocusService
   ){
-  }
-
-  ngOnInit(): void {
-    this.subscription = this.data.selectedSource.subscribe((message) => {
+    this.subscription = this.data.selectedSource.subscribe(async (message) => {
       if (message == "") return;
       this.openProperties();
-      this.allNode = this.data.getNode(message);
+      this.allNode = await this.data.getNode(message);
       this.selectedNode = this.allNode.label;
       this.nodeInfo = this.allNode.info;
       this.nodeInputKeys = this.nodeInfo.inputs ? Object.keys(this.nodeInfo.inputs) : [];
+      let availableParameters = await this.data.getParameterNodes();
+      this.nodeParamOptions = [];
+      for (let i = 0; i < availableParameters.length; i++) {
+        let param = availableParameters[i] as ParameterNode;
+        this.nodeParamOptions.push(
+          {
+            label : param.info.inputs.description.value,
+            value : param.id
+          });
+      }
     });
+  }
+
+  ngOnInit() {
+    
   }
 
   ngOnChanges(): void {
@@ -56,12 +70,12 @@ export class GraphPropertiesComponent implements OnInit {
     }
   }
 
-  updateValue(key: string, value: any) {
+  updateValue(key: string, value: any, field: string = "value") {
     if (typeof value != "string")
     {
-      this. allNode!.info.inputs[key].value = value.value;
+      this. allNode!.info.inputs[key][field] = value.value;
     }else{
-      this.allNode!.info.inputs[key].value = value;
+      this.allNode!.info.inputs[key][field] = value;
     }
     console.log(this.allNode);
     this.allNode!.update();

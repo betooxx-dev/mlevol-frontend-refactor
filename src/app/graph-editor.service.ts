@@ -1,4 +1,4 @@
-import { InputNode, ModuleNode, OutputNode} from './nodes';
+import { InputNode, ModuleNode, OutputNode, ParameterNode} from './nodes';
 // graph-editor.service.ts
 import { Injectable, OnChanges, input } from '@angular/core';
 import { Schemes, Connection, Node, getConnectionSockets} from './editor';
@@ -15,7 +15,6 @@ import {
 import {
   ClassicFlow,
   ConnectionPlugin,
-  Presets as ConnectionPresets,
   getSourceTarget,
 } from 'rete-connection-plugin';
 
@@ -24,7 +23,7 @@ import { ConnectionPathPlugin } from "rete-connection-path-plugin";
 import { MinimapExtra, MinimapPlugin } from "rete-minimap-plugin";
 import { CustomNodeComponent } from './custom-node/custom-node.component';
 import { CustomConnectionComponent } from './custom-connection/custom-connection.component';
-import { BehaviorSubject, connect } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { AutoArrangePlugin, Presets as ArrangePresets } from "rete-auto-arrange-plugin";
 import { saveAs } from 'file-saver';
 import { addCustomBackground } from './custom-background/background';
@@ -32,7 +31,6 @@ import { DataFrameSocket, ModelSocket, ObjectSocket, ResultSocket } from './sock
 import { DataFrameSocketComponent, ModelSocketComponent, CustomSocketComponent, ResultSocketComponent, ObjectSocketComponent} from './custom-socket';
 import { ModelNodeComponent } from './custom-node/model-node.component';
 import { getAvailableNodes, getNewNode } from './utils';
-
 
 type AreaExtra = Area2D<Schemes> | AngularArea2D<Schemes>  | MinimapExtra;
 
@@ -156,11 +154,10 @@ export class GraphEditorService {
     
     AreaExtensions.simpleNodesOrder(this.area);
 
-    AreaExtensions.selectableNodes(this.area, this.selector, { accumulating: accumulateOnCtrl()});
-
     AreaExtensions.restrictor(this.area, {
       scaling: () => ({ min: 0.3, max: 3 }),
     });
+
 
     addCustomBackground(this.area);
     
@@ -397,7 +394,7 @@ export class GraphEditorService {
     await this.editor.clear();
     const data = await JSON.parse(json);
     this.modules = data.modules;
-    let node = new ModuleNode("root");
+    let node = new ModuleNode();
     node.id = "root";
     node.info.inputs.description.value = "General Editor";
     await this.changeEditor(node, false);
@@ -492,11 +489,22 @@ export class GraphEditorService {
     }
 
     await this.arrangeNodes();
+    await this.homeZoom();
 
     this.cleanModules();
     this.anyChangeSource.next("Editor changed");
   }
 
+  async getParameterNodes() {
+    let nodes = this.editor.getNodes();
+    let parameterNodes = [];
+    for (let node of nodes) {
+      if (node instanceof ParameterNode) {
+        parameterNodes.push(node);
+      }
+    }
+    return parameterNodes;
+  }
 
   async generateAndDownloadCode() {
 

@@ -5,7 +5,8 @@ import { InputNode, ReuseScaleDataNode, OutputNode, JoinNode,
   ReplaceNullNode, MakeCategoricalBinaryNode, TrainModelNode, 
   EvaluateModelNode, LoadModelNode, ScaleDataNode, DecomposeNode, 
   FeatureUnionNode, ModuleNode, EncoderNode, ReuseEncoderNode,
-  ReuseDecomposeNode, DropColumnsNode} from "./nodes"
+  ReuseDecomposeNode, DropColumnsNode,
+  ParameterNode} from "./nodes"
 
 import { AnySocket, DataFrameSocket, ModelSocket, ResultSocket } from "./sockets"
 import { ObjectSocket } from "./sockets/sockets"
@@ -35,7 +36,8 @@ export function getNewNode(nodeName: string) : Node | undefined {
     else if (nodeName === EncoderNode.nodeName) node = new EncoderNode();
     else if (nodeName === ReuseEncoderNode.nodeName) node = new ReuseEncoderNode();
     else if (nodeName === PredictNode.nodeName) node = new PredictNode();
-    else if (nodeName === ModuleNode.nodeName) node = new ModuleNode("Module");
+    else if (nodeName === ModuleNode.nodeName) node = new ModuleNode();
+    else if (nodeName === ParameterNode.nodeName) node = new ParameterNode();
     return node;
 }
 
@@ -64,7 +66,7 @@ export function getAvailableNodes() : Map<string, string[]> {
         [EvaluateModelNode.nodeName , PredictNode.nodeName]
       ],
       [ 'Modules',
-        [InputNode.nodeName, OutputNode.nodeName, ModuleNode.nodeName]
+        [InputNode.nodeName, OutputNode.nodeName, ParameterNode.nodeName]
       ]
     ]);
 }

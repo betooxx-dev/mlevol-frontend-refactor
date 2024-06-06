@@ -34,6 +34,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { GraphPropertiesComponent } from './graph-properties/graph-properties.component';
 
@@ -80,6 +82,8 @@ import { FocusHandlerComponent } from './focus-handler/focus-handler.component';
     FormsModule,
     DropdownModule,
     InputTextModule,
+    SelectButtonModule,
+    InputNumberModule,
   ],
   providers: [
     provideAnimationsAsync()

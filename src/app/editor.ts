@@ -1,6 +1,5 @@
 import { ClassicPreset as Classic, ClassicPreset, GetSchemes, NodeEditor } from "rete";
-import { DecomposeNode, DropColumnsNode, EncoderNode, EvaluateModelNode, FeatureUnionNode, InputNode, JoinNode, LoadDatasetNode, LoadModelNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, ReplaceNaNNode, ReplaceNullNode, ReuseEncoderNode, ScaleDataNode, SelectNode, SplitTrainTestNode, TrainModelNode, PredictNode } from "./nodes";
-import { CurveFactory } from "d3-shape";
+import { DecomposeNode, DropColumnsNode, EncoderNode, EvaluateModelNode, FeatureUnionNode, InputNode, JoinNode, LoadDatasetNode, LoadModelNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, ReplaceNaNNode, ReplaceNullNode, ReuseEncoderNode, ScaleDataNode, SelectNode, SplitTrainTestNode, TrainModelNode, PredictNode, ReuseScaleDataNode, ParameterNode } from "./nodes";
 import { DataFrameSocket, ModelSocket } from "./sockets/sockets";
 
 export type Node = InputNode | OutputNode | ModuleNode
@@ -8,7 +7,7 @@ export type Node = InputNode | OutputNode | ModuleNode
                  | JoinNode | EvaluateModelNode | MakeCategoricalBinaryNode | TrainModelNode
                  | LoadModelNode | LoadDatasetNode | ScaleDataNode | DecomposeNode
                  | FeatureUnionNode | EncoderNode | ReuseEncoderNode | DropColumnsNode
-                 | PredictNode;
+                 | PredictNode | ReuseScaleDataNode | ParameterNode;
 
 
 type Sockets = DataFrameSocket | ModelSocket;
@@ -18,12 +17,7 @@ type Conn = Connection<Node, Node>;
   
 export type Schemes = GetSchemes<Node, Conn>;
 
-export class Connection<A extends Node, B extends Node> extends Classic.Connection<
-  A,
-  B
-> {
-  curve?: CurveFactory;
-}
+export class Connection<A extends Node, B extends Node> extends Classic.Connection< A, B > {}
 
 type Input = ClassicPreset.Input<Sockets>;
 type Output = ClassicPreset.Output<Sockets>;

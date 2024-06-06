@@ -1,4 +1,13 @@
- import { TreeNode } from "primeng/api"
+export const ParamOptions = [
+    {
+        label: "Custom value",
+        value: "custom"
+    },
+    {
+        label: "Parameter",
+        value: "param"
+    }
+]
 export const MultipleOptions: {[key:string] : any[]| undefined}  = {
     "model_type":
     [
@@ -96,4 +105,9 @@ export const InputOptions: { [key: string]: string[] } = {
         "LabelEncoder",
         "OrdinalEncoder",
     ],
+    "parameter_type":
+    [
+        "Number",
+        "String",
+    ]
 }

@@ -22,6 +22,8 @@ export class SplitTrainTestNode extends Classic.Node<
             train_percentage: {
                 type: "number",
                 value: 0.25,
+                isParam: "custom",
+                paramRef: null,
             },
         },
     };

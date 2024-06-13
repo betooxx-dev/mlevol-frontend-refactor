@@ -1,17 +1,17 @@
 import { ClassicPreset as Classic, NodeEditor } from "rete";
-import { AnySocket } from "../sockets";
 import { getSocket } from "../utils";
+import { CustomSocket } from "../sockets";
 
 export class ModuleNode
   extends Classic.Node<
-    Record<string, Classic.Socket>,
-    Record<string, Classic.Socket>
+    Record<string, CustomSocket>,
+    Record<string, CustomSocket>
   >
   implements Classic.Node {
   width = 180;
   height = 140;
   color: string = "rgba(255, 99, 132, 0.75)";
-  public static nodeName: string = "Step";
+  nodeName: string = "Step";
   info = {
     info: {
         title: 'Contains Step',
@@ -62,6 +62,6 @@ export class ModuleNode
   }
 
   getNodeName() {
-    return ModuleNode.nodeName;
+    return this.nodeName;
   }
 }

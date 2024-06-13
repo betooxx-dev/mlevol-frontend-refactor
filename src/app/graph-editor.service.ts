@@ -1,4 +1,4 @@
-import { InputNode, ModuleNode, OutputNode, ParameterNode} from './nodes';
+import { ModuleNode, CustomNode, ParameterNode} from './nodes';
 // graph-editor.service.ts
 import { Injectable, OnChanges, input } from '@angular/core';
 import { Schemes, Connection, Node, getConnectionSockets} from './editor';
@@ -27,8 +27,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AutoArrangePlugin, Presets as ArrangePresets } from "rete-auto-arrange-plugin";
 import { saveAs } from 'file-saver';
 import { addCustomBackground } from './custom-background/background';
-import { DataFrameSocket, ModelSocket, ObjectSocket, ResultSocket } from './sockets/sockets';
-import { DataFrameSocketComponent, ModelSocketComponent, CustomSocketComponent, ResultSocketComponent, ObjectSocketComponent} from './custom-socket';
+import { CustomSocketComponent} from './custom-socket';
 import { ModelNodeComponent } from './custom-node/model-node.component';
 import { getAvailableNodes, getNewNode } from './utils';
 
@@ -168,16 +167,7 @@ export class GraphEditorService {
             if (data.payload instanceof ModuleNode) return ModelNodeComponent;
             return CustomNodeComponent;
           },
-          socket(data) {
-            
-            if (data.payload instanceof DataFrameSocket) return DataFrameSocketComponent;
-            
-            if (data.payload instanceof ModelSocket) return ModelSocketComponent;
-
-            if (data.payload instanceof ResultSocket) return ResultSocketComponent;
-
-            if (data.payload instanceof ObjectSocket) return ObjectSocketComponent;
-            
+          socket() {
             return CustomSocketComponent;
           },
           connection() {
@@ -239,7 +229,7 @@ export class GraphEditorService {
       console.log("Node not found");
       return;
     }
-    if (nodeName === ModuleNode.nodeName) {
+    if (nodeName === "Step") {
       this.modules[node.id] = {
           'nodes' : [],
           'connections' : [],
@@ -372,7 +362,7 @@ export class GraphEditorService {
     let nodes = this.editor.getNodes();
     let inputNodes = [];
     for (let node of nodes) {
-      if (node instanceof InputNode) {
+      if (node.getNodeName() === "Input") {
         inputNodes.push(node);
       }
     }
@@ -383,7 +373,7 @@ export class GraphEditorService {
     let nodes = this.editor.getNodes();
     let outputNodes = [];
     for (let node of nodes) {
-      if (node instanceof OutputNode) {
+      if (node.getNodeName() === "Output") {
         outputNodes.push(node);
       }
     }
@@ -459,7 +449,7 @@ export class GraphEditorService {
 
     for (let node of this.modules[this.currentModule].nodes) {
       await this.addNode(node.nodeName, node.id, node.data);
-      if (node.nodeName === ModuleNode.nodeName) {
+      if (node.nodeName === "Step") {
         let inputs = this.modules[node.id].inputs;
         let outputs = this.modules[node.id].outputs;
         let inputStrings: [string, string][] = [];
@@ -552,7 +542,7 @@ export class GraphEditorService {
 
     this.cleanModules();
     const body: string = JSON.stringify({modules: this.modules});
-    const response = await fetch("http://localhost:5000/api/create_app", {
+    const response = await fetch("http://localhost:5000/api/create_app", { // FIXME: Hardcoded URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

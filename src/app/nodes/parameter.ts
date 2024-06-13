@@ -1,12 +1,11 @@
 import { ClassicPreset as Classic } from "rete";
-import { DataFrameSocket, ModelSocket } from "../sockets";
 
 export class ParameterNode extends Classic.Node implements Classic.Node
 {
     width = 190;
     height = 150;
     color = "rgba(132, 132, 135, 0.5)";
-    public static nodeName: string = "Parameter";
+    nodeName: string = "Parameter";
     info = {
       info: {
           title: 'Parameter to be reused by other nodes',
@@ -27,7 +26,7 @@ export class ParameterNode extends Classic.Node implements Classic.Node
   };
 
     constructor() {
-        super(ParameterNode.nodeName);
+        super("Parameter");
     }
 
     /**
@@ -40,7 +39,7 @@ export class ParameterNode extends Classic.Node implements Classic.Node
     }
 
     getNodeName() {
-        return ParameterNode.nodeName;
+        return this.nodeName;
     }
 
     update() {

@@ -40,8 +40,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { GraphPropertiesComponent } from './graph-properties/graph-properties.component';
 
 // Sockets
-import { CustomSocketComponent, ModelSocketComponent, ResultSocketComponent} from './custom-socket';
-import { DataFrameSocketComponent } from './custom-socket';
+import { CustomSocketComponent,} from './custom-socket';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { FocusHandlerComponent } from './focus-handler/focus-handler.component';
@@ -61,9 +60,6 @@ import { FocusHandlerComponent } from './focus-handler/focus-handler.component';
     CustomNodeComponent,
     ModelNodeComponent,
     CustomSocketComponent,
-    DataFrameSocketComponent,
-    ModelSocketComponent,
-    ResultSocketComponent,
     CustomConnectionComponent,
     DialogComponent,
     GraphPropertiesComponent,

@@ -1,16 +1,11 @@
 import { ClassicPreset as Classic, ClassicPreset, GetSchemes, NodeEditor } from "rete";
-import { DecomposeNode, DropColumnsNode, EncoderNode, EvaluateModelNode, FeatureUnionNode, InputNode, JoinNode, LoadDatasetNode, LoadModelNode, MakeCategoricalBinaryNode, ModuleNode, OutputNode, ReplaceNaNNode, ReplaceNullNode, ReuseEncoderNode, ScaleDataNode, SelectNode, SplitTrainTestNode, TrainModelNode, PredictNode, ReuseScaleDataNode, ParameterNode } from "./nodes";
-import { DataFrameSocket, ModelSocket } from "./sockets/sockets";
+import { CustomSocket } from "./sockets/sockets";
+import { CustomNode, ModuleNode, ParameterNode } from "./nodes";
 
-export type Node = InputNode | OutputNode | ModuleNode
-                 | SplitTrainTestNode | ReplaceNaNNode | ReplaceNullNode | SelectNode
-                 | JoinNode | EvaluateModelNode | MakeCategoricalBinaryNode | TrainModelNode
-                 | LoadModelNode | LoadDatasetNode | ScaleDataNode | DecomposeNode
-                 | FeatureUnionNode | EncoderNode | ReuseEncoderNode | DropColumnsNode
-                 | PredictNode | ReuseScaleDataNode | ParameterNode;
+export type Node = ModuleNode | ParameterNode | CustomNode; 
 
 
-type Sockets = DataFrameSocket | ModelSocket;
+type Sockets = CustomSocket;
 
 //type Node =  | ;
 type Conn = Connection<Node, Node>;

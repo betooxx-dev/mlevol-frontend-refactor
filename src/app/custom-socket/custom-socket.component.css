@@ -1,17 +1,20 @@
-div{
+div {
   display: inline-block;
   cursor: pointer;
-  border: 1px solid grey;
+  border-width: 1px;
+  border-style: solid;
+  border-color: grey;
   width: 20px;
   height: 20px;
   vertical-align: middle;
-  background: #fff;
+  background-color: #fff;
   z-index: 2;
   box-sizing: border-box;
   border-radius: 50%;
   transition: all .5s ease;
 }
 
-div:hover{
-  background: #ddd;
+div:hover {
+  border-color: grey;
+  background-color: #ddd;
 }

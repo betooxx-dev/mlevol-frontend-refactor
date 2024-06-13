@@ -2,10 +2,11 @@
 @import './custom-socket.component.css';
 
 div{
-	border: 1px solid blue;
-	background: turquoise;
+	border-color: blue;
+	background-color: turquoise;
 }
-  
+
 div:hover{
-	border: cornflowerblue;
+	border-color: blue;
+	background-color: cornflowerblue;
 }

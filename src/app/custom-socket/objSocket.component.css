@@ -1,10 +1,11 @@
 @import './custom-socket.component.css';
 
 div{
-	border: 1px solid violet;
-	background: palevioletred;
+	border-color: violet;
+	background-color: palevioletred;
 }
   
 div:hover{
-	border: rebeccapurple;
+	border-color: violet;
+	background-color: palevioletred;
 }

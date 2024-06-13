@@ -1,52 +1,12 @@
 import { ClassicPreset } from "rete";
 
-export class ResultSocket extends ClassicPreset.Socket {
-	constructor() {
-		super("Result");
+export class CustomSocket extends ClassicPreset.Socket {
+	constructor(name: string) {
+		super(name);
 	}
 
 	isCompatibleWith(socket: ClassicPreset.Socket) {
-		return (socket instanceof ResultSocket) || (socket instanceof AnySocket);
-	}
-}
-
-export class DataFrameSocket extends ClassicPreset.Socket {
-	constructor() {
-		super("DataFreme");
-	}
-
-	isCompatibleWith(socket: ClassicPreset.Socket) {
-		return (socket instanceof DataFrameSocket) || (socket instanceof AnySocket);
-	}
-}
-  
-export class ModelSocket extends ClassicPreset.Socket {
-	constructor() {
-		super("model");
-	}
-
-	isCompatibleWith(socket: ClassicPreset.Socket) {
-		return (socket instanceof ModelSocket) || (socket instanceof AnySocket);
-	}
-}
-
-export class AnySocket extends ClassicPreset.Socket {
-	constructor() {
-		super("Any");
-	}
-
-	isCompatibleWith(socket: ClassicPreset.Socket) {
-		return true;
-	}
-}
-  
-
-export class ObjectSocket extends ClassicPreset.Socket {
-	constructor() {
-		super("Object");
-	}
-
-	isCompatibleWith(socket: ClassicPreset.Socket) {
-		return (socket instanceof ObjectSocket) || (socket instanceof AnySocket);
+		if (this.name === "Any") return true;
+		return (socket.name === this.name) || (socket.name === "Any");
 	}
 }

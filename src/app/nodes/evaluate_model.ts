@@ -3,7 +3,7 @@ import { DataFrameSocket, ModelSocket, ResultSocket } from "../sockets";
 
 export class EvaluateModelNode extends Classic.Node<
 { model: ModelSocket,
-  label: DataFrameSocket,
+  features: DataFrameSocket,
   truth: DataFrameSocket },
 { results: ResultSocket},
 {}
@@ -30,11 +30,11 @@ export class EvaluateModelNode extends Classic.Node<
   
       this.addInput('model', new Classic.Input(new ModelSocket(), 'model'));
 
-      this.addInput('label', new Classic.Input(new DataFrameSocket(), 'label'));
+      this.addInput('features', new Classic.Input(new DataFrameSocket(), 'features'));
 
       this.addInput('truth', new Classic.Input(new DataFrameSocket(), 'truth'));
 
-      this.addOutput('results', new Classic.Input(new ResultSocket(), 'truth'));
+      this.addOutput('results', new Classic.Input(new ResultSocket(), 'results'));
     }
 
     data() {

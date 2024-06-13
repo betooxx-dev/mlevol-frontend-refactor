@@ -24,10 +24,6 @@ export class ReuseEncoderNode extends Classic.Node<
           value: "change nothing",
           show: true,
         },
-        columns: {
-            type: "string",
-            value: "",
-        },
       },
     };
 

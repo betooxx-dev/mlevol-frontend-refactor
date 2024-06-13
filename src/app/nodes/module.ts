@@ -11,15 +11,15 @@ export class ModuleNode
   width = 180;
   height = 140;
   color: string = "rgba(255, 99, 132, 0.75)";
-  public static nodeName: string = "Module";
+  public static nodeName: string = "Step";
   info = {
     info: {
-        title: 'Contains Module',
+        title: 'Contains Step',
     },
     inputs: {
       description :{
         type: "string",
-        value: "Module description",
+        value: "Step description",
       },
       color :{
         type: "color",
@@ -28,9 +28,7 @@ export class ModuleNode
     },
   };
 
-  constructor(
-    public path: string,
-  ) {
+  constructor() {
     super("Step");
     this.syncPorts([],  []);
 

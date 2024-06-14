@@ -15,6 +15,6 @@ div {
 }
 
 div:hover {
-  border-color: grey;
+  border-color: darkslategray;
   background-color: #ddd;
 }

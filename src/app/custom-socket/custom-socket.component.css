@@ -3,18 +3,11 @@ div {
   cursor: pointer;
   border-width: 1px;
   border-style: solid;
-  border-color: grey;
   width: 20px;
   height: 20px;
   vertical-align: middle;
-  background-color: #fff;
   z-index: 2;
   box-sizing: border-box;
   border-radius: 50%;
   transition: all .5s ease;
-}
-
-div:hover {
-  border-color: darkslategray;
-  background-color: #ddd;
 }

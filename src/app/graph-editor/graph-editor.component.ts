@@ -60,7 +60,7 @@ export class GraphEditorComponent {
   keyEvent(event: KeyboardEvent) {
     if (event.key === ' ' && event.shiftKey) {
       if (this.moduleImIn == "General Editor") {
-        this.graphEditorService.addNode(ModuleNode.nodeName);
+        this.graphEditorService.addNode("Step");
         return;
       }
       this.showPopUp = true;
@@ -112,7 +112,7 @@ export class GraphEditorComponent {
   backToRoot(){
     let node = new ModuleNode();
     node.id = "root";
-    node.info.inputs.description.value = "General Editor";
+    node.params.description.value = "General Editor";
     this.graphEditorService.changeEditor(node, true);
   }
 

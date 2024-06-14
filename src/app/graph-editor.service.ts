@@ -1,10 +1,10 @@
 import { ModuleNode, CustomNode, ParameterNode} from './nodes';
 // graph-editor.service.ts
-import { Injectable, OnChanges, input } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Schemes, Connection, Node, getConnectionSockets} from './editor';
 
-import { ClassicPreset as Classic,  NodeEditor } from 'rete';
-import { Area, Area2D, AreaExtensions, AreaPlugin } from 'rete-area-plugin';
+import { NodeEditor } from 'rete';
+import { Area2D, AreaExtensions, AreaPlugin } from 'rete-area-plugin';
 import { Injector } from '@angular/core'
 import {
   AngularPlugin,
@@ -29,7 +29,8 @@ import { saveAs } from 'file-saver';
 import { addCustomBackground } from './custom-background/background';
 import { CustomSocketComponent} from './custom-socket';
 import { ModelNodeComponent } from './custom-node/model-node.component';
-import { getAvailableNodes, getNewNode } from './utils';
+import { getNewNode } from './utils';
+import { ConfigurationService } from './configuration.service';
 
 type AreaExtra = Area2D<Schemes> | AngularArea2D<Schemes>  | MinimapExtra;
 
@@ -66,7 +67,9 @@ export class GraphEditorService {
   modules : any;
   currentModule = 'root';
 
-  constructor(private injector: Injector) {
+  constructor(private injector: Injector,
+    private configService: ConfigurationService
+  ) {
     this.editor = new NodeEditor<Schemes>();
     this.minimap = new MinimapPlugin<Schemes>();
     this.modules = {
@@ -177,7 +180,6 @@ export class GraphEditorService {
       }
     ));
 
-
     angularRender.addPreset(AngularPresets.minimap.setup({ size: 200 }));
     
     this.area.addPipe(
@@ -188,7 +190,6 @@ export class GraphEditorService {
         return context;
       }
     )
-
   }
 
   setEditor(editor: NodeEditor<Schemes>) {
@@ -258,7 +259,7 @@ export class GraphEditorService {
   }
 
   getAvailableNodes() {
-    return getAvailableNodes();
+    return this.configService.getAvailableNodes();
   }
 
   getNode(id : string) : Node {
@@ -354,6 +355,9 @@ export class GraphEditorService {
   }
 
   async updateNode(node: Node) {
+    if (node.nodeName === "Input" || "Output") {
+      // TODO USING INHERITANCE
+    }
     await this.area?.update("node", node.id);
     this.anyChangeSource.next("Node updated");
   }
@@ -386,12 +390,12 @@ export class GraphEditorService {
     this.modules = data.modules;
     let node = new ModuleNode();
     node.id = "root";
-    node.info.inputs.description.value = "General Editor";
+    node.params.description.value = "General Editor";
     await this.changeEditor(node, false);
   }
 
   async changeEditor(targetModule: Node, clear?: boolean) {
-    this.editorSource.next(targetModule.info.inputs.description.value);
+    this.editorSource.next(targetModule.params.description.value);
     if (clear){
       let nodes = [];
       let connections = [];

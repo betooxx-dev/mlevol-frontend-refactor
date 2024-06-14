@@ -13,19 +13,18 @@ export class ModuleNode
   color: string = "rgba(255, 99, 132, 0.75)";
   nodeName: string = "Step";
   info = {
-    info: {
         title: 'Contains Step',
+    };
+  
+  params = {
+    description :{
+      type: "string",
+      value: "Step description",
     },
-    inputs: {
-      description :{
-        type: "string",
-        value: "Step description",
-      },
-      color :{
-        type: "color",
-        value: "rgba(255, 99, 132, 0.75)",
-      }
-    },
+    color :{
+      type: "color",
+      value: "rgba(255, 99, 132, 0.75)",
+    }
   };
 
   constructor() {
@@ -34,7 +33,7 @@ export class ModuleNode
 
   }
   update() {
-    this.color = this.info.inputs.color.value;
+    this.color = this.params.color.value;
   }
 
   syncPorts(inputs: [string, string][], outputs: [string, string][]) {

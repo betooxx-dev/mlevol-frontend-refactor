@@ -95,6 +95,7 @@
                 {
                     "param_label" : "loader",
                     "param_type" : "option",
+                    "optionId": "data_source",
                     "show" : false
                 }
             ],
@@ -132,7 +133,11 @@
                 "title" : "Loads data from previous step"
             },
             "category" : "Step Managment",
-            "params" : [],
+            "params" : [
+                {"param_label" : "description", "param_type" : "string", "show" : true},
+                {"param_label" : "key", "param_type" : "string", "show" : true},
+                {"param_label" : "Socket type", "param_type" : "option", "optionId": "socket_type", "show" : false}
+            ],
             "inputs" : [],
             "outputs" : [
                 {
@@ -161,7 +166,11 @@
                 "title" : "Saves data to be used in next steps"
             }, 
             "category" : "Step Managment",
-            "params" : [],
+            "params" : [
+                {"param_label" : "description", "param_type" : "string", "show" : true},
+                {"param_label" : "key", "param_type" : "string", "show" : true},
+                {"param_label" : "Socket type", "param_type" : "option", "optionId": "socket_type", "show" : false}
+            ],
             "inputs" : [
                 {
                     "port_label" : "key",
@@ -187,7 +196,7 @@
             "category" : "Step Managment",
             "params" : [
                 {"param_label" : "description", "param_type" : "string", "show" : true},
-                {"param_label" : "type", "param_type" : "option", "show" : true}
+                {"param_label" : "type", "param_type" : "option", "optionId": "parameter_type", "show" : true}
             ],
             "inputs" : [],
             "outputs" : [],
@@ -440,7 +449,7 @@
             "params": [
                 {"param_label": "description", "param_type": "string", "show": true},
                 {"param_label": "columns", "param_type": "string", "show": false},
-                {"param_label": "type", "param_type": "option", "optionID": "encoder_type", "show": true},
+                {"param_label": "type", "param_type": "option", "optionId": "encoder_type", "show": true},
                 {"param_label": "parmeters", "param_type": "list", "show": false}
             ],
             "inputs": [
@@ -488,7 +497,7 @@
             "params": [
                 {"param_label": "description", "param_type": "string", "show": true},
                 {"param_label": "columns", "param_type": "string", "show": false},
-                {"param_label": "type", "param_type": "option", "optionID": "scaler_type", "show": true},
+                {"param_label": "type", "param_type": "option", "optionId": "scaler_type", "show": true},
                 {"param_label": "parmeters", "param_type": "list", "show": false}
             ],
             "inputs": [

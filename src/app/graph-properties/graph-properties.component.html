@@ -44,7 +44,7 @@
                 <p-inputNumber *ngIf="allNode?.params[key].isParam == 'custom'"
                     id="{{key}}" mode="decimal" [(ngModel)]="allNode?.params[key].value" [maxFractionDigits]="2" (ngModelChange)="updateValue(key, $event)"/>
 
-                <p-dropdown *ngIf="allNode?.params[key].isParam == 'param'" 
+                <p-dropdown *ngIf="allNode?.params[key].isParam == 'parameter'" 
                     [(ngModel)]="allNode?.params[key].paramRef"
                     [options]="nodeParamOptions"
                     optionLabel="label"

@@ -244,7 +244,7 @@ export class GraphEditorService {
     }
     
     if (nodeData) {
-      node.info = nodeData; // FIXME: This should not work this way
+      node.setData(nodeData);
     }
 
 
@@ -458,11 +458,12 @@ export class GraphEditorService {
         let outputs = this.modules[node.id].outputs;
         let inputStrings: [string, string][] = [];
         let outputStrings: [string, string][] = [];
+        console.log(inputs, outputs);
         for (let input of inputs) {
-          inputStrings.push([input.data.inputs.key.value, input.data.inputs.type.value]);
+          inputStrings.push([input.data.params.key.value, input.data.params.type.value]);
         }
         for (let output of outputs) {
-          outputStrings.push([output.data.inputs.key.value, output.data.inputs.type.value]);
+          outputStrings.push([output.data.params.key.value, output.data.params.type.value]);
         }
         
         let nodeModule = await this.editor.getNode(node.id) as ModuleNode;

@@ -10,19 +10,19 @@ export class CustomNode
   > implements Classic.Node{
     width = 180;
     height = 200;
-    color : string = "rgba(255, 99, 132, 0.75)";
+    color : string = "rgba(130, 99, 132, 0.75)";
     nodeName: string;
     info : any = {};
     params : any = {};
     configService: ConfigurationService = new ConfigurationService();
-    constructor(nodeName: string,
-        
-    ) {
+    constructor(nodeName: string) {
         super(nodeName);
         this.nodeName = nodeName;
         let config = this.configService.getNode(nodeName);
         console.log(config);
         this.info = config.info;
+        if (config.color!) this.color = config.color;
+        let show_count = 0;
         for (let i = 0; i < config.params.length; i++) {
             let param = config.params[i];
             this.params[param.param_label] = {
@@ -30,8 +30,10 @@ export class CustomNode
                 show : param.show,
                 value : undefined,
                 optionId : param.optionId!,
-                isParam: false,
+                isParam: "custom",
             }
+
+            if (param.show) show_count++;
         }
 
         for ( let i = 0; i < config.inputs.length; i++) {
@@ -43,6 +45,11 @@ export class CustomNode
             let output = config.outputs[i];
             this.addOutput(output.port_label, new Classic.Output(getSocket(output.port_type), output.port_label));
         }
+
+        this.height =
+		80 +
+		25 * (Object.keys(this.inputs).length + Object.keys(this.outputs).length)+
+        35 * show_count;
     }
 
     data() {
@@ -52,10 +59,15 @@ export class CustomNode
         };
     }
 
+	setData(data: any) {
+        this.info = data.info;
+		this.params = data.params;
+	}
+
     update() {
     }
 
     getNodeName() {
         return this.nodeName;
     }
-    }
+}

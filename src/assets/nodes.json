@@ -2,6 +2,7 @@
     "nodes" :
     [
         {   "node" : "TrainModelNode",
+            "color" : "rgba(255, 99, 132, 0.75)",
             "info" : {
                 "title" : "Trains given Model"
             },
@@ -68,6 +69,7 @@
                 "<param:model_tag> = Model(\n\t model = <param:type>(\n\t\t<param:parameters>\n\t),\n\t features = <port:features>,\n\t truth = <port:truth>\n)\n"
         },
         {   "node" : "Load dataset",
+            "color" : "rgba(155, 99, 232, 0.75)",
             "info" : {
                 "title" : "Loads given Dataset"
             },

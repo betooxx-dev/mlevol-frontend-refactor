@@ -27,15 +27,17 @@ export class ParameterNode extends Classic.Node implements Classic.Node
 		super("Parameter");
 	}
 
-	/**
-	 * Returns the data stored in the `info` property of the current object.
-	 *
-	 * @return {any} The data stored in the `info` property.
-	 */
 	data() {
-		return this.info;
-	}
+        return {
+            info: this.info,
+            params: this.params
+        };
+    }
 
+	setData(data: any) {
+        this.info = data.info;
+		this.params = data.params;
+	}
 	getNodeName() {
 		return this.nodeName;
 	}

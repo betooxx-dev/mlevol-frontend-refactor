@@ -50,6 +50,11 @@
         "parameter_type" : [
             "Number",
             "String"
+        ],
+        "optimizer_types" : [
+            "SGD",
+            "Adam",
+            "RMSProp"
         ]
     },
     "option_of_options":

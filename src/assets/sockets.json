@@ -41,6 +41,12 @@
         "background-color:hover" : "violet",
         "border-color:hover" : "palevioletred"
     },
+    "Optimizer" : {
+        "background-color" : "#7B2D26",
+        "border-color" : "white",
+        "background-color:hover" : "#D7C9AA",
+        "border-color:hover" : "gray"
+    },
     "Unknown" : {
         "background-color" : "black",
         "border-color" : "crimson",

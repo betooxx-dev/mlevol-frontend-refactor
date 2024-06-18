@@ -1,7 +1,89 @@
 {
     "nodes" :
-    [
-        {   "node" : "TrainModelNode",
+    [   
+		{ 	"node" : "MLModel",
+			"color": "#d7c9aa",
+			"info": {
+				"title": "Selects machine learning Model"
+			},
+			"category": "Model Training",
+			"params": [
+				{
+					"param_label": "description",
+					"param_type": "string",
+					"show": true
+				},
+                {
+                    "param_label" : "model",
+                    "param_type" : "option_of_options",
+					"optionId" : "models",
+                    "show" : true
+                },
+                {
+                    "param_label" : "parameters",
+                    "param_type" : "list",
+                    "show" : true
+                }
+			],
+			"inputs": [],
+			"outputs": [
+				{
+					"port_label": "model",
+					"port_type": "Model"
+				}
+			],
+			"dependencies": {
+				"models": 
+				{
+					"origin": "parameter",
+					"value": "model"
+				}
+			},
+			"origin" : {
+				"parameter" : "model"
+			}
+        },
+		{	"node" : "Optimizer",
+			"info" : {
+				"title" : "Selects optimizer"
+			},
+			"category" : "Model Training",
+			"params" : [
+				{
+					"param_label" : "description",
+					"param_type" : "string",
+					"show" : true
+				},
+				{
+					"param_label" : "parameters",
+					"param_type" : "list",
+					"show" : true
+				},
+				{
+					"param_label" : "optimizer",
+					"param_type" : "option",
+					"optionId" : "optimizer_types",
+					"show" : true
+				}
+			],
+			"inputs" : [],
+			"outputs" : [
+				{
+					"port_label" : "optimizer",
+					"port_type" : "Optimizer"
+				}
+			],
+			"dependencies" : {
+				"optimizers": {
+					"origin": "parameter",
+					"value": "optimizer"
+				}
+			},
+			"origin" : {
+				"parameter" : "optimizer"
+			}
+		},
+        {   "node" : "Train Model",
             "color" : "rgba(255, 99, 132, 0.75)",
             "info" : {
                 "title" : "Trains given Model"
@@ -9,25 +91,20 @@
             "category" : "Model Training",
             "params" : [
                 {
-                    "param_label" : "tag",
-                    "param_type" : "string",
-                    "show" : false
-                },
-                {
                     "param_label" : "description",
                     "param_type" : "string",
                     "show" : true
                 },
-                {
-                    "param_label" : "model",
-                    "param_type" : "option_of_options",
-                    "show" : true
-                },
-                {
-                    "param_label" : "model_parameters",
-                    "param_type" : "list",
-                    "show" : true
-                }
+				{
+					"param_label" : "epochs",
+					"param_type" : "number",
+					"show" : false
+				},
+				{
+					"param_label" : "bach_size",
+					"param_type" : "number",
+					"show" : false
+				}
             ],
             "inputs" : [
                 {
@@ -37,38 +114,33 @@
                 {
                     "port_label" : "truth",
                     "port_type" : "DataFrame"
-                }
+                },
+				{
+					"port_label" : "model",
+                    "port_type" : "Model"
+				},
+				{
+					"port_label" : "optimizer",
+					"port_type" : "Optimizer"
+				}
             ],
             "outputs" : [
                 {
                     "port_label" : "model",
-                    "port_type" : "Model",
-                    "how_to_solve" :  {
-                        "type" : "parameter",
-                        "label" : "model_tag"
-                    }
+                    "port_type" : "Model"
                 }
             ],
             "dependencies" : {
-                    "models" : 
-                    [
-                        {
-                            "origin" : "parameter",
-                            "value" : "type"
-                        }
-                    ],
-                    "model_manager":
-                    [
-                        {
-                            "origin" : "custom",
-                            "value" : "Model"
-                        }
-                    ]
+				"model_training" : {
+					"origin": "custom",
+					"value": "TrainModel"
+				}
             },
-            "code_template": 
-                "<param:model_tag> = Model(\n\t model = <param:type>(\n\t\t<param:parameters>\n\t),\n\t features = <port:features>,\n\t truth = <port:truth>\n)\n"
+			"origin" : {
+				"custom" : "TrainModel"
+			}
         },
-        {   "node" : "Load dataset",
+        {   "node" : "Load Dataset",
             "color" : "rgba(155, 99, 232, 0.75)",
             "info" : {
                 "title" : "Loads given Dataset"
@@ -87,12 +159,7 @@
                 {
                     "param_label" : "path",
                     "param_type" : "string",
-                    "show": false
-                },
-                {
-                    "param_label" : "tag",
-                    "param_type" : "string",
-                    "show" : false
+                    "show": true
                 },
                 {
                     "param_label" : "loader",
@@ -105,30 +172,18 @@
             "outputs" : [
                 {
                     "port_label" : "resulting_table",
-                    "port_type" : "DataFrame",
-                    "how_to_solve" :  {
-                        "type" : "parameter",
-                        "label" : "tag"
-                    }
+                    "port_type" : "DataFrame"
                 }
             ],
             "dependencies" : {
-                    "loaders" : 
-                    [
-                        {
-                            "origin" : "parameter",
-                            "value" : "loader"
-                        }
-                    ],
-                    "data_manager":
-                    [
-                        {
-                            "origin" : "custom",
-                            "value" : "Dataset"
-                        }
-                    ]
+				"data_manager": {
+					"origin": "custom",
+					"value": "LoadDataset"
+				}
             },
-            "code_template" : "<param:tag> = Dataset(\n\tloader = <param:loader>,\n\tpath = './data/<param:path>'\n)"
+			"origin" : {
+				"custom" : "LoadDataset"
+			}
         },
         {   "node" : "Input",
             "info" : {
@@ -144,24 +199,19 @@
             "outputs" : [
                 {
                     "port_label" : "key",
-                    "port_type" : "Any",
-                    "how_to_solve" :  {
-                        "type" : "parameter",
-                        "label" : "key"
-                    }
+                    "port_type" : "Any"
 
                 }
             ],
             "dependencies" : {
-                    "step_manager":
-                    [
-                        {
-                            "origin" : "custom",
-                            "value" : "StepManager"
-                        }
-                    ]
+                "step_manager": {
+					"origin": "custom",
+					"value": "StepManager"
+				}
             },
-            "code_template" : "<param:key> = StepManager.load(\n\tpath = '<param:input_path>'\n)"
+			"origin" : {
+				"custom" : "StepManager"
+			}
         },
         {   "node" : "Output",
             "info" : {
@@ -203,15 +253,14 @@
             "inputs" : [],
             "outputs" : [],
             "dependencies" : {
-                    "step_manager":
-                    [
-                        {
-                            "origin" : "custom",
-                            "value" : "StepManager"
-                        }
-                    ]
+				"step_manager": {
+					"origin": "custom",
+					"value": "StepManager"
+				}
             },
-            "code_template" : "StepManager.loadParam(<param:description>)"
+			"origin" : {
+				"custom" : "StepManager"
+			}
         },
         {   "node" : "Select Columns",
             "info" : {
@@ -231,15 +280,18 @@
             "outputs" : [
                 {
                 "port_label" : "resulting_table",
-                "port_type" : "DataFrame",
-                "how_to_solve" :  {
-                    "type" : "port",
-                    "label" : "origin_table"
-                    }
-                }
+                "port_type" : "DataFrame"
+				}
             ],
-            "dependencies" : {},
-            "code_template" : "<port:origin_table>.select_data(\n\tcolumns = '<param:columns>'\n)"
+            "dependencies" : {
+				"data_transformation" : {
+					"origin": "custom",
+					"value": "SelectColumns"
+				}
+			},
+			"origin" : {
+				"custom" : "SelectColumns"
+			}
         },
         {   "node" : "Split train test",
             "info" : {
@@ -263,47 +315,30 @@
             "outputs" : [
                 {
                 "port_label" : "features_train",
-                "port_type" : "DataFrame",
-                "how_to_solve" :  {
-                    "type" : "custom",
-                    "label" : "features_train"
-                    }
+                "port_type" : "DataFrame"
                 },
                 {
                 "port_label" : "features_test",
-                "port_type" : "DataFrame",
-                "how_to_solve" :  {
-                    "type" : "custom",
-                    "label" : "features_test"
-                    }
+                "port_type" : "DataFrame"
                 },
                 {
                 "port_label" : "truth_train",
-                "port_type" : "DataFrame",
-                "how_to_solve" :  {
-                    "type" : "custom",
-                    "label" : "truth_train"
-                    }
+                "port_type" : "DataFrame"
                 },
                 {
                 "port_label" : "truth_test",
-                "port_type" : "DataFrame",
-                "how_to_solve" :  {
-                    "type" : "custom",
-                    "label" : "truth_test"
-                }
+                "port_type" : "DataFrame"
                 }
             ],
             "dependencies" : {
-                "data_manager":
-                [
-                    {
-                        "origin" : "custom",
-                        "value" : "split_train_test"
-                    }
-                ]
+                "data_transformation": {
+					"origin": "custom",
+					"value": "SplitTrainTest"
+				}
             },
-            "code_template" : "features_train, features_test, truth_train, truth_test = split_train_test(\n\t features = <port:features>,\n\t truth = <port:truth>,\n\t train_percentage = <param:train_percentage>\n)"
+			"origin" : {
+				"custom" : "SplitTrainTest"
+			}
         },
         {   "node" : "Join",
             "category" : "Data Transformation",
@@ -329,15 +364,18 @@
             "outputs" : [
                 {
                 "port_label" : "resulting_table",
-                "port_type" : "DataFrame",
-                "how_to_solve" :  {
-                    "type" : "port",
-                    "label" : "left_table"
-                    }
+                "port_type" : "DataFrame"
                 }
             ],
-            "dependencies" : {},
-            "code_template" : "<port:left_table>.join_data(\n\t right = <port:right_table>,\n\t index = '<param:index>',\n\t how = '<param:type>'\n)"
+            "dependencies" : {
+				"data_transformation": {
+					"origin": "custom",
+					"value": "Join"
+				}
+			},
+			"origin" : {
+				"custom" : "Join"
+			}
         },
         {   "node" : "Drop Columns",
             "info" : {
@@ -357,15 +395,18 @@
             "outputs" : [
                 {
                 "port_label" : "resulting_table",
-                "port_type" : "DataFrame",
-                "how_to_solve" :  {
-                    "type" : "port",
-                    "label" : "origin_table"
-                    }
+                "port_type" : "DataFrame"
                 }
             ],
-            "dependencies" : {},
-            "code_template" : "<port:origin_table>.drop_columns(\n\t columns = '<param:columns>'\n)"
+            "dependencies" : {
+				"data_transformation": {
+					"origin": "custom",
+					"value": "DropColumns"
+				}
+			},
+			"origin" : {
+				"custom" : "DropColumns"
+			}
         },
         {   "node" : "Evaluate",
             "info" : {
@@ -383,15 +424,18 @@
             "outputs" : [
                 { 
                     "port_label" : "result",
-                    "port_type" : "Result",
-                    "how_to_solve" :  {
-                        "type" : "parameter",
-                        "label" : "description"
-                    }
+                    "port_type" : "Result"
                 }
             ],
-            "dependencies" : {},
-            "code_template" : "<port:model>.evaluate(\n\t features = <port:features>,\n\t truth = <port:truth>\n)"
+            "dependencies" : {
+				"model_evaluation": {
+					"origin": "custom",
+					"value": "Evaluate"
+				}
+			},
+			"origin" : {
+				"custom" : "Evaluate"
+			}
         },
         {   "node" : "Reuse Encoder",
             "info" : {
@@ -402,21 +446,25 @@
                 {"param_label" : "description", "param_type" : "string", "show" : true}
             ],
             "inputs" : [
-                { "port_label" : "input_dataset", "port_type" : "DataFrame" },
+                { "port_label" : "data", "port_type" : "DataFrame" },
                 { "port_label" : "encoder", "port_type" : "Object" }
             ],
             "outputs" : [
                 { 
-                    "port_label" : "output_dataset",
-                    "port_type" : "DataFrame",
-                    "how_to_solve" :  {
-                        "type" : "port",
-                        "label" : "input_dataset"
-                    }
+                    "port_label" : "out",
+                    "port_type" : "DataFrame"
                 }
             ],
-            "dependencies" : {},
-            "code_template" : "<port:encoder>.transform(\n\tdata = <port:input_dataset>\n)"
+            "dependencies" : {
+				"data_preprocessing" :
+				{
+					"origin": "custom",
+					"value": "ReuseEncoder"
+				}
+			},
+			"origin" : {
+				"custom" : "ReuseEncoder"
+			}
         },
         {   "node" : "ReScale Columns",
             "info" : {
@@ -433,111 +481,145 @@
             "outputs" : [
                 { 
                     "port_label" : "output_dataset",
-                    "port_type" : "DataFrame",
-                    "how_to_solve" :  {
-                        "type" : "port",
-                        "label" : "input_dataset"
-                    }
+                    "port_type" : "DataFrame"
                 }
             ],
-            "dependencies" : {},
-            "code_template" : "<port:scaler>.transform(\n\tdata = <port:input_dataset>\n)"
+            "dependencies" : {
+				"data_preprocessing" :
+				{
+					"origin": "custom",
+					"value": "ReScaleColumns"
+				}
+			},
+			"origin" : {
+				"custom" : "ReScaleColumns"
+			}
         },
-        {   "node" : "Encoder",
+		{	"node" : "Encoder",
+			"info" : {
+				"title" : "Selects encoder"
+			},
+			"category": "Data Preprocessing",
+			"params": [
+				{"param_label": "description", "param_type": "string", "show": true},
+				{"param_label": "type", "param_type": "option", "optionId": "encoder_type", "show": true},
+				{"param_label": "parmeters", "param_type": "list", "show": false}
+			],
+			"inputs": [
+			],
+			"outputs": [
+				{
+					"port_label": "encoder",
+					"port_type": "Encoder"
+				}
+			],
+			"dependencies": {
+				"encoders": {
+					"origin": "parameter",
+					"value": "type"
+				}
+			},
+			"origin" : {
+				"parameter" : "type"
+			}
+		},
+        {   "node" : "TrainEncoder",
             "info" : {
                 "title" : "Trains encoder given dataset and columns, also transforms the data"
             },
             "category": "Data Preprocessing",
             "params": [
                 {"param_label": "description", "param_type": "string", "show": true},
-                {"param_label": "columns", "param_type": "string", "show": false},
-                {"param_label": "type", "param_type": "option", "optionId": "encoder_type", "show": true},
-                {"param_label": "parmeters", "param_type": "list", "show": false}
+                {"param_label": "columns", "param_type": "string", "show": false}
             ],
             "inputs": [
-                { "port_label": "input_dataset", "port_type": "DataFrame" }
+				{ "port_label": "encoder", "port_type": "Encoder" },
+                { "port_label": "data", "port_type": "DataFrame" }
             ],
             "outputs": [
                 {
-                    "port_label": "output_dataset",
-                    "port_type": "DataFrame",
-                    "how_to_solve": {
-                        "type": "port",
-                        "label": "input_dataset"
-                    }
+                    "port_label": "out",
+                    "port_type": "DataFrame"
                 },
                 {
                     "port_label": "encoder",
-                    "port_type": "Encoder",
-                    "how_to_solve": {
-                        "type": "custom",
-                        "label": "encoder"
-                    }
+                    "port_type": "Encoder"
                 }
             ],
             "dependencies": {
-                "encoders": [
-                    {
-                        "origin": "parameter",
-                        "value": "type"
-                    }
-                ],
                 "preprocessing_manager": [
                     {
                         "origin": "custom",
-                        "value": "Encoder"
+                        "value": "TrainEncoder"
                     }
                 ]
             },
-            "code_template": "<port:encoder> = Encoder(\n\t encoder = <param:type>(\n\t\tcols = <param:columns>, \n\t\t parameters = <param:parameters>\n\t),\n) <port:encoder>.fit_transform(\n\tdata = <port:input_dataset>\n)"
-        },
-        {   "node" : "Scaler",
+			"origin" : {
+				"custom" : "TrainEncoder"
+			}
+		},
+		{	"node" : "Scaler",
+			"info" : {
+				"title" : "Selects scaler"
+			},
+			"category": "Data Preprocessing",
+			"params": [
+				{"param_label": "description", "param_type": "string", "show": true},
+				{"param_label": "type", "param_type": "option", "optionId": "scaler_type", "show": true},
+				{"param_label": "parmeters", "param_type": "list", "show": false}
+			],
+			"inputs": [
+			],
+			"outputs": [
+				{
+					"port_label": "scaler",
+					"port_type": "Scaler"
+				}
+			],
+			"dependencies": {
+				"scalers": {
+					"origin": "parameter",
+					"value": "type"
+				}
+			},
+			"origin" : {
+				"parameter" : "type"
+			}
+		},
+        {   "node" : "TrainScaler",
             "info" : {
                 "title" : "Fits scaler and transforms data"
             },
             "category": "Data Preprocessing",
             "params": [
                 {"param_label": "description", "param_type": "string", "show": true},
-                {"param_label": "columns", "param_type": "string", "show": false},
-                {"param_label": "type", "param_type": "option", "optionId": "scaler_type", "show": true},
-                {"param_label": "parmeters", "param_type": "list", "show": false}
+                {"param_label": "columns", "param_type": "string", "show": false}
             ],
             "inputs": [
-                { "port_label": "input_dataset", "port_type": "DataFrame" }
+                { "port_label": "data", "port_type": "DataFrame" },
+				{ "port_label": "scaler", "port_type": "Scaler" }
             ],
             "outputs": [
                 {
-                    "port_label": "output_dataset",
-                    "port_type": "DataFrame",
-                    "how_to_solve": {
-                        "type": "port",
-                        "label": "input_dataset"
-                    }
+                    "port_label": "data",
+                    "port_type": "DataFrame"
                 },
                 {
                     "port_label": "scaler",
-                    "port_type": "Scaler",
-                    "how_to_solve": {
-                        "type": "custom",
-                        "label": "scaler"
-                    }
+                    "port_type": "Scaler"
                 }
             ],
             "dependencies": {
-                "scalers": [
-                    {
-                        "origin": "parameter",
-                        "value": "type"
-                    }
-                ],
                 "preprocessing_manager": [
                     {
                         "origin": "custom",
-                        "value": "Scaler"
+                        "value": "TrainScaler"
                     }
                 ]
             },
-            "code_template": "<port:scaler> = Scaler(\n\t scaler = <param:type>(\n\t\tcols = <param:columns>, \n\t\t parameters = <param:parameters>\n\t),\n) <port:scaler>.fit_transform(\n\tdata = <port:input_dataset>\n)"
+			"origin" : {
+				"custom" : "TrainScaler"
+			}
         },
         {   "node" : "Predict",
             "info" : {
@@ -567,20 +649,20 @@
                 {"param_label": "value", "param_type": "string", "show": true}
             ],
             "inputs": [
-                { "port_label": "origin_table", "port_type": "DataFrame" }
+                { 	"port_label": "origin", "port_type": "DataFrame" }
             ],
             "outputs": [
-                {
-                    "port_label": "resulting_table",
-                    "port_type": "DataFrame",
-                    "how_to_solve": {
-                        "type": "port",
-                        "label": "input_dataset"
-                    }
-                }
+                {	"port_label": "result", "port_type": "DataFrame" }
             ],
-            "dependencies": {},
-            "code_template": "<port:origin_table>.replace_nans(\n\t value = <param:value>\n)"
+            "dependencies": {
+				"data_preprocessing" : {
+					"origin": "custom",
+					"value": "ReplaceNan"
+				}
+			},
+			"origin" : {
+				"custom" : "ReplaceNan"
+			}
         },
         {   "node" : "Make Categorical Numeric",
             "category": "Data Preprocessing",
@@ -592,20 +674,20 @@
                 {"param_label": "columns", "param_type": "string", "show": false}
             ],
             "inputs": [
-                { "port_label": "origin_table", "port_type": "DataFrame" }
+                { 	"port_label": "origin_table", "port_type": "DataFrame" }
             ],
             "outputs": [
-                {
-                    "port_label": "resulting_table",
-                    "port_type": "DataFrame",
-                    "how_to_solve": {
-                        "type": "port",
-                        "label": "input_dataset"
-                    }
-                }
+                {	"port_label": "resulting_table", "port_type": "DataFrame" }
             ],
-            "dependencies": {},
-            "code_template": "<port:origin_table>.make_categorical_numeric(\n\t cols = <param:columns>\n)"
+            "dependencies": {
+				"data_preprocessing" : {
+					"origin": "custom",
+					"value": "MakeCategoricalNumeric"
+				}
+			},
+			"origin" : {
+				"custom" : "MakeCategoricalNumeric"
+			}
         }
     ]
 }

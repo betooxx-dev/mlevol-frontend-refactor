@@ -160,7 +160,4 @@ export class DialogComponent {
   closeAddDialog() {
     this.addedNode.emit(false);
   }
-
-
-
 }

@@ -17,15 +17,15 @@
                 <p>
                     {{key}}
                 </p>
-                <div *ngIf="allNode?.params[key]['show']">
+                <div *ngIf="allNode?.params[key].show">
                     <input pInputText maxlength="55" id="{{key}}" type="text" [(ngModel)]="allNode?.params[key].value" (ngModelChange)="updateValue(key, $event)"/>
                 </div>
-                <div *ngIf="!allNode?.params[key]['show']">
+                <div *ngIf="!allNode?.params[key].show">
                     <input pInputText id="{{key}}" type="text" [(ngModel)]="allNode?.params[key].value" (ngModelChange)="updateValue(key, $event)"/>
                 </div>
             </div>
 
-            <div *ngIf="allNode?.params[key]['type'] == 'number'" style="margin: 10px;">
+            <div *ngIf="allNode?.params[key].type == 'number'" style="margin: 10px;">
                 <p>
                     {{key}}
                 </p>
@@ -56,7 +56,7 @@
                 <p>
                     {{key}}
                 </p>
-                    <p-dropdown [options]="options['color']" optionLabel="color" (onChange)="updateValue(key, $event)">
+                    <p-dropdown [options]="options.color" optionLabel="color" (onChange)="updateValue(key, $event)">
                         <ng-template pTemplate="selectedItem">
                             <div class="flex align-items-center gap-2" *ngIf="allNode?.params[key].value">
                                 <div style="width: 40px; height: 20px; border-radius: 5px;" [ngStyle]="{background: allNode?.params[key].value}"></div>
@@ -70,7 +70,7 @@
                     </p-dropdown>
             </div>
 
-            <div *ngIf="allNode?.params[key]['type'] == 'option'" style="margin: 10px;">
+            <div *ngIf="allNode?.params[key].type == 'option'" style="margin: 10px;">
                 <p>
                     {{key}}
                 </p>
@@ -88,7 +88,7 @@
                 </p-dropdown>
             </div>
 
-            <div *ngIf="allNode?.params[key]['type'] == 'option_of_options'" style="margin: 10px;">
+            <div *ngIf="allNode?.params[key].type == 'option_of_options'" style="margin: 10px;">
                 <p>
                     {{key}}
                 </p>
@@ -97,6 +97,7 @@
                     [group]="true"
                     optionGroupLabel="category"
                     optionLabel="label"
+                    optionValue="value"
                     [filter]="true"
                     (onChange)="updateValue(key, $event)">
                     <ng-template pTemplate="selectedItem">

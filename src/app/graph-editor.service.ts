@@ -31,7 +31,7 @@ import { CustomSocketComponent} from './custom-socket';
 import { ModelNodeComponent } from './custom-node/model-node.component';
 import { getNewNode } from './utils';
 import { ConfigurationService } from './configuration.service';
-
+import modules from '../assets/base_editor.json';
 type AreaExtra = Area2D<Schemes> | AngularArea2D<Schemes>  | MinimapExtra;
 
 export  function accumulateOnCtrl(): { active(): boolean; destroy(): void;
@@ -72,14 +72,7 @@ export class GraphEditorService {
   ) {
     this.editor = new NodeEditor<Schemes>();
     this.minimap = new MinimapPlugin<Schemes>();
-    this.modules = {
-      'root': {
-        'nodes' : [],
-        'connections' : [],
-        'inputs' : [],
-        'outputs' : [],
-      }
-    };
+    this.modules = modules;
     this.editorSource.next("General Editor");
   }
 
@@ -190,7 +183,15 @@ export class GraphEditorService {
         return context;
       }
     )
+
+    this.loadEditor(
+      JSON.stringify(
+        this.modules
+      )
+    )
   }
+
+  
 
   setEditor(editor: NodeEditor<Schemes>) {
     this.editor = editor;

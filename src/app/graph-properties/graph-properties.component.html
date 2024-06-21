@@ -102,7 +102,7 @@
                     (onChange)="updateValue(key, $event)">
                     <ng-template pTemplate="selectedItem">
                         <div class="flex align-items-center gap-2" *ngIf="allNode?.params[key].value">
-                            {{allNode?.params[key].value.label}}
+                            {{allNode?.params[key].value}}
                         </div>
                     </ng-template>
                     <ng-template let-group pTemplate="group">

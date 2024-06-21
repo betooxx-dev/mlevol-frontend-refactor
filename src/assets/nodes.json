@@ -635,8 +635,17 @@
 				{ "port_label": "features", "port_type": "DataFrame"}
 			],
 			"outputs": [],
-			"dependencies": {},
-			"code_template": "<port:model>.predict(\n\t data = <port:features>\n, path = './outputs/<param:path>'\n)"
+			"dependencies": {
+				"evaluation_manager": [
+					{
+						"origin": "custom",
+						"value": "Predict"
+					}
+				]
+			},
+			"origin" : {
+				"custom" : "Predict"
+			}
 			
 		},
 		{   "node" : "Replace Nan",
@@ -687,6 +696,28 @@
 			},
 			"origin" : {
 				"custom" : "MakeCategoricalNumeric"
+			}
+		},
+		{ 	"node" : "Replace0s",
+			"category": "Qué pasa",
+			"info": {
+				"title": "Replaces 0 values"
+			},
+			"params": [
+				{"param_label": "description", "param_type": "string", "show": true},
+				{"param_label": "value", "param_type": "string", "show": true}
+			],
+			"inputs": [
+				{ 	"port_label": "origin_table", "port_type": "DataFrame" }
+			],
+			"outputs": [
+				{	"port_label": "resulting_table", "port_type": "DataFrame" }
+			],
+			"dependencies": {
+				"data_preprocessing" : {
+					"origin": "custom",
+					"value": "Replace0s"
+				}
 			}
 		}
 	]

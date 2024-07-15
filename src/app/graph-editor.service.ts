@@ -1,10 +1,10 @@
-import { InputNode, ModuleNode, OutputNode, ParameterNode} from './nodes';
+import { ModuleNode, CustomNode, ParameterNode} from './nodes';
 // graph-editor.service.ts
-import { Injectable, OnChanges, input } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Schemes, Connection, Node, getConnectionSockets} from './editor';
 
-import { ClassicPreset as Classic,  NodeEditor } from 'rete';
-import { Area, Area2D, AreaExtensions, AreaPlugin } from 'rete-area-plugin';
+import { NodeEditor } from 'rete';
+import { Area2D, AreaExtensions, AreaPlugin } from 'rete-area-plugin';
 import { Injector } from '@angular/core'
 import {
   AngularPlugin,
@@ -27,11 +27,11 @@ import { BehaviorSubject } from 'rxjs';
 import { AutoArrangePlugin, Presets as ArrangePresets } from "rete-auto-arrange-plugin";
 import { saveAs } from 'file-saver';
 import { addCustomBackground } from './custom-background/background';
-import { DataFrameSocket, ModelSocket, ObjectSocket, ResultSocket } from './sockets/sockets';
-import { DataFrameSocketComponent, ModelSocketComponent, CustomSocketComponent, ResultSocketComponent, ObjectSocketComponent} from './custom-socket';
+import { CustomSocketComponent} from './custom-socket';
 import { ModelNodeComponent } from './custom-node/model-node.component';
-import { getAvailableNodes, getNewNode } from './utils';
-
+import { getNewNode } from './utils';
+import { ConfigurationService } from './configuration.service';
+import modules from '../assets/base_editor.json';
 type AreaExtra = Area2D<Schemes> | AngularArea2D<Schemes>  | MinimapExtra;
 
 export  function accumulateOnCtrl(): { active(): boolean; destroy(): void;
@@ -67,17 +67,12 @@ export class GraphEditorService {
   modules : any;
   currentModule = 'root';
 
-  constructor(private injector: Injector) {
+  constructor(private injector: Injector,
+    private configService: ConfigurationService
+  ) {
     this.editor = new NodeEditor<Schemes>();
     this.minimap = new MinimapPlugin<Schemes>();
-    this.modules = {
-      'root': {
-        'nodes' : [],
-        'connections' : [],
-        'inputs' : [],
-        'outputs' : [],
-      }
-    };
+    this.modules = modules;
     this.editorSource.next("General Editor");
   }
 
@@ -168,16 +163,7 @@ export class GraphEditorService {
             if (data.payload instanceof ModuleNode) return ModelNodeComponent;
             return CustomNodeComponent;
           },
-          socket(data) {
-            
-            if (data.payload instanceof DataFrameSocket) return DataFrameSocketComponent;
-            
-            if (data.payload instanceof ModelSocket) return ModelSocketComponent;
-
-            if (data.payload instanceof ResultSocket) return ResultSocketComponent;
-
-            if (data.payload instanceof ObjectSocket) return ObjectSocketComponent;
-            
+          socket() {
             return CustomSocketComponent;
           },
           connection() {
@@ -186,7 +172,6 @@ export class GraphEditorService {
         }
       }
     ));
-
 
     angularRender.addPreset(AngularPresets.minimap.setup({ size: 200 }));
     
@@ -199,7 +184,14 @@ export class GraphEditorService {
       }
     )
 
+    this.loadEditor(
+      JSON.stringify(
+        this.modules
+      )
+    )
   }
+
+  
 
   setEditor(editor: NodeEditor<Schemes>) {
     this.editor = editor;
@@ -239,7 +231,7 @@ export class GraphEditorService {
       console.log("Node not found");
       return;
     }
-    if (nodeName === ModuleNode.nodeName) {
+    if (nodeName === "Step") {
       this.modules[node.id] = {
           'nodes' : [],
           'connections' : [],
@@ -253,7 +245,7 @@ export class GraphEditorService {
     }
     
     if (nodeData) {
-      node.info = nodeData; // FIXME: This should not work this way
+      node.setData(nodeData);
     }
 
 
@@ -268,7 +260,7 @@ export class GraphEditorService {
   }
 
   getAvailableNodes() {
-    return getAvailableNodes();
+    return this.configService.getAvailableNodes();
   }
 
   getNode(id : string) : Node {
@@ -364,6 +356,9 @@ export class GraphEditorService {
   }
 
   async updateNode(node: Node) {
+    if (node.nodeName === "Input" || "Output") {
+      // TODO USING INHERITANCE
+    }
     await this.area?.update("node", node.id);
     this.anyChangeSource.next("Node updated");
   }
@@ -372,7 +367,7 @@ export class GraphEditorService {
     let nodes = this.editor.getNodes();
     let inputNodes = [];
     for (let node of nodes) {
-      if (node instanceof InputNode) {
+      if (node.getNodeName() === "Input") {
         inputNodes.push(node);
       }
     }
@@ -383,7 +378,7 @@ export class GraphEditorService {
     let nodes = this.editor.getNodes();
     let outputNodes = [];
     for (let node of nodes) {
-      if (node instanceof OutputNode) {
+      if (node.getNodeName() === "Output") {
         outputNodes.push(node);
       }
     }
@@ -396,12 +391,12 @@ export class GraphEditorService {
     this.modules = data.modules;
     let node = new ModuleNode();
     node.id = "root";
-    node.info.inputs.description.value = "General Editor";
+    node.params.description.value = "General Editor";
     await this.changeEditor(node, false);
   }
 
   async changeEditor(targetModule: Node, clear?: boolean) {
-    this.editorSource.next(targetModule.info.inputs.description.value);
+    this.editorSource.next(targetModule.params.description.value);
     if (clear){
       let nodes = [];
       let connections = [];
@@ -459,16 +454,17 @@ export class GraphEditorService {
 
     for (let node of this.modules[this.currentModule].nodes) {
       await this.addNode(node.nodeName, node.id, node.data);
-      if (node.nodeName === ModuleNode.nodeName) {
+      if (node.nodeName === "Step") {
         let inputs = this.modules[node.id].inputs;
         let outputs = this.modules[node.id].outputs;
         let inputStrings: [string, string][] = [];
         let outputStrings: [string, string][] = [];
+        console.log(inputs, outputs);
         for (let input of inputs) {
-          inputStrings.push([input.data.inputs.key.value, input.data.inputs.type.value]);
+          inputStrings.push([input.data.params.key.value, input.data.params.type.value]);
         }
         for (let output of outputs) {
-          outputStrings.push([output.data.inputs.key.value, output.data.inputs.type.value]);
+          outputStrings.push([output.data.params.key.value, output.data.params.type.value]);
         }
         
         let nodeModule = await this.editor.getNode(node.id) as ModuleNode;
@@ -552,7 +548,7 @@ export class GraphEditorService {
 
     this.cleanModules();
     const body: string = JSON.stringify({modules: this.modules});
-    const response = await fetch("http://localhost:5000/api/create_app", {
+    const response = await fetch("https://gessi.cs.upc.edu:1446/api/create_app", { // FIXME: Hardcoded URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

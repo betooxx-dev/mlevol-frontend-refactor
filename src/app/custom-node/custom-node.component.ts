@@ -27,7 +27,7 @@ export class CustomNodeComponent implements OnChanges{
   
   ngOnChanges(): void {
 
-    const inputs = this.data.info.inputs;
+    const inputs = this.data.params;
     this.inputs_to_show = {};
     for (const key in inputs) {
       if (inputs[key].show) {

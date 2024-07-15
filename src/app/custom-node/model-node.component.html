@@ -1,5 +1,5 @@
 
-<div class="node-title" data-testid="title" [ngStyle]="{'background':data.color}">{{data.info.inputs['description'].value}} </div>
+<div class="node-title" data-testid="title" [ngStyle]="{'background':data.color}">{{data.params['description'].value}} </div>
 
 <div class="output" *ngFor="let output of data.outputs | keyvalue: sortByIndex"
 [attr.data-testid]="'output-'+output.key">

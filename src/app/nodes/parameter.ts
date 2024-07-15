@@ -1,49 +1,48 @@
 import { ClassicPreset as Classic } from "rete";
-import { DataFrameSocket, ModelSocket } from "../sockets";
 
 export class ParameterNode extends Classic.Node implements Classic.Node
 {
-    width = 190;
-    height = 150;
-    color = "rgba(132, 132, 135, 0.5)";
-    public static nodeName: string = "Parameter";
-    info = {
-      info: {
-          title: 'Parameter to be reused by other nodes',
-      },
-      inputs: {
-          description: {
-              type: "string",
-              value: "parameter description",
-              show: true,
-          },
-          type : {
-              type: "option",
-              value: "Number",
-              optionId: "parameter_type",
-              show: true,
-          },
-      },
-  };
+	width = 190;
+	height = 150;
+	color = "rgba(132, 132, 135, 0.5)";
+	nodeName: string = "Parameter";
+	info = {
+		title: 'Parameter to be reused by other nodes',
+	};
+	params =  {
+		description: {
+			type: "string",
+			value: "parameter description",
+			show: true,
+		},
+		type : {
+			type: "option",
+			value: "Number",
+			optionId: "parameter_type",
+			show: true,
+		},
+	};
 
-    constructor() {
-        super(ParameterNode.nodeName);
+	constructor() {
+		super("Parameter");
+	}
+
+	data() {
+        return {
+            info: this.info,
+            params: this.params
+        };
     }
 
-    /**
-     * Returns the data stored in the `info` property of the current object.
-     *
-     * @return {any} The data stored in the `info` property.
-     */
-    data() {
-        return this.info;
-    }
+	setData(data: any) {
+        this.info = data.info;
+		this.params = data.params;
+	}
+	getNodeName() {
+		return this.nodeName;
+	}
 
-    getNodeName() {
-        return ParameterNode.nodeName;
-    }
-
-    update() {
-    }
-    
-  }
+	update() {
+	}
+	
+}

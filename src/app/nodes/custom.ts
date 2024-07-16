@@ -19,7 +19,6 @@ export class CustomNode
         super(nodeName);
         this.nodeName = nodeName;
         let config = this.configService.getNode(nodeName);
-        console.log(config);
         this.info = config.info;
         if (config.color!) this.color = config.color;
         let show_count = 0;

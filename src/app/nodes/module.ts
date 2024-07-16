@@ -36,7 +36,6 @@ extends Classic.Node<
 	}
 
 	syncPorts(inputs: [string, string][], outputs: [string, string][]) {
-		console.log("syncPorts", inputs, outputs);
 		Object.keys(this.inputs).forEach((key: keyof typeof this.inputs) =>
 			this.removeInput(key)
 		);

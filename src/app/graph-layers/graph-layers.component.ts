@@ -12,7 +12,9 @@ import { PanelFocusService } from '../panel-focus.service';
 })
 export class GraphLayersComponent {
 
-  allModules: NodeEditor<Schemes>;
+  allModules : any;
+  modulesKeys : any;
+  modulesNames : any;
   subscription: Subscription | undefined;
   constructor(
     private graphService: GraphEditorService,
@@ -24,7 +26,19 @@ export class GraphLayersComponent {
   ngOnInit(): void {
     this.subscription = this.graphService.anyChange.subscribe((message) => {
       this.allModules = this.graphService.modules;
-      console.log(this.allModules);
+      let moduleIds = Object.keys(this.allModules);
+      // delete root from modulesKeys
+      moduleIds.splice(moduleIds.indexOf('root'), 1);
+      this.modulesKeys = moduleIds;
+      this.modulesNames = {};
+      for (let module in moduleIds) {
+        for (let node of this.allModules["root"].nodes) {
+          if (node.id == moduleIds[module]) {
+            this.modulesNames[moduleIds[module]] = node.data.params.description.value;
+          }
+        }
+      }
+
     });
   }
 

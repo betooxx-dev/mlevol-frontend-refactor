@@ -53,8 +53,6 @@ export class ConfigurationService {
 			let node_cat = this.nodes[i].category;
 			result.get(node_cat)?.push(this.nodes[i]["node"]);
 		}
-		
-		console.log(result)
 
 		return result;
 	}

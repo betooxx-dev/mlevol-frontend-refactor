@@ -459,7 +459,6 @@ export class GraphEditorService {
         let outputs = this.modules[node.id].outputs;
         let inputStrings: [string, string][] = [];
         let outputStrings: [string, string][] = [];
-        console.log(inputs, outputs);
         for (let input of inputs) {
           inputStrings.push([input.data.params.key.value, input.data.params.type.value]);
         }

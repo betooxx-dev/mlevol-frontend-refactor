@@ -7,8 +7,8 @@ import { Node } from '../editor';
 
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean; }) => {
   // Recommended
-  event.preventDefault(); 
-  event.returnValue = true;
+  //event.preventDefault(); 
+  //event.returnValue = true;
 };
 
 @Component({

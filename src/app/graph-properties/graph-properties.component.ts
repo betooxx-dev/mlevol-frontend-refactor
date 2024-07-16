@@ -74,13 +74,12 @@ export class GraphPropertiesComponent implements OnInit {
   }
 
   updateValue(key: string, value: any, field: string = "value") {
-    if (typeof value != "string")
-    {
+    if (typeof value != "string") {
       this. allNode!.params[key][field] = value.value;
-    }else{
+    } else{
       this.allNode!.params[key][field] = value;
     }
-    console.log(this.allNode);
+
     this.allNode!.update();
     this.data.updateNode(this.allNode!);
   }

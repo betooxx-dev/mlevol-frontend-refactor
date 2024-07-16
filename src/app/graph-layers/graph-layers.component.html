@@ -1,1 +1,8 @@
-<p style="text-align: center;">Work In Progress</p>
+<div *ngFor="let module of modulesKeys">
+    {{modulesNames[module]}}
+    <div>
+        <div *ngFor="let node of allModules[module].nodes">
+            {{node.name}}
+        </div>
+    </div>
+</div>

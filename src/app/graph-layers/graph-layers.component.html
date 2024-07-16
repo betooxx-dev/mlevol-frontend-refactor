@@ -1,8 +1,13 @@
-<div *ngFor="let module of modulesKeys">
-    {{modulesNames[module]}}
+<div class="module-selector" *ngFor="let module of modulesKeys">
+    <button class="toggle-button" (click)="toggleModule(module)">
+        {{modulesNames[module]}}
+    </button>
     <div>
-        <div *ngFor="let node of allModules[module].nodes">
-            {{node.name}}
+        <div style="display: flex; flex-direction: column;" *ngFor="let node of allModules[module].nodes">
+            <button class="toggle-node" (click)="toggleNode(node)">
+                {{node.name}}
+            </button>
         </div>
     </div>
+    <br>
 </div>

@@ -25,6 +25,9 @@ export class GraphLayersComponent {
 
   ngOnInit(): void {
     this.subscription = this.graphService.anyChange.subscribe((message) => {
+      this.allModules = {};
+      this.modulesKeys = [];
+      this.modulesNames = {};
       this.allModules = this.graphService.modules;
       let moduleIds = Object.keys(this.allModules);
       // delete root from modulesKeys
@@ -48,6 +51,14 @@ export class GraphLayersComponent {
 
   keyEvent(event: KeyboardEvent){
     console.log("Event handled from graph layers: " + event.key);
+  }
+
+  toggleModule(module: string) {
+    console.log("Toggling module: " + module);
+  }
+
+  toggleNode(node: any) {
+    console.log("Toggling node: " + node.name);
   }
 
 }

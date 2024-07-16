@@ -1,6 +1,5 @@
 import { Component, HostListener } from '@angular/core';
 import { GraphEditorService } from '../graph-editor.service';
-import { ModuleNode } from '../nodes';
 import { PanelFocusService } from '../panel-focus.service';
 
 @Component({

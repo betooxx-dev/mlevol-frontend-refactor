@@ -8,8 +8,6 @@ import { Node } from '../editor';
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean; }) => {
   // Recommended
   event.preventDefault(); 
-
-  // Included for legacy support, e.g. Chrome/Edge < 119
   event.returnValue = true;
 };
 
@@ -34,7 +32,7 @@ export class GraphEditorComponent {
     private injector: Injector,
     private graphEditorService: GraphEditorService,
     private focusService: PanelFocusService) { 
-      //window.addEventListener("beforeunload", beforeUnloadHandler); FIXME
+      window.addEventListener("beforeunload", beforeUnloadHandler);
       this.subscription = this.graphEditorService.selectedEditor.subscribe((message) => {
         this.moduleImIn = message;
       } );

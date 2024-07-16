@@ -1,14 +1,14 @@
 <div style="width: 250px; overflow: hidden; display: flex; flex-direction: column;">
        <button (click)="downloadEditor()">
-              Export editor to JSON
+              Export pipeline model
        </button>
        <input style="display: none" type="file" accept=".json" 
               (change)="onFileLoad($event)" #fileinput>
        <button (click)="fileinput.click()">
-              Import editor from JSON
+              Import pipeline model
        </button>
 
        <button (click)="generateCode()">
-              Generate Code
+              Generate pipeline code
        </button>
 </div>

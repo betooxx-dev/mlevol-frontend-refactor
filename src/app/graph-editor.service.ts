@@ -32,6 +32,7 @@ import { ModelNodeComponent } from './custom-node/model-node.component';
 import { getNewNode } from './utils';
 import { ConfigurationService } from './configuration.service';
 import modules from '../assets/base_editor.json';
+
 type AreaExtra = Area2D<Schemes> | AngularArea2D<Schemes>  | MinimapExtra;
 
 export  function accumulateOnCtrl(): { active(): boolean; destroy(): void;
@@ -178,7 +179,7 @@ export class GraphEditorService {
     this.area.addPipe(
       context => {
         if (context.type == "nodedragged"){
-          this.nodeSource.next(context.data.id);
+          this.selectNode(context.data.id);
         }
         return context;
       }
@@ -261,6 +262,10 @@ export class GraphEditorService {
 
   getAvailableNodes() {
     return this.configService.getAvailableNodes();
+  }
+
+  selectNode(nodeId : string) {
+    this.nodeSource.next(nodeId);
   }
 
   getNode(id : string) : Node {
@@ -363,6 +368,19 @@ export class GraphEditorService {
     this.anyChangeSource.next("Node updated");
   }
 
+  async getNodeModule(nodeId : string) {
+    for (const module of Object.keys(this.modules)){
+      if (module == "root") continue;
+      const nodes_of_module = this.modules[module].nodes;
+      for (const node of nodes_of_module){
+        if (node.id == nodeId){
+          return module;
+        }
+      }
+    }
+    return ""
+  }
+
   findInputs() {
     let nodes = this.editor.getNodes();
     let inputNodes = [];
@@ -386,18 +404,28 @@ export class GraphEditorService {
   }
 
   async loadEditor(json: string) {
+
     await this.editor.clear();
     const data = await JSON.parse(json);
     this.modules = data.modules;
     let node = new ModuleNode();
     node.id = "root";
-    node.params.description.value = "General Editor";
-    await this.changeEditor(node, false);
+    await this.changeEditor(node.id, false);
+
   }
 
-  async changeEditor(targetModule: Node, clear?: boolean) {
-    this.editorSource.next(targetModule.params.description.value);
-    if (clear){
+  getModuleTag(moduleId: string) : string {
+
+    for (let node of this.modules["root"].nodes) {
+      if (node.id == moduleId) {
+        return node.data.params.description.value
+      }
+    }
+
+    return "General Editor"
+  }
+
+  private async clearEditor(){
       let nodes = [];
       let connections = [];
       let inputs = [];
@@ -448,9 +476,17 @@ export class GraphEditorService {
       }
   
       await this.editor.clear();
-    }
+  }
 
-    this.currentModule = targetModule.id;
+  async changeEditor(targetModuleId: string, clear?: boolean) {
+    if ((targetModuleId != 'root') && this.currentModule == targetModuleId) return;
+
+    if (clear) await this.clearEditor();
+
+    this.currentModule = targetModuleId;
+
+    this.editorSource.next(this.getModuleTag(this.currentModule))
+
 
     for (let node of this.modules[this.currentModule].nodes) {
       await this.addNode(node.nodeName, node.id, node.data);

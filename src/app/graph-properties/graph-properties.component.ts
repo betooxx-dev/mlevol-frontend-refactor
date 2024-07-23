@@ -103,7 +103,7 @@ export class GraphPropertiesComponent implements OnInit {
 
   changeEditor(){
     if (this.allNode == undefined) return;
-    this.data.changeEditor(this.allNode!, true);
+    this.data.changeEditor(this.allNode!.id, true);
     this.closeProperties();
     
   }

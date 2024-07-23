@@ -111,7 +111,7 @@ export class GraphEditorComponent {
     let node = new ModuleNode();
     node.id = "root";
     node.params.description.value = "General Editor";
-    this.graphEditorService.changeEditor(node, true);
+    this.graphEditorService.changeEditor(node.id, true);
   }
 
   deleteNode(){

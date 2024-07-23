@@ -13,7 +13,7 @@
 
 <ul class="config-buttons">
     <li>
-        <button pTooltip="Auto home" (click)="homeZoom()">
+        <button pTooltip="Center zoom" (click)="homeZoom()">
             <i class="pi pi-home"></i>
         </button>
     </li>
@@ -42,3 +42,8 @@
 </ul>
 
 <dialog-content-example-dialog [visible]="showPopUp" (addedNode)="closePopUp()"></dialog-content-example-dialog>
+<div class="actions-container">
+    <p-button label="Add node" (click)="openPopUp()">
+
+    </p-button>
+</div>

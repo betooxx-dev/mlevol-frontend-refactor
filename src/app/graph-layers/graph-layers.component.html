@@ -1,13 +1,15 @@
-<div class="module-selector" *ngFor="let module of modulesKeys">
-    <button class="toggle-button" (click)="toggleModule(module)">
-        {{modulesNames[module]}}
-    </button>
-    <div>
-        <div style="display: flex; flex-direction: column;" *ngFor="let node of allModules[module].nodes">
-            <button class="toggle-node" (click)="toggleNode(node)">
-                {{node.name}}
-            </button>
+<p-scrollPanel [style]="{ width: '100%', height: '100%'}" styleClass="custombar1">
+    <div class="module-selector" *ngFor="let module of modulesKeys">
+        <button class="toggle-button" (click)="toggleModule(module)">
+            {{modulesNames[module]}}
+        </button>
+        <div>
+            <div style="display: flex; flex-direction: column;" *ngFor="let node of allModules[module].nodes">
+                <button class="toggle-node" (click)="toggleNode(node)">
+                    {{node.name}}
+                </button>
+            </div>
         </div>
+        <br>
     </div>
-    <br>
-</div>
+</p-scrollPanel>

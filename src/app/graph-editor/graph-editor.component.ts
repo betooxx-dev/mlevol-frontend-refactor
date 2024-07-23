@@ -51,6 +51,10 @@ export class GraphEditorComponent {
     this.showPopUp = false;
   }
 
+  openPopUp() {
+    this.showPopUp = true;
+  }
+
   @HostListener('mouseenter') onMouseEnter() {
     this.focusService.mouseOver(this);
   }

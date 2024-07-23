@@ -45,6 +45,11 @@ import { CustomSocketComponent,} from './custom-socket';
 import { InputTextModule } from 'primeng/inputtext';
 import { FocusHandlerComponent } from './focus-handler/focus-handler.component';
 
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+
+import { TreeSelectModule } from 'primeng/treeselect';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,6 +85,8 @@ import { FocusHandlerComponent } from './focus-handler/focus-handler.component';
     InputTextModule,
     SelectButtonModule,
     InputNumberModule,
+    ScrollPanelModule,
+    TreeSelectModule,
   ],
   providers: [
     provideAnimationsAsync()

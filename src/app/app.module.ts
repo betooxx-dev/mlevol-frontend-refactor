@@ -47,7 +47,7 @@ import { FocusHandlerComponent } from './focus-handler/focus-handler.component';
 
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 
-import { TreeSelectModule } from 'primeng/treeselect';
+import { CascadeSelectModule } from 'primeng/cascadeselect';
 
 
 @NgModule({
@@ -86,7 +86,7 @@ import { TreeSelectModule } from 'primeng/treeselect';
     SelectButtonModule,
     InputNumberModule,
     ScrollPanelModule,
-    TreeSelectModule,
+    CascadeSelectModule,
   ],
   providers: [
     provideAnimationsAsync()

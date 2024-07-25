@@ -584,7 +584,7 @@ export class GraphEditorService {
     this.cleanModules();
     const body: string = JSON.stringify({modules: this.modules});
     const response = await fetch("https://gessi.cs.upc.edu:1446/api/create_app", { // FIXME: Hardcoded URL
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },

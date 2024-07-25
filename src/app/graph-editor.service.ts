@@ -588,11 +588,13 @@ export class GraphEditorService {
         nodes : this.configService.getNodes()
       }
     );
-    //const response = await fetch("https://gessi.cs.upc.edu:1446/api/create_app", { // FIXME: Hardcoded URL
-    const response = await fetch("http://localhost:5000/api/create_app", { // FIXME: Hardcoded URL
+    const response = await fetch("https://gessi.cs.upc.edu:1446/api/create_app", { // FIXME: Hardcoded URL
+    //const response = await fetch("http://localhost:5000/api/create_app", { // FIXME: Hardcoded URL
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          // CORS disable
+          'Access-Control-Allow-Origin': '*',
         },
         body: body,
     });

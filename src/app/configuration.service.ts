@@ -62,4 +62,8 @@ export class ConfigurationService {
 			return this.sockets[key];
 		return this.sockets["Unknown"]
 	}
+
+	getNodes() {
+		return this.nodes;
+	}
 }

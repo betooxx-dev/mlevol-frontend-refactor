@@ -8,8 +8,8 @@ import { ConfigurationService } from '../configuration.service';
 
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean; }) => {
   // Recommended
-  //event.preventDefault(); 
-  //event.returnValue = true;
+  event.preventDefault(); 
+  event.returnValue = true;
 };
 
 @Component({

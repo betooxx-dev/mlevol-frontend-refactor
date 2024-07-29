@@ -2,7 +2,7 @@ import { ClassicPreset as Classic, NodeEditor } from "rete";
 import { CustomSocket } from "../sockets";
 import { ConfigurationService } from "../configuration.service";
 import { getSocket } from "../utils";
-
+import { getColorFromCategory } from "../utils";
 export class CustomNode
     extends Classic.Node<
     Record<string, CustomSocket>,
@@ -14,13 +14,14 @@ export class CustomNode
     nodeName: string;
     info : any = {};
     params : any = {};
-    configService: ConfigurationService = new ConfigurationService();
-    constructor(nodeName: string) {
+    constructor(nodeName: string, config: any) {
         super(nodeName);
+        
         this.nodeName = nodeName;
-        let config = this.configService.getNode(nodeName);
         this.info = config.info;
+        this.color = getColorFromCategory(config.category!);
         if (config.color!) this.color = config.color;
+        
         let show_count = 0;
         for (let i = 0; i < config.params.length; i++) {
             let param = config.params[i];
@@ -31,7 +32,6 @@ export class CustomNode
                 optionId : param.optionId!,
                 isParam: "custom",
             }
-
             if (param.show) show_count++;
         }
 

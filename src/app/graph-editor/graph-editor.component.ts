@@ -144,7 +144,7 @@ export class DialogComponent implements OnInit{
   }
 
   async ngOnInit() {
-    await this.configService.initClass();
+    await this.configService.waitForFetch();
     this.availableNodes = this.graphEditorService.getAvailableNodes();
     for(const value of this.availableNodes.keys()){
       this.availableCategories.push(value);

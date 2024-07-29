@@ -1,9 +1,8 @@
 // configuration.service.ts
 
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import OptionsJSON from '../assets/options.json';
-import SocketJSON from '../assets/sockets.json';
-import NodesJSON from '../assets/nodes.json';
+import { BehaviorSubject, filter, first, Observable, tap } from 'rxjs';
 @Injectable({
   	providedIn: 'root'
 })
@@ -12,21 +11,44 @@ export class ConfigurationService {
 	options_of_options : any;
 	nodes : any;
 	sockets : any;
-
+	semaphor : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	constructor() {
-
-		this.options = OptionsJSON["options"];
-		this.options_of_options = OptionsJSON["option_of_options"];
-		
-		this.nodes = NodesJSON["nodes"];
-
-		this.sockets = SocketJSON;
 	}
+
+	async initClass() {
+		const response = await fetch("https://gessi.cs.upc.edu:1446/api/get_config", { // FIXME: Hardcoded URL
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				// CORS disable
+				'Access-Control-Allow-Origin': '*',
+			},
+		})
+		const json = await response.json()
+
+		console.log(json);
+		this.options = json["options"]["options"];
+		this.options_of_options = json["options"]["option_of_options"];
+		this.nodes = json["nodes"]["nodes"];
+		this.sockets = json["sockets"];
+
+		this.semaphor.next(true);
+	}
+
+
 
 	getOptions(key : string) {
 		if (key in this.options)
 			return this.options[key];
 		return []
+	}
+
+	getAllOptions() {
+		return this.options
+	}
+
+	getAllOptionsOfOptions() {
+		return this.options_of_options
 	}
 
 	getOptionsOfOptions(key : string) {
@@ -66,4 +88,16 @@ export class ConfigurationService {
 	getNodes() {
 		return this.nodes;
 	}
+
+	waitForFetch() : Promise<void> {
+		if (this.semaphor.getValue() === true) {
+		  return Promise.resolve();
+		}
+	
+		return this.semaphor.asObservable().pipe(
+			filter(value => value === true),
+			first(),
+			tap(value => console.log(`BehaviorSubject emitted: ${value}`))
+		  ).toPromise().then(() => {});
+	  }
 }

@@ -1,13 +1,12 @@
+import { ConfigurationService } from './../configuration.service';
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GraphEditorService } from '../graph-editor.service';
 import { Node } from '../editor';
 import { ParameterNode } from '../nodes';
 
-import OptionsJSON from '../../assets/options.json';
 import {ParamOptions} from "../dropbox.options";
 import { PanelFocusService } from '../panel-focus.service';
-import { ConfigurationService } from '../configuration.service';
 @Component({
   selector: 'app-graph-properties',
   templateUrl: './graph-properties.component.html',
@@ -24,14 +23,15 @@ export class GraphPropertiesComponent implements OnInit {
   colors : [] = [];
   subscription : Subscription | undefined;
   moduleNodeName = "Step";
-  options:any = OptionsJSON.options;
-  options_of_options:any = OptionsJSON.option_of_options;
+  options:any;
+  options_of_options:any;
 
   paramOptions = ParamOptions;
   nodeParamOptions : [] | any;
   constructor(
     private data : GraphEditorService,
     private focusService : PanelFocusService,
+    private configService: ConfigurationService
   ){
     this.subscription = this.data.selectedSource.subscribe(async (message) => {
       if (message == "") return;
@@ -42,6 +42,8 @@ export class GraphPropertiesComponent implements OnInit {
       this.nodeInputKeys = this.nodeInfo ? Object.keys(this.nodeInfo) : [];
       let availableParameters = await this.data.getParameterNodes();
       this.nodeParamOptions = [];
+      this.options = this.configService.getAllOptions();
+      this.options_of_options = this.configService.getAllOptionsOfOptions();
       for (let i = 0; i < availableParameters.length; i++) {
         let param = availableParameters[i] as ParameterNode;
         this.nodeParamOptions.push(

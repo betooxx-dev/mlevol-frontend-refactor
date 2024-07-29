@@ -1,9 +1,10 @@
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Injector, Input, Output, ViewChild } from '@angular/core'
+import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Injector, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { GraphEditorService } from '../graph-editor.service';
 import { Subscription } from 'rxjs';
 import { ModuleNode } from '../nodes';
 import { PanelFocusService } from '../panel-focus.service';
 import { Node } from '../editor';
+import { ConfigurationService } from '../configuration.service';
 
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean; }) => {
   // Recommended
@@ -59,7 +60,7 @@ export class GraphEditorComponent {
     this.focusService.mouseOver(this);
   }
 
-  keyEvent(event: KeyboardEvent) {
+  async keyEvent(event: KeyboardEvent) {
     if (event.key === ' ' && event.shiftKey) {
       if (this.moduleImIn == "General Editor") {
         this.graphEditorService.addNode("Step");
@@ -130,7 +131,7 @@ export class GraphEditorComponent {
   templateUrl: './add-node-dialog.html',
   styleUrl: './add-node-dialog.css',
 })
-export class DialogComponent {
+export class DialogComponent implements OnInit{
   availableNodes: Map<string, string[]> = new Map<string, string[]>();
   availableCategories : string[] = [];
   @Input() visible: boolean = false;
@@ -138,7 +139,12 @@ export class DialogComponent {
   showTip: boolean = true;
   constructor(
     private graphEditorService: GraphEditorService,
+    private configService: ConfigurationService,
     private focusService: PanelFocusService) {
+  }
+
+  async ngOnInit() {
+    await this.configService.initClass();
     this.availableNodes = this.graphEditorService.getAvailableNodes();
     for(const value of this.availableNodes.keys()){
       this.availableCategories.push(value);

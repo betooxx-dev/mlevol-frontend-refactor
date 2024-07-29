@@ -78,6 +78,7 @@ export class GraphEditorService {
   }
 
   async createEditor(container: HTMLElement, injector: Injector) {
+    await this.configService.waitForFetch();
     if (this.area) this.area.destroy();
     this.area = new AreaPlugin<Schemes, AreaExtra>(container);
     

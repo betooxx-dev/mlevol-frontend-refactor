@@ -50,8 +50,8 @@ extends Classic.Node<
 			this.addOutput(key[0], new Classic.Output(getSocket(key[1]), key[0]));
 		});
 		this.height =
-		80 +
-		25 * (Object.keys(this.inputs).length + Object.keys(this.outputs).length);
+		45 +
+		27.5 * (Object.keys(this.inputs).length + Object.keys(this.outputs).length);
 	}
 
 	data() {

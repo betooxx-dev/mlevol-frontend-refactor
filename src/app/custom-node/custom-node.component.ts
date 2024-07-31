@@ -21,12 +21,9 @@ export class CustomNodeComponent implements OnChanges{
 
   constructor(private cdr: ChangeDetectorRef) {
     this.cdr.detach();
-    
   }
-
   
   ngOnChanges(): void {
-
     const inputs = this.data.params;
     this.inputs_to_show = {};
     for (const key in inputs) {
@@ -35,7 +32,6 @@ export class CustomNodeComponent implements OnChanges{
       }
     }
     this.inputs_keys = Object.keys(this.inputs_to_show);
-
     this.cdr.detectChanges();
     requestAnimationFrame(() => this.rendered());
     this.seed++; // force render sockets

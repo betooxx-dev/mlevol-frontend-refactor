@@ -46,8 +46,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FocusHandlerComponent } from './focus-handler/focus-handler.component';
 
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
-import { CascadeSelectModule } from 'primeng/cascadeselect';
 
 
 @NgModule({
@@ -86,7 +86,7 @@ import { CascadeSelectModule } from 'primeng/cascadeselect';
     SelectButtonModule,
     InputNumberModule,
     ScrollPanelModule,
-    CascadeSelectModule,
+    SplitButtonModule,
   ],
   providers: [
     provideAnimationsAsync()

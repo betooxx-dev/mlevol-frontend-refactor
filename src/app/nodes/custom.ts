@@ -45,10 +45,7 @@ export class CustomNode
             this.addOutput(output.port_label, new Classic.Output(getSocket(output.port_type), output.port_label));
         }
 
-        this.height =
-		80 +
-		25 * (Object.keys(this.inputs).length + Object.keys(this.outputs).length)+
-        35 * show_count;
+        this.height = 45 + 27.5 * (Object.keys(this.inputs).length + Object.keys(this.outputs).length) + 25 * show_count;
     }
 
     data() {
@@ -64,6 +61,21 @@ export class CustomNode
 	}
 
     update() {
+        let total_lines = 0;    
+        // iterate through params
+        for (var m in this.params) {
+            if (this.params[m].show) {
+                total_lines++;
+                var value_length = String(this.params[m].value).length;
+                if (value_length > 16){
+                    value_length -= 16;
+                    total_lines++;
+                }
+                total_lines += String(value_length).length / 25;
+            }
+        }
+        console.log(total_lines);   
+        this.height = 45 + 27.5 * (Object.keys(this.inputs).length + Object.keys(this.outputs).length) + 25 * total_lines;
     }
 
     getNodeName() {

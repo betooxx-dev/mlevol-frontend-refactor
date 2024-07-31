@@ -5,167 +5,196 @@ import { ModuleNode } from '../nodes';
 import { PanelFocusService } from '../panel-focus.service';
 import { Node } from '../editor';
 import { ConfigurationService } from '../configuration.service';
+import { MenuItem } from 'primeng/api';
 
 const beforeUnloadHandler = (event: { preventDefault: () => void; returnValue: boolean; }) => {
-  // Recommended
-  event.preventDefault(); 
-  event.returnValue = true;
+	// Recommended
+	event.preventDefault(); 
+	event.returnValue = true;
 };
 
 @Component({
-  selector: 'app-graph-editor',
-  templateUrl: './graph-editor.component.html',
-  styleUrl: './graph-editor.component.css',
+	selector: 'app-graph-editor',
+	templateUrl: './graph-editor.component.html',
+	styleUrl: './graph-editor.component.css',
 })
-export class GraphEditorComponent {
-  @ViewChild('rete') container!: ElementRef<HTMLElement>;
-  showMap: boolean = true;
-  moduleImIn: string = 'General Editor';
-  showPopup: boolean = false;
-  showConfirmArrange: boolean = false;
-  subscription: Subscription;
-  allNode: Node | undefined;
-  copyNode: Node | undefined;
-  subscriptionNode: Subscription;
-  showPopUp: boolean = false;
+export class GraphEditorComponent implements OnInit {
+	@ViewChild('rete') container!: ElementRef<HTMLElement>;
+	showMap: boolean = true;
+	moduleImIn: string = 'General Editor';
+	showPopup: boolean = false;
+	showConfirmArrange: boolean = false;
+	subscription: Subscription;
+	allNode: Node | undefined;
+	copyNode: Node | undefined;
+	subscriptionNode: Subscription;
+	showPopUp: boolean = false;
+	items: MenuItem[];
 
-  constructor(
-    private injector: Injector,
-    private graphEditorService: GraphEditorService,
-    private focusService: PanelFocusService) { 
-      window.addEventListener("beforeunload", beforeUnloadHandler);
-      this.subscription = this.graphEditorService.selectedEditor.subscribe((message) => {
-        this.moduleImIn = message;
-      } );
-      this.subscriptionNode = this.graphEditorService.selectedSource.subscribe((message) => {
-        if (message == "") return;
-        this.allNode = this.graphEditorService.getNode(message);
-      });
-    }
+	constructor(
+		private injector: Injector,
+		private graphEditorService: GraphEditorService,
+		private focusService: PanelFocusService,
+		private configService : ConfigurationService) { 
+			window.addEventListener("beforeunload", beforeUnloadHandler);
+			this.subscription = this.graphEditorService.selectedEditor.subscribe((message) => {
+				this.moduleImIn = message;
+			} );
+			this.subscriptionNode = this.graphEditorService.selectedSource.subscribe((message) => {
+				if (message == "") return;
+				this.allNode = this.graphEditorService.getNode(message);
+			});
+			this.items = [];
+		}
 
-  async ngAfterViewInit() {
-    await this.graphEditorService.createEditor(this.container.nativeElement,this.injector);
-    await this.graphEditorService.homeZoom();
-  }
+	async ngOnInit() {
+		await this.configService.waitForFetch();
+		const availableNodes = this.graphEditorService.getAvailableNodes();
+		for(const value of availableNodes.keys()){
+			let items = [];
+			for(const item of availableNodes.get(value)!) {
+				items.push({
+					label: item,
+					command : () => {
+						this.graphEditorService.addNode(item);
+						}
+					}
+				);
+			}
+			this.items.push({
+				label : value,
+				items
+			})
+		}
+	}
 
-  closePopUp() {
-    this.showPopUp = false;
-  }
+	async ngAfterViewInit() {
+		await this.graphEditorService.createEditor(this.container.nativeElement,this.injector);
+		await this.graphEditorService.homeZoom();
+	}
 
-  openPopUp() {
-    this.showPopUp = true;
-  }
+	save(severity: string) {
+		console.log(severity);
+	}
 
-  @HostListener('mouseenter') onMouseEnter() {
-    this.focusService.mouseOver(this);
-  }
+	closePopUp() {
+		this.showPopUp = false;
+	}
 
-  async keyEvent(event: KeyboardEvent) {
-    if (event.key === ' ' && event.shiftKey) {
-      if (this.moduleImIn == "General Editor") {
-        this.graphEditorService.addNode("Step");
-        return;
-      }
-      this.showPopUp = true;
-    }
-    if (event.key === 'Delete' && this.allNode) {
-      this.deleteNode();
-    }
+	openPopUp() {
+		this.showPopUp = true;
+	}
 
-    if (event.key === 'c' && event.ctrlKey && this.allNode) {
-      this.copyNode = this.allNode;
-    }
+	@HostListener('mouseenter') onMouseEnter() {
+		this.focusService.mouseOver(this);
+	}
 
-    if (event.key === 'x' && event.ctrlKey && this.allNode) {
-      this.copyNode = this.allNode;
-      this.deleteNode();
-    }
+	async keyEvent(event: KeyboardEvent) {
+		if (event.key === ' ' && event.shiftKey) {
+			if (this.moduleImIn == "General Editor") {
+				this.graphEditorService.addNode("Step");
+				return;
+			}
+			this.showPopUp = true;
+		}
+		if (event.key === 'Delete' && this.allNode) {
+			this.deleteNode();
+		}
 
-    if (event.key === 'v' && event.ctrlKey && this.copyNode) {
-      this.graphEditorService.addNode(this.copyNode.getNodeName(), undefined, JSON.parse(JSON.stringify(this.copyNode.data())));
-      this.copyNode = undefined;
-    }
-  }
+		if (event.key === 'c' && event.ctrlKey && this.allNode) {
+			this.copyNode = this.allNode;
+		}
 
-  async zoomIn() {
-    await this.graphEditorService.zoomIn();
-  }
+		if (event.key === 'x' && event.ctrlKey && this.allNode) {
+			this.copyNode = this.allNode;
+			this.deleteNode();
+		}
 
-  async zoomOut() {
-    await this.graphEditorService.zoomOut();
-  }
+		if (event.key === 'v' && event.ctrlKey && this.copyNode) {
+			this.graphEditorService.addNode(this.copyNode.getNodeName(), undefined, JSON.parse(JSON.stringify(this.copyNode.data())));
+			this.copyNode = undefined;
+		}
+	}
 
-  async homeZoom() {
-    await this.graphEditorService.homeZoom();
-  }
+	async zoomIn() {
+		await this.graphEditorService.zoomIn();
+	}
 
-  async toggleMap() {
-    this.showMap = !this.showMap;
-    if (this.showMap) {
-      this.container.nativeElement.classList.remove('hide-minimap');
-    } else {
-      this.container.nativeElement.classList.add('hide-minimap');
-    }
-  }
+	async zoomOut() {
+		await this.graphEditorService.zoomOut();
+	}
 
-  async arrangeNodes() {
-    await this.graphEditorService.arrangeNodes();
-  }
+	async homeZoom() {
+		await this.graphEditorService.homeZoom();
+	}
 
-  backToRoot(){
-    let node = new ModuleNode();
-    node.id = "root";
-    node.params.description.value = "General Editor";
-    this.graphEditorService.changeEditor(node.id, true);
-  }
+	async toggleMap() {
+		this.showMap = !this.showMap;
+		if (this.showMap) {
+			this.container.nativeElement.classList.remove('hide-minimap');
+		} else {
+			this.container.nativeElement.classList.add('hide-minimap');
+		}
+	}
 
-  deleteNode(){
-    this.graphEditorService.deleteNode(this.allNode!.id);
-    this.allNode = undefined;
-  }
+	async arrangeNodes() {
+		await this.graphEditorService.arrangeNodes();
+	}
+
+	backToRoot(){
+		let node = new ModuleNode();
+		node.id = "root";
+		node.params.description.value = "General Editor";
+		this.graphEditorService.changeEditor(node.id, true);
+	}
+
+	deleteNode(){
+		this.graphEditorService.deleteNode(this.allNode!.id);
+		this.allNode = undefined;
+	}
 
 }
 
 @Component({
-  selector: 'dialog-content-example-dialog',
-  templateUrl: './add-node-dialog.html',
-  styleUrl: './add-node-dialog.css',
+	selector: 'dialog-content-example-dialog',
+	templateUrl: './add-node-dialog.html',
+	styleUrl: './add-node-dialog.css',
 })
 export class DialogComponent implements OnInit{
-  availableNodes: Map<string, string[]> = new Map<string, string[]>();
-  availableCategories : string[] = [];
-  @Input() visible: boolean = false;
-  @Output() addedNode: EventEmitter<boolean> = new EventEmitter<boolean>();
-  showTip: boolean = true;
-  constructor(
-    private graphEditorService: GraphEditorService,
-    private configService: ConfigurationService,
-    private focusService: PanelFocusService) {
-  }
+	availableNodes: Map<string, string[]> = new Map<string, string[]>();
+	availableCategories : string[] = [];
+	@Input() visible: boolean = false;
+	@Output() addedNode: EventEmitter<boolean> = new EventEmitter<boolean>();
+	showTip: boolean = true;
+	constructor(
+		private graphEditorService: GraphEditorService,
+		private configService: ConfigurationService,
+		private focusService: PanelFocusService) {
+	}
 
-  async ngOnInit() {
-    await this.configService.waitForFetch();
-    this.availableNodes = this.graphEditorService.getAvailableNodes();
-    for(const value of this.availableNodes.keys()){
-      this.availableCategories.push(value);
-    }
-  }
+	async ngOnInit() {
+		await this.configService.waitForFetch();
+		this.availableNodes = this.graphEditorService.getAvailableNodes();
+		for(const value of this.availableNodes.keys()){
+			this.availableCategories.push(value);
+		}
+	}
 
-  @HostListener('mouseenter') onMouseEnter() {
-    this.focusService.mouseOver(this);
-  }
+	@HostListener('mouseenter') onMouseEnter() {
+		this.focusService.mouseOver(this);
+	}
 
-  keyEvent(event: KeyboardEvent){
-    
-  }
+	keyEvent(event: KeyboardEvent){
+		
+	}
 
-  addNode(nodeName :string) {
-    this.showTip = false;
-    this.graphEditorService.addNode(nodeName);
-    this.closeAddDialog();
-  }
+	addNode(nodeName :string) {
+		this.showTip = false;
+		this.graphEditorService.addNode(nodeName);
+		this.closeAddDialog();
+	}
 
-  closeAddDialog() {
-    this.addedNode.emit(false);
-  }
+	closeAddDialog() {
+		this.addedNode.emit(false);
+	}
 }

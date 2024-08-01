@@ -17,7 +17,7 @@ extends Classic.Node<
 	};
 	
 	params = {
-		description :{
+		'Stage name' :{
 			type: "string",
 			value: "Step description",
 		},

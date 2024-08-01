@@ -13,14 +13,15 @@ export class ConfigurationService {
 	sockets : any;
 	semaphor : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	constructor() {
+		this.initClass();
 	}
 
 	async initClass() {
 		const response = await fetch("https://gessi.cs.upc.edu:1446/api/get_config", { // FIXME: Hardcoded URL
+		//const response = await fetch("http://localhost:5000/api/get_config", { // FIXME: Hardcoded URL
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				// CORS disable
 				'Access-Control-Allow-Origin': '*',
 			},
 		})
@@ -33,6 +34,8 @@ export class ConfigurationService {
 		this.sockets = json["sockets"];
 
 		this.semaphor.next(true);
+		this.semaphor.complete();
+		console.log(this)
 	}
 
 
@@ -58,6 +61,8 @@ export class ConfigurationService {
 	}
 
 	getNode(key : string) {
+		console.log("Getting node: " + key);
+		console.log(this.sockets);
 		for (let i = 0; i < this.nodes.length; i++) {
 			if (this.nodes[i]["node"] == key)
 				return this.nodes[i];
@@ -94,7 +99,7 @@ export class ConfigurationService {
 		  return Promise.resolve();
 		}
 	
-		return this.semaphor.asObservable().pipe(
+		return this.semaphor.pipe(
 			filter(value => value === true),
 			first(),
 			tap(value => console.log(`BehaviorSubject emitted: ${value}`))

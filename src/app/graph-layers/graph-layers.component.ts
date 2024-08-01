@@ -37,7 +37,7 @@ export class GraphLayersComponent {
       for (let module in moduleIds) {
         for (let node of this.allModules["root"].nodes) {
           if (node.id == moduleIds[module]) {
-            this.modulesNames[moduleIds[module]] = node.data.params.description.value;
+            this.modulesNames[moduleIds[module]] = node.data.params["Stage name"].value;
           }
         }
       }

@@ -9,7 +9,7 @@
               "title": "Contains Step"
             },
             "params": {
-              "description": {
+              "Stage name": {
                 "type": "string",
                 "value": "Data Collection"
               },
@@ -29,7 +29,7 @@
               "title": "Contains Step"
             },
             "params": {
-              "description": {
+              "Stage name": {
                 "type": "string",
                 "value": "Data Cleaning"
               },
@@ -49,7 +49,7 @@
               "title": "Contains Step"
             },
             "params": {
-              "description": {
+              "Stage name": {
                 "type": "string",
                 "value": "Feature Engineering"
               },
@@ -69,7 +69,7 @@
               "title": "Contains Step"
             },
             "params": {
-              "description": {
+              "Stage name": {
                 "type": "string",
                 "value": "Model Train"
               },
@@ -89,7 +89,7 @@
               "title": "Contains Step"
             },
             "params": {
-              "description": {
+              "Stage name": {
                 "type": "string",
                 "value": "Model Evaluation"
               },

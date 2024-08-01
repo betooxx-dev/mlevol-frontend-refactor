@@ -139,7 +139,6 @@ export class GraphEditorService {
               );
               return true;
             }
-
             return false; // Add this line
           },
         })
@@ -154,7 +153,6 @@ export class GraphEditorService {
     AreaExtensions.restrictor(this.area, {
       scaling: () => ({ min: 0.3, max: 3 }),
     });
-
 
     addCustomBackground(this.area);
     
@@ -228,7 +226,7 @@ export class GraphEditorService {
     if(!this.editor) return;
     if(!this.area) return;
 
-    let node = getNewNode(nodeName);
+    let node = getNewNode(nodeName, this.configService.getNode(nodeName));
     if (!node) {
       console.log("Node not found");
       return;
@@ -254,9 +252,11 @@ export class GraphEditorService {
     node.update();
 
     await this.editor.addNode(node);
-    
-    let centerOfScreen = this.area.area.pointer;
-    await this.area.nodeViews.get(node.id)?.translate(centerOfScreen.x, centerOfScreen.y);
+    let centerOfScreen = this.area.container.getBoundingClientRect();
+    await this.area.nodeViews.get(node.id)?.translate(
+      centerOfScreen.x + centerOfScreen.width  / 4,
+      centerOfScreen.y + centerOfScreen.height / 4);
+    //await this.area.nodeViews.get(node.id)?.translate(centerOfScreen.x, centerOfScreen.y);
     await this.area.nodeViews.get(node.id)?.resize(node.width, node.height);
 
   }
@@ -366,6 +366,7 @@ export class GraphEditorService {
       // TODO USING INHERITANCE
     }
     await this.area?.update("node", node.id);
+    await this.area?.nodeViews.get(node.id)?.resize(node.width, node.height);
     this.anyChangeSource.next("Node updated");
   }
 
@@ -419,7 +420,7 @@ export class GraphEditorService {
 
     for (let node of this.modules["root"].nodes) {
       if (node.id == moduleId) {
-        return node.data.params.description.value
+        return node.data.params["Stage name"].value
       }
     }
 

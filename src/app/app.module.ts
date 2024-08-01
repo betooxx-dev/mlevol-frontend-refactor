@@ -15,7 +15,7 @@ import { FeatureButtonComponent } from './feature-button/feature-button.componen
 
 import { GraphComponent } from './graph/graph.component';
 import { GraphMenuComponent } from './graph-menu/graph-menu.component';
-import { DialogComponent, GraphEditorComponent } from './graph-editor/graph-editor.component';
+import { GraphEditorComponent } from './graph-editor/graph-editor.component';
 import { GraphLayersComponent } from './graph-layers/graph-layers.component';
 import { GraphSettingsComponent } from './graph-settings/graph-settings.component';
 
@@ -66,7 +66,6 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     ModelNodeComponent,
     CustomSocketComponent,
     CustomConnectionComponent,
-    DialogComponent,
     GraphPropertiesComponent,
     FocusHandlerComponent,
   ],

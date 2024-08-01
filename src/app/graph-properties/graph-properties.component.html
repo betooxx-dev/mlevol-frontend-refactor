@@ -13,22 +13,11 @@
         <h2 style="margin: 10px;">Inputs</h2>
 
         <div *ngFor="let key of nodeInputKeys" >
-            <div *ngIf="allNode?.params[key]['type'] == 'string'" style="margin: 10px;" >
-                <p>
-                    {{key}}
-                </p>
-                <div *ngIf="allNode?.params[key].show">
-                    <input pInputText maxlength="55" id="{{key}}" type="text" [(ngModel)]="allNode?.params[key].value" (ngModelChange)="updateValue(key, $event)"/>
-                </div>
-                <div *ngIf="!allNode?.params[key].show">
-                    <input pInputText id="{{key}}" type="text" [(ngModel)]="allNode?.params[key].value" (ngModelChange)="updateValue(key, $event)"/>
-                </div>
-            </div>
+            <p>
+                {{key}}
+            </p>
 
-            <div *ngIf="allNode?.params[key].type == 'number'" style="margin: 10px;">
-                <p>
-                    {{key}}
-                </p>
+            <div *ngIf="allNode?.params[key]['type'] == 'string'" style="margin: 10px;" >
                 <p-selectButton
                     [options]="paramOptions"
                     [(ngModel)]="allNode?.params[key].isParam"
@@ -40,40 +29,51 @@
                         <div style="font-size: small;">{{item.label}}</div>
                     </ng-template>
                 </p-selectButton>
-                
-                <p-inputNumber *ngIf="allNode?.params[key].isParam == 'custom'"
-                    id="{{key}}" mode="decimal" [(ngModel)]="allNode?.params[key].value" [maxFractionDigits]="2" (ngModelChange)="updateValue(key, $event)"/>
+                <input pInputText id="{{key}}" type="text" [(ngModel)]="allNode?.params[key].value" (ngModelChange)="updateValue(key, $event)"/>
+            </div>
 
-                <p-dropdown *ngIf="allNode?.params[key].isParam == 'parameter'" 
+            <div *ngIf="allNode?.params[key].type == 'number'" style="margin: 10px;">
+                <p-selectButton
+                    [options]="paramOptions"
+                    [(ngModel)]="allNode?.params[key].isParam"
+                    (ngModelChange)="updateValue(key, $event, 'isParam')"
+                    optionLabel="label"
+                    optionValue="value"
+                    style="width: 50%;">
+                    <ng-template let-item pTemplate>
+                        <div style="font-size: small;">{{item.label}}</div>
+                    </ng-template>
+                </p-selectButton>
+                <p-inputNumber *ngIf="allNode?.params[key].isParam != 'parameter'"
+                    id="{{key}}" mode="decimal" [(ngModel)]="allNode?.params[key].value" [maxFractionDigits]="2" (ngModelChange)="updateValue(key, $event)"/>
+                
+                <input *ngIf="allNode?.params[key].isParam == 'parameter'"
+                    pInputText id="{{key}}" type="text" [(ngModel)]="allNode?.params[key].value" (ngModelChange)="updateValue(key, $event)"/>
+
+                <!--p-dropdown *ngIf="allNode?.params[key].isParam == 'parameter'" 
                     [(ngModel)]="allNode?.params[key].paramRef"
                     [options]="nodeParamOptions"
                     optionLabel="label"
                     optionValue="value"
-                    (ngModelChange)="updateValue(key, $event, 'paramRef')"/>
+                    (ngModelChange)="updateValue(key, $event, 'paramRef')"/-->
             </div>
 
             <div *ngIf="allNode?.params[key]['type'] == 'color'" style="margin: 10px;">
-                <p>
-                    {{key}}
-                </p>
-                    <p-dropdown [options]="options.color" optionLabel="color" (onChange)="updateValue(key, $event)">
-                        <ng-template pTemplate="selectedItem">
-                            <div class="flex align-items-center gap-2" *ngIf="allNode?.params[key].value">
-                                <div style="width: 40px; height: 20px; border-radius: 5px;" [ngStyle]="{background: allNode?.params[key].value}"></div>
-                            </div>
-                        </ng-template>
-                        <ng-template let-option pTemplate="item">
-                            <div class="flex align-items-center gap-2">
-                                <div style="width: 40px; height: 20px; border-radius: 5px;" [ngStyle]="{background: option}"></div>
-                            </div>
-                        </ng-template>
-                    </p-dropdown>
+                <p-dropdown [options]="options.color" optionLabel="color" (onChange)="updateValue(key, $event)">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="flex align-items-center gap-2" *ngIf="allNode?.params[key].value">
+                            <div style="width: 40px; height: 20px; border-radius: 5px;" [ngStyle]="{background: allNode?.params[key].value}"></div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-option pTemplate="item">
+                        <div class="flex align-items-center gap-2">
+                            <div style="width: 40px; height: 20px; border-radius: 5px;" [ngStyle]="{background: option}"></div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
             </div>
 
             <div *ngIf="allNode?.params[key].type == 'option'" style="margin: 10px;">
-                <p>
-                    {{key}}
-                </p>
                 <p-dropdown [options]="options[allNode?.params[key].optionId]" [filter]="true" (onChange)="updateValue(key, $event)" id="{{allNode?.id}}_{{key}}">
                     <ng-template pTemplate="selectedItem">
                         <div class="flex align-items-center gap-2" *ngIf="allNode?.params[key].value">
@@ -89,9 +89,6 @@
             </div>
 
             <div *ngIf="allNode?.params[key].type == 'option_of_options'" style="margin: 10px;">
-                <p>
-                    {{key}}
-                </p>
                 <p-dropdown 
                     [options]="options_of_options[allNode?.params[key]['optionId']]"
                     [group]="true"
@@ -115,7 +112,7 @@
 
     </div>
     <div *ngIf="allNode?.getNodeName() == moduleNodeName;" style="margin: 10px;">
-        <p-button label="Edit module" (click)="changeEditor()"></p-button>
+        <p-button label="Edit stage" (click)="changeEditor()"></p-button>
     </div>
     <!--div style="margin: 10px; display: flex; justify-content: center;">
         <p-button label="Delete" (click)="deleteNode()">

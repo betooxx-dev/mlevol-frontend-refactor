@@ -22,13 +22,11 @@ export class GraphEditorComponent implements OnInit {
 	@ViewChild('rete') container!: ElementRef<HTMLElement>;
 	showMap: boolean = true;
 	moduleImIn: string = 'General Editor';
-	showPopup: boolean = false;
 	showConfirmArrange: boolean = false;
 	subscription: Subscription;
 	allNode: Node | undefined;
 	copyNode: Node | undefined;
 	subscriptionNode: Subscription;
-	showPopUp: boolean = false;
 	items: MenuItem[];
 
 	constructor(
@@ -77,12 +75,8 @@ export class GraphEditorComponent implements OnInit {
 		console.log(severity);
 	}
 
-	closePopUp() {
-		this.showPopUp = false;
-	}
-
-	openPopUp() {
-		this.showPopUp = true;
+	addStage() {
+		this.graphEditorService.addNode("Step");
 	}
 
 	@HostListener('mouseenter') onMouseEnter() {
@@ -90,13 +84,6 @@ export class GraphEditorComponent implements OnInit {
 	}
 
 	async keyEvent(event: KeyboardEvent) {
-		if (event.key === ' ' && event.shiftKey) {
-			if (this.moduleImIn == "General Editor") {
-				this.graphEditorService.addNode("Step");
-				return;
-			}
-			this.showPopUp = true;
-		}
 		if (event.key === 'Delete' && this.allNode) {
 			this.deleteNode();
 		}
@@ -144,57 +131,12 @@ export class GraphEditorComponent implements OnInit {
 	backToRoot(){
 		let node = new ModuleNode();
 		node.id = "root";
-		node.params.description.value = "General Editor";
+		node.params['Stage name'].value = "General Editor";
 		this.graphEditorService.changeEditor(node.id, true);
 	}
 
 	deleteNode(){
 		this.graphEditorService.deleteNode(this.allNode!.id);
 		this.allNode = undefined;
-	}
-
-}
-
-@Component({
-	selector: 'dialog-content-example-dialog',
-	templateUrl: './add-node-dialog.html',
-	styleUrl: './add-node-dialog.css',
-})
-export class DialogComponent implements OnInit{
-	availableNodes: Map<string, string[]> = new Map<string, string[]>();
-	availableCategories : string[] = [];
-	@Input() visible: boolean = false;
-	@Output() addedNode: EventEmitter<boolean> = new EventEmitter<boolean>();
-	showTip: boolean = true;
-	constructor(
-		private graphEditorService: GraphEditorService,
-		private configService: ConfigurationService,
-		private focusService: PanelFocusService) {
-	}
-
-	async ngOnInit() {
-		await this.configService.waitForFetch();
-		this.availableNodes = this.graphEditorService.getAvailableNodes();
-		for(const value of this.availableNodes.keys()){
-			this.availableCategories.push(value);
-		}
-	}
-
-	@HostListener('mouseenter') onMouseEnter() {
-		this.focusService.mouseOver(this);
-	}
-
-	keyEvent(event: KeyboardEvent){
-		
-	}
-
-	addNode(nodeName :string) {
-		this.showTip = false;
-		this.graphEditorService.addNode(nodeName);
-		this.closeAddDialog();
-	}
-
-	closeAddDialog() {
-		this.addedNode.emit(false);
 	}
 }

@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { GraphSettingsComponent } from './graph-settings/graph-settings.component';
 import { GraphLayersComponent } from './graph-layers/graph-layers.component';
-import { DialogComponent, GraphEditorComponent } from './graph-editor/graph-editor.component';
+import { GraphEditorComponent } from './graph-editor/graph-editor.component';
 import { GraphPropertiesComponent } from './graph-properties/graph-properties.component';
 
 type myPanels =
 	GraphSettingsComponent | GraphLayersComponent | 
-	GraphEditorComponent | GraphPropertiesComponent | 
-	DialogComponent;
+	GraphEditorComponent | GraphPropertiesComponent;
 
 @Injectable({
   providedIn: 'root'

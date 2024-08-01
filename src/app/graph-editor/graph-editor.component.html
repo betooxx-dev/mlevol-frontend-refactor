@@ -41,9 +41,9 @@
     </li>
 </ul>
 
-<dialog-content-example-dialog [visible]="showPopUp" (addedNode)="closePopUp()"></dialog-content-example-dialog>
 <div class="actions-container">
     <p-splitButton 
         label="Add" 
-        [model]="items" />
+        [model]="items" *ngIf="moduleImIn != 'General Editor'"/>
+    <p-button label="Add Stage" (click)="addStage()" *ngIf="moduleImIn === 'General Editor'"/>
 </div>

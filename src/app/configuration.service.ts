@@ -17,8 +17,8 @@ export class ConfigurationService {
 	}
 
 	async initClass() {
-		const response = await fetch("https://gessi.cs.upc.edu:1446/api/get_config", { // FIXME: Hardcoded URL
-		//const response = await fetch("http://localhost:5000/api/get_config", { // FIXME: Hardcoded URL
+		//const response = await fetch("https://gessi.cs.upc.edu:1446/api/get_config", { // FIXME: Hardcoded URL
+		const response = await fetch("http://localhost:5000/api/get_config", { // FIXME: Hardcoded URL
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -27,7 +27,6 @@ export class ConfigurationService {
 		})
 		const json = await response.json()
 
-		console.log(json);
 		this.options = json["options"]["options"];
 		this.options_of_options = json["options"]["option_of_options"];
 		this.nodes = json["nodes"]["nodes"];
@@ -35,7 +34,6 @@ export class ConfigurationService {
 
 		this.semaphor.next(true);
 		this.semaphor.complete();
-		console.log(this)
 	}
 
 
@@ -61,8 +59,6 @@ export class ConfigurationService {
 	}
 
 	getNode(key : string) {
-		console.log("Getting node: " + key);
-		console.log(this.sockets);
 		for (let i = 0; i < this.nodes.length; i++) {
 			if (this.nodes[i]["node"] == key)
 				return this.nodes[i];
@@ -102,7 +98,7 @@ export class ConfigurationService {
 		return this.semaphor.pipe(
 			filter(value => value === true),
 			first(),
-			tap(value => console.log(`BehaviorSubject emitted: ${value}`))
+			tap(value => console.log(`Finished fetching`))
 		  ).toPromise().then(() => {});
 	  }
 }

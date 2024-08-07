@@ -10,26 +10,32 @@
         <h1 style="margin: 10px;">{{selectedNode}}</h1>
         <p style="color: gray; font-style: italic;margin: 0px;margin-left: 10px;">id: {{allNode?.id}}</p>
         <p style="color: gray; font-style: italic;margin: 0px;margin-left: 10px;">Title: {{allNode?.info?.title}}</p>
-        <h2 style="margin: 10px;">Inputs</h2>
+        <h2 style="margin: 10px; margin-top: 15px; margin-bottom: 0px;">Inputs</h2>
 
         <div *ngFor="let key of nodeInputKeys" >
-            <p>
+            <p style="margin-left: 10px;">
                 {{key}}
             </p>
 
+            <div *ngIf="allNode?.params[key]['type'] == 'description'" style="margin: 10px;" >
+                <input pInputText id="{{key}}" type="text" [(ngModel)]="allNode?.params[key].value" (ngModelChange)="updateValue(key, $event)"/>
+            </div>
+            
             <div *ngIf="allNode?.params[key]['type'] == 'string'" style="margin: 10px;" >
                 <p-selectButton
                     [options]="paramOptions"
                     [(ngModel)]="allNode?.params[key].isParam"
                     (ngModelChange)="updateValue(key, $event, 'isParam')"
                     optionLabel="label"
-                    optionValue="value"
-                    style="width: 50%;">
+                    optionValue="value">
                     <ng-template let-item pTemplate>
                         <div style="font-size: small;">{{item.label}}</div>
                     </ng-template>
                 </p-selectButton>
-                <input pInputText id="{{key}}" type="text" [(ngModel)]="allNode?.params[key].value" (ngModelChange)="updateValue(key, $event)"/>
+                <input *ngIf="allNode?.params[key].isParam != 'parameter'" 
+                    pInputText id="{{key}}" type="text" [(ngModel)]="allNode?.params[key].value" (ngModelChange)="updateValue(key, $event)"/>
+                <input *ngIf="allNode?.params[key].isParam == 'parameter'"
+                    pInputText id="{{key}}" type="text" [value]="allNode?.params[key].param_label" (input)="updateParam(key, $event)"/>
             </div>
 
             <div *ngIf="allNode?.params[key].type == 'number'" style="margin: 10px;">
@@ -38,24 +44,16 @@
                     [(ngModel)]="allNode?.params[key].isParam"
                     (ngModelChange)="updateValue(key, $event, 'isParam')"
                     optionLabel="label"
-                    optionValue="value"
-                    style="width: 50%;">
+                    optionValue="value">
                     <ng-template let-item pTemplate>
                         <div style="font-size: small;">{{item.label}}</div>
                     </ng-template>
                 </p-selectButton>
                 <p-inputNumber *ngIf="allNode?.params[key].isParam != 'parameter'"
                     id="{{key}}" mode="decimal" [(ngModel)]="allNode?.params[key].value" [maxFractionDigits]="2" (ngModelChange)="updateValue(key, $event)"/>
-                
-                <input *ngIf="allNode?.params[key].isParam == 'parameter'"
-                    pInputText id="{{key}}" type="text" [(ngModel)]="allNode?.params[key].value" (ngModelChange)="updateValue(key, $event)"/>
 
-                <!--p-dropdown *ngIf="allNode?.params[key].isParam == 'parameter'" 
-                    [(ngModel)]="allNode?.params[key].paramRef"
-                    [options]="nodeParamOptions"
-                    optionLabel="label"
-                    optionValue="value"
-                    (ngModelChange)="updateValue(key, $event, 'paramRef')"/-->
+                <input *ngIf="allNode?.params[key].isParam == 'parameter'"
+                    pInputText id="{{key}}" type="text" [value]="allNode?.params[key].param_label" (input)="updateParam(key, $event)"/>
             </div>
 
             <div *ngIf="allNode?.params[key]['type'] == 'color'" style="margin: 10px;">
@@ -108,8 +106,59 @@
                         </div>
                     </ng-template>
                 </p-dropdown>
-        </div>
+            </div>
 
+            <div *ngIf="allNode?.params[key]['type'] == 'list'" style="margin: 10px;" >
+                <p-selectButton
+                    [options]="paramOptions"
+                    [(ngModel)]="allNode?.params[key].isParam"
+                    (ngModelChange)="updateValue(key, $event, 'isParam')"
+                    optionLabel="label"
+                    optionValue="value">
+                    <ng-template let-item pTemplate>
+                        <div style="font-size: small;">{{item.label}}</div>
+                    </ng-template>
+                </p-selectButton>
+                <div *ngIf="allNode?.params[key].isParam != 'parameter'">
+                    <div *ngFor="let item of allNode?.params[key].value; let index = index; trackBy: trackByFn">
+                        <div >
+                            <input pInputText type="text" [value]="item" (input)="updateList(key, $event, index)" style="width: 230px;"/>
+                            <p-button p-icon icon="pi pi-times" (click)="removeItemFromList(key, index)"></p-button>
+                        </div>
+                    </div>
+                    <p-button label="Add" (click)="addItemToList(key)"></p-button>
+                </div>
+
+                <input *ngIf="allNode?.params[key].isParam == 'parameter'"
+                    pInputText id="{{key}}" type="text" [value]="allNode?.params[key].param_label" (input)="updateParam(key, $event)"/>
+                
+            </div>
+
+            <div *ngIf="allNode?.params[key]['type'] == 'map'" style="margin: 10px;" >
+                <p-selectButton
+                    [options]="paramOptions"
+                    [(ngModel)]="allNode?.params[key].isParam"
+                    (ngModelChange)="updateValue(key, $event, 'isParam')"
+                    optionLabel="label"
+                    optionValue="value">
+                    <ng-template let-item pTemplate>
+                        <div style="font-size: small;">{{item.label}}</div>
+                    </ng-template>
+                </p-selectButton>
+                <div *ngIf="allNode?.params[key].isParam != 'parameter'">
+                    <div *ngFor="let item of allNode?.params[key].value ; let index = index; trackBy: trackByFn">
+                        <div >
+                            <input pInputText type="text" [value]="item.key"   (input)="updateMap(key, 'key', $event, index)" style="width: 70px;"/>
+                            <input pInputText type="text" [value]="item.value" (input)="updateMap(key, 'value', $event, index)" style="width: 160px;"/>
+                            <p-button p-icon icon="pi pi-times" (click)="removeItemFromList(key, index)"></p-button>
+                        </div>
+                    </div>
+                    <p-button label="Add" (click)="addItemToMap(key)"></p-button>
+                </div>
+                <input *ngIf="allNode?.params[key].isParam == 'parameter'"
+                    pInputText id="{{key}}" type="text" [value]="allNode?.params[key].param_label" (input)="updateParam(key, $event)"/>
+            </div>
+            
     </div>
     <div *ngIf="allNode?.getNodeName() == moduleNodeName;" style="margin: 10px;">
         <p-button label="Edit stage" (click)="changeEditor()"></p-button>

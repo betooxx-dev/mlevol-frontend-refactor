@@ -18,7 +18,7 @@ extends Classic.Node<
 	
 	params = {
 		'Stage name' :{
-			type: "string",
+			type: "description",
 			value: "Step description",
 		},
 		color :{
@@ -33,6 +33,14 @@ extends Classic.Node<
 	}
 	update() {
 		this.color = this.params.color.value;
+	}
+
+	getName() {
+		return this.params['Stage name'].value;
+	}
+
+	getColor() {
+		return this.params.color.value;
 	}
 
 	syncPorts(inputs: [string, string][], outputs: [string, string][]) {

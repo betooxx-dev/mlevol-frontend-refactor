@@ -75,15 +75,61 @@ export class GraphPropertiesComponent implements OnInit {
     }
   }
 
-  updateValue(key: string, value: any, field: string = "value") {
+  async updateValue(key: string, value: any, field: string = "value") {
     if (typeof value != "string") {
       this. allNode!.params[key][field] = value.value;
     } else{
       this.allNode!.params[key][field] = value;
     }
 
-    this.allNode!.update();
-    this.data.updateNode(this.allNode!);
+    await this.allNode!.update();
+    await this.data.updateNode(this.allNode!);
+  }
+
+  async updateParam(key: string, value: Event) {
+    const inputElement = value.target as HTMLInputElement;
+    this.allNode!.params[key].param_label = inputElement.value;
+    await this.allNode!.update();
+    await this.data.updateNode(this.allNode!);
+  }
+
+  async updateList(key: string, event: Event, index: number) {
+    const inputElement = event.target as HTMLInputElement;
+
+    this.allNode!.params[key].value[index] = inputElement.value;
+    //this.data
+    await this.allNode!.update();
+    //await this.data.updateNode(this.allNode!);
+  }
+
+  async updateMap(key: string, key_index: string, event: Event, index: number) {
+    const inputElement = event.target as HTMLInputElement;
+
+    this.allNode!.params[key].value[index][key_index] = inputElement.value;
+    await this.allNode!.update();
+    await this.data.updateNode(this.allNode!);
+  }
+
+  async addItemToMap(key: string) {
+    this.allNode!.params[key].value.push({key: "", value: ""});
+    await this.allNode!.update();
+    await this.data.updateNode(this.allNode!);
+  }
+
+  async addItemToList(key: string) {
+    this.allNode!.params[key].value.push("");
+    await this.allNode!.update();
+    await this.data.updateNode(this.allNode!);
+  }
+
+  async removeItemFromList(key: string, index: number) {
+    this.allNode!.params[key].value.splice(index, 1);
+    await this.allNode!.update();
+    await this.data.updateNode(this.allNode!);
+  }
+
+  trackByFn(index: number, item: any): number {
+    return index
   }
 
   ngOnDestroy() {

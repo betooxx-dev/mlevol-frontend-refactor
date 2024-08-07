@@ -31,7 +31,25 @@ export class CustomNode
                 value : undefined,
                 optionId : param.optionId!,
                 isParam: "custom",
+                param_label: "",
             }
+
+            if (param.param_type == "string") {
+                this.params[param.param_label].value = "";
+            }
+            else if (param.param_type == "number") {
+                this.params[param.param_label].value = 0;
+            }
+            else if (param.param_type == "boolean") {
+                this.params[param.param_label].value = false;
+            }
+            else if (param.param_type == "map") {
+                this.params[param.param_label].value = [];
+            }
+            else if (param.param_type == "list") {
+                this.params[param.param_label].value = [];
+            }
+
             if (param.show) show_count++;
         }
 
@@ -60,22 +78,7 @@ export class CustomNode
 		this.params = data.params;
 	}
 
-    update() {
-        let total_lines = 0;    
-        // iterate through params
-        for (var m in this.params) {
-            if (this.params[m].show) {
-                total_lines++;
-                var value_length = String(this.params[m].value).length;
-                if (value_length > 16){
-                    value_length -= 16;
-                    total_lines++;
-                }
-                total_lines += String(value_length).length / 25;
-            }
-        }
-        console.log(total_lines);   
-        this.height = 45 + 27.5 * (Object.keys(this.inputs).length + Object.keys(this.outputs).length) + 25 * total_lines;
+    async update() {
     }
 
     getNodeName() {

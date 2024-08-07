@@ -4,6 +4,7 @@ import { Component, HostListener } from '@angular/core';
 import { GraphEditorService } from '../graph-editor.service';
 import { NodeEditor } from 'rete';
 import { PanelFocusService } from '../panel-focus.service';
+import { ModuleNode } from '../nodes';
 
 @Component({
   selector: 'app-graph-layers',
@@ -15,6 +16,7 @@ export class GraphLayersComponent {
   allModules : any;
   modulesKeys : any;
   modulesNames : any;
+  modulesColors : any;
   subscription: Subscription | undefined;
   constructor(
     private graphService: GraphEditorService,
@@ -34,14 +36,18 @@ export class GraphLayersComponent {
       moduleIds.splice(moduleIds.indexOf('root'), 1);
       this.modulesKeys = moduleIds;
       this.modulesNames = {};
+      this.modulesColors = {};
       for (let module in moduleIds) {
         for (let node of this.allModules["root"].nodes) {
           if (node.id == moduleIds[module]) {
-            this.modulesNames[moduleIds[module]] = node.data.params["Stage name"].value;
+            const real_node = this.graphService.getNode(node.id) as ModuleNode;
+            if (real_node) {
+              this.modulesNames[moduleIds[module]] = real_node.getName();
+              this.modulesColors[moduleIds[module]] = real_node.getColor();
+            }
           }
         }
       }
-
     });
   }
 

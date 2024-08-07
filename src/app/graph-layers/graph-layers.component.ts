@@ -1,3 +1,4 @@
+import { ParameterNode } from './../nodes/parameter';
 import { Subscription } from 'rxjs';
 import { Schemes } from './../editor';
 import { Component, HostListener } from '@angular/core';
@@ -40,11 +41,8 @@ export class GraphLayersComponent {
       for (let module in moduleIds) {
         for (let node of this.allModules["root"].nodes) {
           if (node.id == moduleIds[module]) {
-            const real_node = this.graphService.getNode(node.id) as ModuleNode;
-            if (real_node) {
-              this.modulesNames[moduleIds[module]] = real_node.getName();
-              this.modulesColors[moduleIds[module]] = real_node.getColor();
-            }
+              this.modulesNames[moduleIds[module]] = node.data.params['Stage name'].value;
+              this.modulesColors[moduleIds[module]] = node.data.params['color'].value;
           }
         }
       }

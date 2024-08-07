@@ -18,6 +18,7 @@ export class GraphLayersComponent {
   modulesKeys : any;
   modulesNames : any;
   modulesColors : any;
+  modulesCollapsed : any;
   subscription: Subscription | undefined;
   constructor(
     private graphService: GraphEditorService,
@@ -31,6 +32,7 @@ export class GraphLayersComponent {
       this.allModules = {};
       this.modulesKeys = [];
       this.modulesNames = {};
+      this.modulesCollapsed = {};
       this.allModules = this.graphService.modules;
       let moduleIds = Object.keys(this.allModules);
       // delete root from modulesKeys
@@ -43,6 +45,7 @@ export class GraphLayersComponent {
           if (node.id == moduleIds[module]) {
               this.modulesNames[moduleIds[module]] = node.data.params['Stage name'].value;
               this.modulesColors[moduleIds[module]] = node.data.params['color'].value;
+              this.modulesCollapsed[moduleIds[module]] = false;
           }
         }
       }

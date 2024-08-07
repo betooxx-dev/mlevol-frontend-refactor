@@ -9,12 +9,43 @@
 
 
 .toggle-button {
+    transition: all .5s ease;
     border-style: solid;
     border-color: darkslategray;
     border-width: 0px 0px 1px 0px;
-    padding: 10px;
+    border-radius: 15px 15px 0px 0px;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.toggle-button-title {
+    flex: 1;
+    border-style: none;
+    background-color: transparent;
     font-weight: bold;
-    transition: all .5s ease;
+    padding: 8px;
+    transform: translateY(-.5px);
+}
+
+.toggle-button-title:hover{
+    background-color: rgba(255, 255, 255, .2);
+    transition: all 0.5s;
+    border-radius: 13px 0px 0px 0px;
+    cursor: pointer;
+}
+
+.down-button {
+    padding: 8px;
+    border-style: solid;
+    border-width: 0px;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: transparent;
+    box-shadow: inset 200px 70px 15px -200px rgba(0,0,0,.3);
 }
 
 .toggle-button:hover {
@@ -31,6 +62,7 @@
     display: flex;
     flex-direction: column;
     transition: all .5s ease;
+    cursor: pointer;
 }
 
 .toggle-node:hover {

@@ -28,7 +28,7 @@ export class GraphEditorComponent implements OnInit {
 	copyNode: Node | undefined;
 	subscriptionNode: Subscription;
 	items: MenuItem[];
-
+	last_selected_node: string = "";
 	constructor(
 		private injector: Injector,
 		private graphEditorService: GraphEditorService,
@@ -40,6 +40,9 @@ export class GraphEditorComponent implements OnInit {
 			} );
 			this.subscriptionNode = this.graphEditorService.selectedSource.subscribe((message) => {
 				if (message == "") return;
+
+				if (message == this.last_selected_node) return;
+				this.last_selected_node = message;	
 				this.allNode = this.graphEditorService.getNode(message);
 			});
 			this.items = [];
@@ -131,7 +134,7 @@ export class GraphEditorComponent implements OnInit {
 	backToRoot(){
 		let node = new ModuleNode();
 		node.id = "root";
-		node.params['Stage name'].value = "General Editor";
+		node.setName("General Editor");
 		this.graphEditorService.changeEditor(node.id, true);
 	}
 

@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, HostBinding, Input, KeyValueDiffer, KeyValueDiffers, OnChanges } from '@angular/core';
 import { Node } from '../editor';
+import { ModuleNode } from '../nodes';
 
 @Component({
   selector: 'app-model-node',
@@ -7,7 +8,7 @@ import { Node } from '../editor';
   styleUrl: './model-node.component.css'
 })
 export class ModelNodeComponent implements OnChanges{
-  @Input() data!: Node;
+  @Input() data!: ModuleNode;
   @Input() emit!: (data: any) => void;
   @Input() rendered!: () => void;
   

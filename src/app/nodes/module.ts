@@ -39,6 +39,10 @@ extends Classic.Node<
 		return this.params['Stage name'].value;
 	}
 
+	setName(name : string){
+		this.params['Stage name'].value = name
+	}
+
 	getColor() {
 		return this.params.color.value;
 	}

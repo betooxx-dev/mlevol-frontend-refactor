@@ -271,7 +271,6 @@ export class GraphEditorService {
 
   getNode(id : string) : Node {
     return this.editor.getNode(id);
-
   }
 
   async deleteNode(id: string) {
@@ -417,13 +416,10 @@ export class GraphEditorService {
   }
 
   getModuleTag(moduleId: string) : string {
-
-    for (let node of this.modules["root"].nodes) {
-      if (node.id == moduleId) {
-        return node.data.params["Stage name"].value
-      }
+    const real_node = this.getNode(moduleId) as ModuleNode;
+    if (real_node) {
+        return real_node.getName();
     }
-
     return "General Editor"
   }
 
@@ -482,12 +478,12 @@ export class GraphEditorService {
 
   async changeEditor(targetModuleId: string, clear?: boolean) {
     if ((targetModuleId != 'root') && this.currentModule == targetModuleId) return;
+    
+    this.editorSource.next(this.getModuleTag(targetModuleId))
 
     if (clear) await this.clearEditor();
 
     this.currentModule = targetModuleId;
-
-    this.editorSource.next(this.getModuleTag(this.currentModule))
 
 
     for (let node of this.modules[this.currentModule].nodes) {

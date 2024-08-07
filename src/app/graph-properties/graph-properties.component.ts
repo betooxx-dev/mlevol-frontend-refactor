@@ -25,7 +25,7 @@ export class GraphPropertiesComponent implements OnInit {
   moduleNodeName = "Step";
   options:any;
   options_of_options:any;
-
+  last_selected_node : string | undefined;
   paramOptions = ParamOptions;
   nodeParamOptions : [] | any;
   constructor(
@@ -34,7 +34,10 @@ export class GraphPropertiesComponent implements OnInit {
     private configService: ConfigurationService
   ){
     this.subscription = this.data.selectedSource.subscribe(async (message) => {
+      
       if (message == "") return;
+      if (message == this.last_selected_node) return;
+      this.last_selected_node = message;
       this.openProperties();
       this.allNode = await this.data.getNode(message);
       this.selectedNode = this.allNode.label;

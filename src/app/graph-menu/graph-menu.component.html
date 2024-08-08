@@ -8,14 +8,22 @@
     </div>
     <div class="tools" > 
         <div class="options" id="options">
-            <button (click)="openLayers()" class="option-button" [ngClass]="{'active':showLayers && expandedGraphMenu}">
-                <i class="pi pi-clone"></i>
+            <button     pTooltip="Graph explorer" 
+            (click)="openLayers()" class="option-button" [ngClass]="{'active':showLayers && expandedGraphMenu}">
+                <i class="pi pi-compass
+                "></i>
             </button>
-            <button (click)="openSettings()" class="option-button" [ngClass]="{'active':showSettings && expandedGraphMenu}">
-                <i class="pi pi-cog"></i>
+            <button     pTooltip="Code generation" 
+            (click)="openSettings()" class="option-button" [ngClass]="{'active':showSettings && expandedGraphMenu}">
+                <i class="pi pi-align-left"></i>
             </button>
         </div>
         <app-graph-layers *ngIf="showLayers" class="tool"></app-graph-layers>
         <app-graph-settings *ngIf="showSettings" class="tool"></app-graph-settings>
+    </div>
+    <div class="back-button">
+        <a routerLink="/home" routerLinkActive="active" pTooltip="Back to main page">
+            <i class="pi pi-sign-out"></i>
+        </a>
     </div>
 </div>

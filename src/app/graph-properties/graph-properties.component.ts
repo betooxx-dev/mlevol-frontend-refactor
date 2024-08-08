@@ -142,6 +142,7 @@ export class GraphPropertiesComponent implements OnInit {
   closeProperties(){
     this.propertiesClose.emit(true);
     this.data.unselectNodes();
+    this.last_selected_node = "";
   }
 
   openProperties(){

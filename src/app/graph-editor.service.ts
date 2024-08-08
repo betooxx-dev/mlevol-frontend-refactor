@@ -190,9 +190,7 @@ export class GraphEditorService {
       )
     )
   }
-
   
-
   setEditor(editor: NodeEditor<Schemes>) {
     this.editor = editor;
   }

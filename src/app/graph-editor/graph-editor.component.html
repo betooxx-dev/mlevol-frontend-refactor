@@ -1,49 +1,50 @@
-<div class="rete" #rete></div>
-
-<div class="node-in">
-    <div >
-        {{moduleImIn}}
+<div style="display: flex;" class="rete" #rete>
+    <div class="node-in">
+        <h3>
+            {{moduleImIn}}
+        </h3>
+        
+        <!--div  -->
+        <button (click)="backToRoot()" *ngIf="moduleImIn != 'General Editor'">
+            <i class="pi pi-caret-up"></i>
+        </button>
     </div>
     
-    <!--div  -->
-    <button (click)="backToRoot()" *ngIf="moduleImIn != 'General Editor'">
-        <i class="pi pi-caret-up"></i>
-    </button>
-</div>
-
-<ul class="config-buttons">
-    <li>
-        <button pTooltip="Center zoom" (click)="homeZoom()">
-            <i class="pi pi-home"></i>
-        </button>
-    </li>
+    <ul class="config-buttons">
+        <li>
+            <button pTooltip="Center zoom" (click)="homeZoom()">
+                <i class="pi pi-home"></i>
+            </button>
+        </li>
+        
+        <li>
+            <button pTooltip="Zoom in" (click)="zoomIn()">
+                <i class="pi pi-plus"></i>
+            </button>
+        </li>
     
-    <li>
-        <button pTooltip="Zoom in" (click)="zoomIn()">
-            <i class="pi pi-plus"></i>
-        </button>
-    </li>
+        <li>
+            <button pTooltip="Zoom out" (click)="zoomOut()">
+                <i class="pi pi-minus"></i>
+            </button>
+        </li>
+        <li>
+            <button pTooltip="Toggle minimap" (click)="toggleMap()" [ngClass]="{active: !showMap}">
+                <i class="pi pi-map"></i>
+            </button>
+        </li>
+        <li>
+            <button pTooltip="Arrange nodes" (click)="arrangeNodes()">
+                <i class="pi pi-share-alt"></i>
+            </button>
+        </li>
+    </ul>
+    
+    <div class="actions-container">
+        <p-splitButton 
+            label="Add" 
+            [model]="items" *ngIf="moduleImIn != 'General Editor'"/>
+        <p-button label="Add Stage" (click)="addStage()" *ngIf="moduleImIn === 'General Editor'"/>
+    </div>
 
-    <li>
-        <button pTooltip="Zoom out" (click)="zoomOut()">
-            <i class="pi pi-minus"></i>
-        </button>
-    </li>
-    <li>
-        <button pTooltip="Toggle minimap" (click)="toggleMap()" [ngClass]="{active: !showMap}">
-            <i class="pi pi-map"></i>
-        </button>
-    </li>
-    <li>
-        <button pTooltip="Arrange nodes" (click)="arrangeNodes()">
-            <i class="pi pi-share-alt"></i>
-        </button>
-    </li>
-</ul>
-
-<div class="actions-container">
-    <p-splitButton 
-        label="Add" 
-        [model]="items" *ngIf="moduleImIn != 'General Editor'"/>
-    <p-button label="Add Stage" (click)="addStage()" *ngIf="moduleImIn === 'General Editor'"/>
 </div>

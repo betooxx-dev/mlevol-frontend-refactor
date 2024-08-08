@@ -63,17 +63,18 @@ a:hover {
 
 .rete ::ng-deep rete-minimap{
     backdrop-filter: blur(5px);
-    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
     border-color: whitesmoke;
     position:absolute;
-    bottom: 50px;
+    bottom: 60px;
     left: 115px;
     right: auto;
-    transition: all .5s ease;
+    transition: all .66s ease;
 }
 
 .rete.hide-minimap ::ng-deep rete-minimap{
-    transform: translate(0, 200%);
+    transform: translate(0, 100%);
+    opacity: 0;
 }
 
   
@@ -101,20 +102,16 @@ a:hover {
     z-index:3;
     bottom: 25px;
     margin-left: 25px;
-    border-radius: 30px;
     padding: 10px;
-    background-color: rgba(0,0,0,0.1);
-    border-color: gainsboro;
-    border-width: 1px;
-    border-style: solid;
+    background-color: transparent;
+    border-style: none;
 }
 
 .node-in {
-    position: absolute;
+    position : inherit;
     top: 0;
     z-index: 2;
     padding: 1em;
-    font-size: 2em;
     backdrop-filter: blur(5px);
     border-width: 0px 1px 1px 0px;
     border-radius: 0px 0px 10px 0px;
@@ -124,6 +121,8 @@ a:hover {
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
     display: flex;
     gap: 20px;
+    flex: 0 0 auto;
+    height: fit-content;
 }
 
 .node-in button{
@@ -132,6 +131,11 @@ a:hover {
     background-color: transparent;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
     transition: all .5s ease;
+    aspect-ratio: 1;
+    width: fit-content;
+    height: fit-content;
+    border-style: outset;
+    border-color: rgba(0, 0, 0, 0.3);
 }
 
 .node-in button:hover{
@@ -143,8 +147,8 @@ a:hover {
 }
 
 .config-buttons li button{
-    width: 30;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     background-color: rgba(255, 255, 255, .1);
     box-shadow: inset ;
     border-radius: 50%;

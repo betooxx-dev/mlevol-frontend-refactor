@@ -3,6 +3,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter, first, Observable, tap } from 'rxjs';
+import { getBaseURL } from './utils';
 @Injectable({
   	providedIn: 'root'
 })
@@ -17,8 +18,7 @@ export class ConfigurationService {
 	}
 
 	async initClass() {
-		//const response = await fetch("https://gessi.cs.upc.edu:1446/api/get_config", { // FIXME: Hardcoded URL
-		const response = await fetch("http://localhost:5000/api/get_config", { // FIXME: Hardcoded URL
+		const response = await fetch(getBaseURL("/api/get_config"), { // FIXME: Hardcoded URL
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',

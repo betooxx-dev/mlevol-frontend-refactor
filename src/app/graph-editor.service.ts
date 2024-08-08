@@ -29,7 +29,7 @@ import { saveAs } from 'file-saver';
 import { addCustomBackground } from './custom-background/background';
 import { CustomSocketComponent} from './custom-socket';
 import { ModelNodeComponent } from './custom-node/model-node.component';
-import { getNewNode } from './utils';
+import { getBaseURL, getNewNode } from './utils';
 import { ConfigurationService } from './configuration.service';
 import modules from '../assets/base_editor.json';
 
@@ -190,7 +190,7 @@ export class GraphEditorService {
       )
     )
   }
-  
+
   setEditor(editor: NodeEditor<Schemes>) {
     this.editor = editor;
   }
@@ -584,8 +584,8 @@ export class GraphEditorService {
         nodes : this.configService.getNodes()
       }
     );
-    //const response = await fetch("https://gessi.cs.upc.edu:1446/api/create_app", { // FIXME: Hardcoded URL
-    const response = await fetch("http://localhost:5000/api/create_app", { // FIXME: Hardcoded URL
+    
+    const response = await fetch(getBaseURL('/api/create_app'), { // FIXME: Hardcoded URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

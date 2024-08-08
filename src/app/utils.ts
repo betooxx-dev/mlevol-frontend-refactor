@@ -1,3 +1,4 @@
+import { isDevMode } from "@angular/core";
 import { Node } from "./editor"
 import { ModuleNode, CustomNode,
 ParameterNode,
@@ -33,4 +34,12 @@ export function getColorFromCategory(category: string) : string {
 	}
 	let random = seed % 100 / 100;
 	return `hsl(${random * 360}, ${saturation * 100}%, ${value * 100}%)`;
+}
+
+export function getBaseURL(suffix = "") : string {
+	if ( isDevMode() ) {
+		return "http://localhost:5000" + suffix;
+	}
+
+	return "https://gessi.cs.upc.edu:1446" + suffix;
 }

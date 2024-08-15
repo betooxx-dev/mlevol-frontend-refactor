@@ -11,7 +11,7 @@ export class InputNode extends Classic.Node implements Classic.Node {
 		};
 	params = {
 		description: {
-			type: "string",
+			type: "description",
 			value: "",
 			show: true,
 		},

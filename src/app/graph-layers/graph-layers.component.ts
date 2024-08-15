@@ -69,6 +69,7 @@ export class GraphLayersComponent {
     console.log("Toggling node: " + node.name);
     await this.graphService.changeEditor(await this.graphService.getNodeModule(node.id), true);
     this.graphService.selectNode(node.id);
+    console.log(this.allModules);
   }
 
 }

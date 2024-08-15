@@ -1,6 +1,6 @@
 <div style="display: flex;" class="rete" #rete>
     <div class="node-in">
-        <h3>
+        <h3 style="font-size: x-large;">
             {{moduleImIn}}
         </h3>
         
@@ -44,7 +44,7 @@
         <p-splitButton 
             label="Add" 
             [model]="items" *ngIf="moduleImIn != 'General Editor'"/>
-        <p-button label="Add Stage" (click)="addStage()" *ngIf="moduleImIn === 'General Editor'"/>
+        <p-button label="Add Step" (click)="addStage()" *ngIf="moduleImIn === 'General Editor'"/>
     </div>
 
 </div>

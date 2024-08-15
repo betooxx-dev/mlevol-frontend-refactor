@@ -20,7 +20,12 @@
                     'max-height': modulesCollapsed[module] ? '0px' : 'unset'}">
                 <div style="display: flex; flex-direction: column;" *ngFor="let node of allModules[module].nodes">
                     <button class="toggle-node" (click)="toggleNode(node)">
-                        {{node.name}}
+                        <p>
+                            {{node.name}}:
+                        </p>
+                        <p class="toggle-node-description"  *ngIf="node.data.params.description">
+                            {{node.data.params.description.value}}
+                        </p>
                     </button>
                 </div>
             </div>

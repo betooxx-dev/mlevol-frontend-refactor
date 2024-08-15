@@ -123,6 +123,13 @@ a:hover {
     gap: 20px;
     flex: 0 0 auto;
     height: fit-content;
+    max-width: 50%;
+}
+
+.node-in h3{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .node-in button{
@@ -136,6 +143,8 @@ a:hover {
     height: fit-content;
     border-style: outset;
     border-color: rgba(0, 0, 0, 0.3);
+    
+
 }
 
 .node-in button:hover{

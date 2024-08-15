@@ -13,13 +13,27 @@
     border-style: solid;
     border-color: darkslategray;
     border-width: 0px 0px 1px 0px;
-    border-radius: 15px 15px 0px 0px;
+    border-radius: 0px;
     z-index: 1;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
 
+
+.toggle-node-description {
+    flex: 1;
+    border-style: none;
+    background-color: transparent;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-style: italic;
+    color: darkslategray;
+    font-weight: lighter;
+    text-align: left;
 }
 
 .toggle-button-title {
@@ -29,12 +43,15 @@
     font-weight: bold;
     padding: 8px;
     transform: translateY(-.5px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .toggle-button-title:hover{
     background-color: rgba(255, 255, 255, .2);
     transition: all 0.5s;
-    border-radius: 13px 0px 0px 0px;
+    border-radius: 0px;
     cursor: pointer;
 }
 
@@ -57,12 +74,14 @@
     border-style: solid;
     border-color: gray;
     border-width: 0px 0px 1px 0px;
-    padding: 10px;
     padding-left: 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    display: flex;
     transition: all .5s ease;
     cursor: pointer;
+    gap: 5px;
+
 }
 
 .toggle-node:hover {

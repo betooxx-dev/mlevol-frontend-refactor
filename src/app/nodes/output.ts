@@ -13,7 +13,7 @@ export class OutputNode
 	};
 	params = {
 		description: {
-			type: "string",
+			type: "description",
 			value: "",
 			show: true,
 		},

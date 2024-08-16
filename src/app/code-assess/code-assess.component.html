@@ -1,0 +1,56 @@
+<div class="whole">
+    <app-small-header></app-small-header>
+    <div class="container">
+        <div *ngIf="!fetching">
+            <div *ngIf="!uploadedFile">
+                <input id="app-file" style="display: none" type="file" accept=".zip" 
+                          (change)="onFileLoad($event)" #fileinput>
+                <button class ="upload-button" (click)="fileinput.click()">
+                    Select your app (.zip)
+                </button>
+            </div>
+            <div *ngIf="uploadedFile">
+                <div class="uploaded-file">
+                    <button class ="upload-button" (click)="uploadFile()">
+                        Run code assessment
+                    </button>
+                    <p-table [value]="uploadedFile" [tableStyle]="{ 'min-width': '66%' }">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Name</th>
+                                <th>Size [kB]</th>
+                                <th>Last modified</th>
+                                <th>Type</th>
+                                <th></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-product>
+                            <tr>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.size }}</td>
+                                <td>{{ product.lastModifiedDate }}</td>
+                                <td>{{ product.type }}</td>
+                                <td>
+                                    <button pButton type="button" (click)="deleteFile()">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <div *ngIf="response">
+                <div *ngFor="let test of response | keyvalue">
+                    {{test.key}}
+                    <app-code-assess-response [response]="[test.value]"></app-code-assess-response>
+                </div>
+            </div>
+            <br>
+            <br>
+        </div>
+        <div *ngIf="fetching">
+            <app-code-assess-fetching></app-code-assess-fetching>
+        </div>
+    </div>
+</div>

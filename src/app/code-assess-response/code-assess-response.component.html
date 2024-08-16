@@ -1,0 +1,36 @@
+<div>
+    Score: {{ response[0].score }}
+</div>
+<div>
+    Modules linted: {{ response[0].module_count }}
+</div>
+
+<div>
+    Errors:
+</div>
+<p-table [value]="response" [tableStyle]="{ 'min-width': '66%' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Convention</th>
+            <th>Error</th>
+            <th>Fatal</th>
+            <th>Info</th>
+            <th>Refactor</th>
+            <th>Warning</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+        <tr>
+            <td>{{ product.message_count.convention }}</td>
+            <td>{{ product.message_count.error }}</td>
+            <td>{{ product.message_count.fatal }}</td>
+            <td>{{ product.message_count.info }}</td>
+            <td>{{ product.message_count.refactor }}</td>
+            <td>{{ product.message_count.warning }}</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<button (click)="getFullReport()">
+    Get full report
+</button>

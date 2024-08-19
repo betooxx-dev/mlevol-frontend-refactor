@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import saveAs from 'file-saver';
+import { getBaseURL } from '../utils';
 
 @Component({
   selector: 'app-code-assess-response',
@@ -8,24 +9,28 @@ import saveAs from 'file-saver';
 })
 export class CodeAssessResponseComponent {
   @Input() response!: any[];
+  @Input() testId!: string | unknown;
+  @Input() uploadedFile!: File | undefined;
+  fetching: boolean = false;
 
   constructor() {
 
   }
 
   getFullReport() {
-    let text = this.response[0].full_report.slice(2,-1);
-    text = this.cleanText(text);
-    const blob = new Blob([text], { type: 'text/plain' });
-    window.saveAs(blob, 'report.txt');
-  }
-
-  cleanText(text : string) {
-    text.replace(/\n/g, "\n");
-    text.replace(/\t/g, "\t");
-    text.replace(/\r/g, "\r");
-    text.replace(/\\/g, "");
-
-    return text;
+    this.fetching = true;
+    let formData = new FormData();
+    formData.append("app", this.uploadedFile!);
+    const target_url = "/api/get_report?test_id=" + this.testId;
+    fetch(getBaseURL(target_url), {method: "POST", body: formData}).then(( response ) => {
+      this.fetching = false;
+      response.blob().then((data) => {
+        console.log(data);
+        window.saveAs(data, 'report.txt');
+      })
+    }).catch((error) => {
+      this.fetching = false;
+    })
+    
   }
 }

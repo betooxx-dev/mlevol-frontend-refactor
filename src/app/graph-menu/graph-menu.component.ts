@@ -7,7 +7,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class GraphMenuComponent {
   expandedGraphMenu : boolean = false;
-  showLayers : boolean = true;
+  showFile : boolean = true;
+  showLayers : boolean = false;
   showSettings : boolean = false;
 
   @Output() menuExpanded = new EventEmitter<boolean>();
@@ -34,12 +35,21 @@ export class GraphMenuComponent {
   openLayers() {
     this.showLayers = true;
     this.showSettings = false;
+    this.showFile = false;
     this.expandMenu();
   }
 
   openSettings() {
     this.showLayers = false;
+    this.showFile = false;
     this.showSettings = true;
+    this.expandMenu();
+  }
+
+  openFile() {
+    this.showFile = true;
+    this.showLayers = false;
+    this.showSettings = false;
     this.expandMenu();
   }
   

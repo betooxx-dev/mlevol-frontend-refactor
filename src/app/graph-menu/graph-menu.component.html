@@ -8,10 +8,13 @@
     </div>
     <div class="tools" > 
         <div class="options" id="options">
+            <button     pTooltip="File" 
+            (click)="openFile()" class="option-button" [ngClass]="{'active':showSettings && expandedGraphMenu}">
+                <i class="pi pi-copy"></i>
+            </button>
             <button     pTooltip="Graph explorer" 
             (click)="openLayers()" class="option-button" [ngClass]="{'active':showLayers && expandedGraphMenu}">
-                <i class="pi pi-compass
-                "></i>
+                <i class="pi pi-compass"></i>
             </button>
             <button     pTooltip="Code generation" 
             (click)="openSettings()" class="option-button" [ngClass]="{'active':showSettings && expandedGraphMenu}">
@@ -20,6 +23,7 @@
         </div>
         <app-graph-layers *ngIf="showLayers" class="tool"></app-graph-layers>
         <app-graph-settings *ngIf="showSettings" class="tool"></app-graph-settings>
+        <app-graph-file *ngIf="showFile" class="tool"></app-graph-file>
     </div>
     <div class="back-button">
         <a routerLink="/home" routerLinkActive="active" pTooltip="Back to main page">

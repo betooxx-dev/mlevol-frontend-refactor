@@ -12,10 +12,12 @@ export class CodeAssessComponent {
   uploadedFile: File[] | undefined;
   fetching: boolean = false;
   response: any;
-
+  loadEvent: any;
   constructor(private messageService: MessageService) { }
 
   onFileLoad(event : any) {
+    console.log(event);
+    this.loadEvent = event;
     if (event.target.files && event.target.files.length > 0) {
       this.uploadedFile = event.target.files;
     }
@@ -23,6 +25,8 @@ export class CodeAssessComponent {
 
   deleteFile(){
     this.uploadedFile = undefined;
+    this.response = undefined;
+    this.loadEvent.target.value = ''; // reset input so can be reused
   }
 
   async uploadFile(){
@@ -41,7 +45,6 @@ export class CodeAssessComponent {
     }).catch((error) => {
       this.fetching = false;
       this.messageService.add({ severity: 'info', summary: 'Error', detail: 'Error during code assessment' });
-
     })
   }
 }

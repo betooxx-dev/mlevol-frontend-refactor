@@ -413,6 +413,13 @@ export class GraphEditorService {
 
   }
 
+  async cleanEditor() {
+    await this.editor.clear();
+    let node = new ModuleNode();
+    node.id = "root";
+    await this.changeEditor(node.id, false);
+  }
+
   getModuleTag(moduleId: string) : string {
     const real_node = this.getNode(moduleId) as ModuleNode;
     if (real_node) {

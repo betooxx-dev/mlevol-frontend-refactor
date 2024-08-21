@@ -18,7 +18,7 @@ export class OutputNode
 			show: true,
 		},
 		key: {
-			type: "string",
+			type: "description",
 			value: "key",
 		},
 		type: {

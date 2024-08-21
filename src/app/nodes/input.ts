@@ -14,15 +14,17 @@ export class InputNode extends Classic.Node implements Classic.Node {
 			type: "description",
 			value: "",
 			show: true,
+
 		},
 		key: {
-			type: "string",
+			type: "description",
 			value: "key",
 		},
 		type: {
 			type: "option",
 			value: "Any",
 			optionId: "socket_type",
+			isParam: "custom",
 		}
 	};
 

@@ -24,7 +24,8 @@
             <div *ngIf="allNode?.params[key]['type'] == 'string'" style="margin: 10px;" >
                 <p-selectButton
                     [options]="paramOptions"
-                    [optionValue]="allNode?.params[key].isParam"
+                    optionLabel="label"
+                    optionValue="value"
                     (onChange)="updateOption($event, key, 'isParam')">
                     <ng-template let-item pTemplate>
                         <div style="font-size: small;">{{item.label}}</div>
@@ -40,8 +41,9 @@
             <div *ngIf="allNode?.params[key].type == 'number'" style="margin: 10px;">
                 <p-selectButton
                     [options]="paramOptions"
-                    [optionValue]="allNode?.params[key].isParam"
-                    (input)="updateValue(key, $event, 'isParam')">
+                    optionLabel="label"
+                    optionValue="value"
+                    (onChange)="updateOption($event, key, 'isParam')">
                     <ng-template let-item pTemplate>
                         <div style="font-size: small;">{{item.label}}</div>
                     </ng-template>
@@ -108,8 +110,10 @@
             <div *ngIf="allNode?.params[key]['type'] == 'list'" style="margin: 10px;" >
                 <p-selectButton
                     [options]="paramOptions"
-                    [optionValue]="allNode?.params[key].isParam"
+                    optionLabel="label"
+                    optionValue="value"
                     (onChange)="updateOption($event, key, 'isParam')">
+                    
                     <ng-template let-item pTemplate>
                         <div style="font-size: small;">{{item.label}}</div>
                     </ng-template>
@@ -134,7 +138,8 @@
             <div *ngIf="allNode?.params[key]['type'] == 'map'" style="margin: 10px;" >
                 <p-selectButton
                     [options]="paramOptions"
-                    [optionValue]="allNode?.params[key].isParam"
+                    optionLabel="label"
+                    optionValue="value"
                     (onChange)="updateOption($event, key, 'isParam')">
                     <ng-template let-item pTemplate>
                         <div style="font-size: small;">{{item.label}}</div>

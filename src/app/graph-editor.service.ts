@@ -403,8 +403,7 @@ export class GraphEditorService {
   }
 
   async loadEditor(json: string) {
-
-    await this.editor.clear();
+    await this.cleanEditor();
     const data = await JSON.parse(json);
     this.modules = data.modules;
     let node = new ModuleNode();

@@ -250,11 +250,8 @@ export class GraphEditorService {
     node.update();
 
     await this.editor.addNode(node);
-    let centerOfScreen = this.area.container.getBoundingClientRect();
-    await this.area.nodeViews.get(node.id)?.translate(
-      centerOfScreen.x + centerOfScreen.width  / 4,
-      centerOfScreen.y + centerOfScreen.height / 4);
-    //await this.area.nodeViews.get(node.id)?.translate(centerOfScreen.x, centerOfScreen.y);
+    let centerOfScreen = this.area.area.pointer;
+    await this.area.nodeViews.get(node.id)?.translate(centerOfScreen.x, centerOfScreen.y);
     await this.area.nodeViews.get(node.id)?.resize(node.width, node.height);
 
   }

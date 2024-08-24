@@ -1,21 +1,27 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import saveAs from 'file-saver';
 import { getBaseURL } from '../utils';
+import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'app-code-assess-response',
   templateUrl: './code-assess-response.component.html',
   styleUrl: './code-assess-response.component.css'
 })
-export class CodeAssessResponseComponent {
+export class CodeAssessResponseComponent implements OnInit{
   @Input() response!: any[];
   @Input() testId!: string | unknown;
   @Input() uploadedFile!: File | undefined;
   fetching: boolean = false;
 
-  constructor() {
+  headers!: any[];
 
+  ngOnInit(): void {
+    this.headers = Object.keys(this.response[0].message_count);
+
+    console.log(this.headers);
   }
+
 
   getFullReport() {
     this.fetching = true;
@@ -32,5 +38,9 @@ export class CodeAssessResponseComponent {
       this.fetching = false;
     })
     
+  }
+
+  originalOrder = (a: KeyValue<any,any>, b: KeyValue<any,any>): number => {
+    return 0;
   }
 }

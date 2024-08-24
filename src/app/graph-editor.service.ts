@@ -400,7 +400,6 @@ export class GraphEditorService {
   }
 
   async loadEditor(json: string) {
-    await this.cleanEditor();
     const data = await JSON.parse(json);
     this.modules = data.modules;
     let node = new ModuleNode();

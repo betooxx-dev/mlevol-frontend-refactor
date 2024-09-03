@@ -73,12 +73,7 @@ export class GraphEditorService {
   ) {
     this.editor = new NodeEditor<Schemes>();
     this.minimap = new MinimapPlugin<Schemes>();
-    this.modules = {
-      "root" : {
-        "nodes": [],
-        "connections": [],
-      }
-    };
+    this.modules = modules;
     this.editorSource.next("General Editor");
   }
 

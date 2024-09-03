@@ -73,7 +73,12 @@ export class GraphEditorService {
   ) {
     this.editor = new NodeEditor<Schemes>();
     this.minimap = new MinimapPlugin<Schemes>();
-    this.modules = modules;
+    this.modules = {
+      "root" : {
+        "nodes": [],
+        "connections": [],
+      }
+    };
     this.editorSource.next("General Editor");
   }
 
@@ -400,11 +405,11 @@ export class GraphEditorService {
   }
 
   async loadEditor(json: string) {
+    await this.editor.clear(); 
     const data = await JSON.parse(json);
     this.modules = data.modules;
-    let node = new ModuleNode();
-    node.id = "root";
-    await this.changeEditor(node.id, false);
+    console.log(data);
+    await this.changeEditor("root", false);
 
   }
 
@@ -485,6 +490,7 @@ export class GraphEditorService {
 
     this.currentModule = targetModuleId;
 
+    console.log(this.modules[this.currentModule]);
 
     for (let node of this.modules[this.currentModule].nodes) {
       await this.addNode(node.nodeName, node.id, node.data);

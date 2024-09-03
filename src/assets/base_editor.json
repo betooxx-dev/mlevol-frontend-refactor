@@ -1029,27 +1029,21 @@
         },
         {
           "source": "b4b3f5e945f82a5c",
-          "sourceOutput": "truth_train",
-          "target": "42e209158fbbafdd",
-          "targetInput": "truth"
-        },
-        {
-          "source": "b4b3f5e945f82a5c",
           "sourceOutput": "features_train",
           "target": "a3aab233a6f904a2",
           "targetInput": "features"
-        },
-        {
-          "source": "b4b3f5e945f82a5c",
-          "sourceOutput": "truth_train",
-          "target": "a3aab233a6f904a2",
-          "targetInput": "truth"
         },
         {
           "source": "a3aab233a6f904a2",
           "sourceOutput": "model",
           "target": "13cc74ed7abccbbe",
           "targetInput": "value"
+        },
+        {
+          "source": "b4b3f5e945f82a5c",
+          "sourceOutput": "truth_train",
+          "target": "a3aab233a6f904a2",
+          "targetInput": "truth"
         }
       ],
       "inputs": [

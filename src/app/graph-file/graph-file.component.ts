@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 export class GraphFileComponent {
   items : any[] = []
 
-  constructor(graphEditorService: GraphEditorService){
+  constructor(public graphEditorService: GraphEditorService){
     this.items = [
       {
         label: "Empty",
@@ -50,5 +50,13 @@ export class GraphFileComponent {
           }
       }
     ]
+  }
+
+  generateCode(){
+    this.graphEditorService.generateAndDownloadCode();
+  }
+
+  downloadEditor(){
+    this.graphEditorService.generateJsonOfEditor();
   }
 }

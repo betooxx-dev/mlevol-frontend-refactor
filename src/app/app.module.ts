@@ -19,7 +19,6 @@ import { GraphComponent } from './graph/graph.component';
 import { GraphMenuComponent } from './graph-menu/graph-menu.component';
 import { GraphEditorComponent } from './graph-editor/graph-editor.component';
 import { GraphLayersComponent } from './graph-layers/graph-layers.component';
-import { GraphSettingsComponent } from './graph-settings/graph-settings.component';
 import { GraphPropertiesComponent } from './graph-properties/graph-properties.component';
 
 import { CodeAssessComponent } from './code-assess/code-assess.component';
@@ -67,7 +66,6 @@ import { GraphFileComponent } from './graph-file/graph-file.component';
     GraphMenuComponent,
     GraphEditorComponent,
     GraphLayersComponent,
-    GraphSettingsComponent,
     FeatureButtonComponent,
     CustomNodeComponent,
     ModelNodeComponent,

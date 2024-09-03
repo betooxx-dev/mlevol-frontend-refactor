@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { GraphSettingsComponent } from './graph-settings/graph-settings.component';
 import { GraphLayersComponent } from './graph-layers/graph-layers.component';
 import { GraphEditorComponent } from './graph-editor/graph-editor.component';
 import { GraphPropertiesComponent } from './graph-properties/graph-properties.component';
 
 type myPanels =
-	GraphSettingsComponent | GraphLayersComponent | 
+	GraphLayersComponent | 
 	GraphEditorComponent | GraphPropertiesComponent;
 
 @Injectable({

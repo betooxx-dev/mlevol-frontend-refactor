@@ -464,14 +464,6 @@ export class GraphEditorService {
         inputs: inputs,
         outputs: outputs,
       };
-      
-      for (let node of this.editor.getNodes()) {
-        await this.editor.removeNode(node.id);
-      }
-  
-      for (let connection of this.editor.getConnections()) {
-        await  this.editor.removeConnection(connection.id);
-      }
   
       await this.editor.clear();
   }

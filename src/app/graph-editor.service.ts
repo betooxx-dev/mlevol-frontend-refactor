@@ -483,8 +483,6 @@ export class GraphEditorService {
 
     this.currentModule = targetModuleId;
 
-    console.log(this.modules[this.currentModule]);
-
     for (let node of this.modules[this.currentModule].nodes) {
       await this.addNode(node.nodeName, node.id, node.data);
       if (node.nodeName === "Step") {

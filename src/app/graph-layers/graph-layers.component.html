@@ -21,7 +21,10 @@
                 <div style="display: flex; flex-direction: column;" *ngFor="let node of allModules[module].nodes">
                     <button class="toggle-node" (click)="toggleNode(node)">
                         <p>
-                            {{node.name}}:
+                            {{node.name}}
+                        </p>
+                        <p *ngIf="node.data.params.description.value">
+                            :
                         </p>
                         <p class="toggle-node-description"  *ngIf="node.data.params.description">
                             {{node.data.params.description.value}}

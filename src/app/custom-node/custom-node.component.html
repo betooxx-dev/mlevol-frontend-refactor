@@ -2,7 +2,12 @@
 <div class="node-title" data-testid="title" [ngStyle]="{'background':data.color}">{{data.label}} </div>
 
 <div class="node-descrpition" *ngFor="let input of inputs_keys">
-{{input}}: {{inputs_to_show[input]}}
+	<div *ngIf="inputs_to_show[input]">
+		{{input}}: {{inputs_to_show[input]}} 
+	</div>
+	<div *ngIf="!inputs_to_show[input]">
+		{{input}}
+	</div>
 </div>
 
 <div class="output" *ngFor="let output of data.outputs | keyvalue: sortByIndex"

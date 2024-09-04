@@ -410,6 +410,12 @@ export class GraphEditorService {
 
   async cleanEditor() {
     await this.editor.clear();
+    this.modules = {
+      "root": {
+        "nodes": [],
+        "connections": [],
+      }
+    }
     let node = new ModuleNode();
     node.id = "root";
     await this.changeEditor(node.id, false);

@@ -1,13 +1,14 @@
 <div style="display: flex;" class="rete" #rete>
     <div class="node-in">
+            <button (click)="backToRoot()" *ngIf="moduleImIn != 'General Editor'">
+                <i class="pi pi-caret-left"></i>
+            </button>
         <h3 style="font-size: x-large;">
             {{moduleImIn}}
         </h3>
         
         <!--div  -->
-        <button (click)="backToRoot()" *ngIf="moduleImIn != 'General Editor'">
-            <i class="pi pi-caret-up"></i>
-        </button>
+        
     </div>
     
     <ul class="config-buttons">

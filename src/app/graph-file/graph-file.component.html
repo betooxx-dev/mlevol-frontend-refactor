@@ -2,14 +2,24 @@
     <h2>
         File
     </h2>
-    <p-splitButton 
-        label="New Pipeline" 
-        [model]="items"
-    />
-    <button pButton (click)="downloadEditor()">
-        Export pipeline model
+
+    <button pButton class="my-button" (click)="clearEditor()">
+        New Empty Pipeline
     </button>
-    <button pButton (click)="generateCode()">
-        Generate pipeline code
+    <button pButton class="my-button" (click)="clearEditor()">
+        New Pipeline from Template
+    </button>
+    <div class="separator">
+    </div>
+    <button pButton class="my-button" (click)="importPipeline()">
+        Import Pipeline Model
+    </button>
+    <button pButton class="my-button" (click)="downloadEditor()">
+        Export Pipeline Model
+    </button>
+    <div class="separator">
+    </div>
+    <button pButton class="my-button" (click)="generateCode()">
+        Generate Pipeline Code
     </button>
 </div>

@@ -7,9 +7,13 @@
         </div>
     </div>
     <div class="tools">
-        <h1 style="margin: 10px; user-select: none;">{{selectedNode}}</h1>
-        <p style="color: gray; font-style: italic;margin: 0px;margin-left: 10px; user-select: none;">id: {{allNode?.id}}</p>
-        <p style="color: gray; font-style: italic;margin: 0px;margin-left: 10px; user-select: none;">Title: {{allNode?.info?.title}}</p>
+        <div *ngIf="allNode?.getNodeName() == moduleNodeName;" style="margin: 10px; align-self: center;">
+            <h1 style="margin: 10px; user-select: none;">{{allNode?.params["Stage name"].value}}</h1>
+        </div>
+        <div *ngIf="allNode?.getNodeName() != moduleNodeName;" style="margin: 10px; align-self: center;">
+            <h1 style="margin: 10px; user-select: none;">{{selectedNode}}</h1>
+        </div>
+        <p style="color: gray; font-style: italic;margin: 0px;margin-left: 10px; user-select: none;">{{allNode?.info?.title}}</p>
         <h2 style="margin: 10px; margin-top: 15px; margin-bottom: 0px; user-select: none;">Inputs</h2>
 
         <div *ngFor="let key of nodeInputKeys" >

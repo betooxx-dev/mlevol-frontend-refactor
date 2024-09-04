@@ -417,7 +417,6 @@ export class GraphEditorService {
 
   getModuleTag(moduleId: string) : string {
     for (const nodes of this.modules["root"]["nodes"]){
-      console.log(nodes);
       if (nodes.id == moduleId) {
           return nodes.data.params["Stage name"].value;
       }

@@ -6,16 +6,16 @@ import { GraphComponent } from './graph/graph.component';
 import { CodeAssessComponent } from './code-assess/code-assess.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full', runGuardsAndResolvers: 'always', },
   { path: 'home', component: HomeComponent},
   { path: 'about', component: AboutComponent},
-  { path: 'pipeline_generator', component: GraphComponent},
+  { path: 'pipeline_generator', component: GraphComponent, runGuardsAndResolvers: 'always',},
   { path: 'assess', component: CodeAssessComponent},
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})
     
     ],
   exports: [RouterModule],

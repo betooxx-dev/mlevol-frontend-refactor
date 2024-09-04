@@ -2,4 +2,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 50px;
+}
+
+.back-button{
+    left: 0px;
+    width: 50px;
+    height: 50px;
+    border-right: 1px solid lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

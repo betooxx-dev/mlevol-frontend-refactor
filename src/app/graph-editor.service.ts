@@ -416,9 +416,11 @@ export class GraphEditorService {
   }
 
   getModuleTag(moduleId: string) : string {
-    const real_node = this.getNode(moduleId) as ModuleNode;
-    if (real_node) {
-        return real_node.getName();
+    for (const nodes of this.modules["root"]["nodes"]){
+      console.log(nodes);
+      if (nodes.id == moduleId) {
+          return nodes.data.params["Stage name"].value;
+      }
     }
     return "General Editor"
   }
@@ -471,7 +473,6 @@ export class GraphEditorService {
   async changeEditor(targetModuleId: string, clear?: boolean) {
     if ((targetModuleId != 'root') && this.currentModule == targetModuleId) return;
     
-    this.editorSource.next(this.getModuleTag(targetModuleId))
 
     if (clear) await this.clearEditor();
 
@@ -515,6 +516,8 @@ export class GraphEditorService {
 
     this.cleanModules();
     this.anyChangeSource.next("Editor changed");
+
+    this.editorSource.next(this.getModuleTag(targetModuleId))
   }
 
   async getParameterNodes() {

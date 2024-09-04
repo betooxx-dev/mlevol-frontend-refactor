@@ -35,9 +35,11 @@ export class GraphEditorComponent implements OnInit {
 		private focusService: PanelFocusService,
 		private configService : ConfigurationService) { 
 			window.addEventListener("beforeunload", beforeUnloadHandler);
+
 			this.subscription = this.graphEditorService.selectedEditor.subscribe((message) => {
 				this.moduleImIn = message;
 			} );
+
 			this.subscriptionNode = this.graphEditorService.selectedSource.subscribe((message) => {
 				if (message == "") return;
 
@@ -45,6 +47,7 @@ export class GraphEditorComponent implements OnInit {
 				this.last_selected_node = message;	
 				this.allNode = this.graphEditorService.getNode(message);
 			});
+
 			this.items = [];
 		}
 

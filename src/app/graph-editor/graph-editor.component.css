@@ -124,6 +124,7 @@ a:hover {
     flex: 0 0 auto;
     height: fit-content;
     max-width: 50%;
+    align-items: center;
 }
 
 .node-in h3{
@@ -135,20 +136,18 @@ a:hover {
 .node-in button{
     border-radius: 50%;
     border-width: 3px;
-    background-color: transparent;
+    background-color: var(--primary-color);
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
     transition: all .5s ease;
     aspect-ratio: 1;
     width: fit-content;
     height: fit-content;
     border-style: outset;
-    border-color: rgba(0, 0, 0, 0.3);
-    
-
-}
-
-.node-in button:hover{
-    background-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--light-blue);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    color: var(--light-blue);
 }
 
 .config-buttons li{

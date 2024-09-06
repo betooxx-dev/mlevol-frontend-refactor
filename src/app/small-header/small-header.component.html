@@ -1,10 +1,14 @@
-<div style="display: flex; flex-direction: row  ;">
+<div style="display: flex; flex-direction: row; align-items: center; gap: 20px; margin: 5px;">
         <p-button (onClick)="redirectTo('/home')">
             Back to Home
         </p-button>
     <div class="small-header">
         
-        <img src="../../assets/horizontal.png" style="height:4em">
+        <img src="../../assets/horizontal.png" style="height:5em">
     </div>
-
+    <div *ngIf="custom_header">
+        <h2 style="margin: 0px;">
+             {{custom_header}}
+        </h2>
+    </div>
 </div>

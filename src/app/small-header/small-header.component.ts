@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-small-header',
@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
   styleUrl: './small-header.component.css'
 })
 export class SmallHeaderComponent {
+
+  @Input() custom_header!: string;
 
   constructor(private router: Router) { }
   

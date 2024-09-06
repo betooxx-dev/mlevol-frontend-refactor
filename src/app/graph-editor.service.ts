@@ -277,6 +277,7 @@ export class GraphEditorService {
     })
     await this.editor.removeNode(id);
     this.anyChangeSource.next("Node deleted");
+    this.nodeSource.next("");
   }
 
   unselectNodes() {

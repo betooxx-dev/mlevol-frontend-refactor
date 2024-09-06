@@ -41,7 +41,11 @@ export class GraphEditorComponent implements OnInit {
 			} );
 
 			this.subscriptionNode = this.graphEditorService.selectedSource.subscribe((message) => {
-				if (message == "") return;
+				if (message == "") {
+					this.allNode = undefined; 
+					this.last_selected_node = "";
+					return;
+				}
 
 				if (message == this.last_selected_node) return;
 				this.last_selected_node = message;	

@@ -35,7 +35,16 @@ export class GraphPropertiesComponent implements OnInit {
   ){
     this.subscription = this.data.selectedSource.subscribe(async (message) => {
       
-      if (message == "") return;
+      if (message == ""){
+        this.allNode = undefined;
+        this.selectedNode = "";
+        this.nodeInfo = undefined;
+        this.nodeInputKeys = undefined;
+        this.nodeParamOptions = [];
+        this.last_selected_node = "";
+        this.closeProperties();
+        return;
+      } 
       if (message == this.last_selected_node) return;
       this.last_selected_node = message;
       this.openProperties();
@@ -161,7 +170,11 @@ export class GraphPropertiesComponent implements OnInit {
   changeEditor(){
     if (this.allNode == undefined) return;
     this.data.changeEditor(this.allNode!.id, true);
-    this.closeProperties();
-    
+    this.closeProperties(); 
+  }
+  
+  deleteNode(){
+    if (this.allNode == undefined) return;
+    this.data.deleteNode(this.allNode!.id);
   }
 }

@@ -174,8 +174,13 @@
             </div>
             
     </div>
-    <div *ngIf="allNode?.getNodeName() == moduleNodeName;" style="margin: 10px; align-self: center;">
-        <p-button label="Edit step" (click)="changeEditor()"></p-button>
+    <div *ngIf="allNode?.getNodeName() == moduleNodeName;" style="margin: 10px; align-self: center; justify-content: center; display: flex; flex-direction: row;">
+        <p-button label="Edit Step" (click)="changeEditor()"></p-button>
+        <p-button label="Delete Step" (click)="deleteNode()"></p-button>
+    </div>
+
+    <div *ngIf="allNode?.getNodeName() != moduleNodeName;" style="margin: 10px; align-self: center; justify-content: center; display: flex; flex-direction: row;">
+        <p-button label="Delete Node" (click)="deleteNode()"></p-button>
     </div>
     <!--div style="margin: 10px; display: flex; justify-content: center;">
         <p-button label="Delete" (click)="deleteNode()">

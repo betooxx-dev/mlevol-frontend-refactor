@@ -13,13 +13,13 @@ extends Classic.Node<
 	color: string = "rgba(255, 99, 132, 0.75)";
 	nodeName: string = "Step";
 	info = {
-		title: 'Contains Step',
+		title: 'Contains steps',
 	};
 	
 	params = {
 		'Stage name' :{
 			type: "description",
-			value: "Step description",
+			value: "Stage title",
 		},
 		color :{
 			type: "color",

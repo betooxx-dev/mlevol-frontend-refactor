@@ -116,7 +116,13 @@ export class GraphEditorService {
                 target.key as never
               )
             );
-  
+
+            let source_node = editor.getNode(source.nodeId);
+            let target_node = editor.getNode(target.nodeId);
+
+            if (source_node.getNodeName() === "Input" && target_node.getNodeName() === "Output") {
+              return false;
+            }
             if (!sockets.source.isCompatibleWith(sockets.target)) {
               connection.drop();
               return false;

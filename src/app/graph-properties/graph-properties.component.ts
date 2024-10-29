@@ -3,7 +3,7 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { Subscription } from 'rxjs';
 import { GraphEditorService } from '../graph-editor.service';
 import { Node } from '../editor';
-import { ParameterNode } from '../nodes';
+import { ModuleNode, ParameterNode } from '../nodes';
 
 import {ParamOptions} from "../dropbox.options";
 import { PanelFocusService } from '../panel-focus.service';
@@ -28,6 +28,7 @@ export class GraphPropertiesComponent implements OnInit {
   last_selected_node : string | undefined;
   paramOptions = ParamOptions;
   nodeParamOptions : [] | any;
+  stageOptions : [] | any;
   constructor(
     private data : GraphEditorService,
     private focusService : PanelFocusService,
@@ -56,6 +57,7 @@ export class GraphPropertiesComponent implements OnInit {
       this.nodeParamOptions = [];
       this.options = this.configService.getAllOptions();
       this.options_of_options = this.configService.getAllOptionsOfOptions();
+      this.stageOptions = this.data.getModuleOptions().filter((option: any) => option.id != this.allNode!.id);
       for (let i = 0; i < availableParameters.length; i++) {
         let param = availableParameters[i] as ParameterNode;
         this.nodeParamOptions.push(
@@ -119,6 +121,19 @@ export class GraphPropertiesComponent implements OnInit {
     //await this.data.updateNode(this.allNode!);
   }
 
+  async updateLink(value: any){
+    let target_id = value.value as string;
+    if (target_id == ""){
+      if (this.allNode!.params['link'].value != '') {
+        this.allNode!.params['link'].value = "";
+        this.data.unlinkModule(this.allNode! as ModuleNode);
+      } 
+    } else {
+      this.allNode!.params['link'].value = target_id;
+      this.data.linkModule(this.allNode! as ModuleNode);
+    }
+  }
+
   async updateMap(key: string, key_index: string, event: Event, index: number) {
     const inputElement = event.target as HTMLInputElement;
 
@@ -176,5 +191,9 @@ export class GraphPropertiesComponent implements OnInit {
   deleteNode(){
     if (this.allNode == undefined) return;
     this.data.deleteNode(this.allNode!.id);
+  }
+
+  getStageName(id : string){
+    return this.data.getStageName(id);
   }
 }

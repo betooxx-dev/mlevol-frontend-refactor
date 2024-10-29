@@ -16,7 +16,7 @@ extends Classic.Node<
 		title: 'Contains steps',
 	};
 	
-	params = {
+	params : any = {
 		'Stage name' :{
 			type: "description",
 			value: "Stage title",
@@ -24,6 +24,10 @@ extends Classic.Node<
 		color :{
 			type: "color",
 			value: "rgba(255, 99, 132, 0.75)",
+		},
+		link : {
+			type: "link",
+			value : "",
 		}
 	};
 
@@ -75,7 +79,11 @@ extends Classic.Node<
 
 	setData(data: any) {
 		this.info = data.info;
-		this.params = data.params;
+		for (let key in this.params) {
+			if (key in data.params) {
+				this.params[key].value = data.params[key].value;
+			}
+		}
 	}
 
 	getNodeName() {

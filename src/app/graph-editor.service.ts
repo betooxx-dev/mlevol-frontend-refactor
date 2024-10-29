@@ -32,6 +32,7 @@ import { ModelNodeComponent } from './custom-node/model-node.component';
 import { getBaseURL, getNewNode } from './utils';
 import { ConfigurationService } from './configuration.service';
 import modules from '../assets/base_editor.json';
+import { link } from 'd3-shape';
 
 type AreaExtra = Area2D<Schemes> | AngularArea2D<Schemes>  | MinimapExtra;
 
@@ -266,12 +267,45 @@ export class GraphEditorService {
     return this.configService.getAvailableNodes();
   }
 
+  getModuleOptions() {
+    let availableNames = [{
+      "name" : "None",
+      "id" : ""
+    }];
+    for (let module in this.modules) {
+      if (module == "root") continue;
+      let nodes = this.modules["root"].nodes;
+      for (let node in nodes) {
+        let isLinked = nodes[node].data.params["link"];
+        if ((isLinked != undefined) && (isLinked.value != "")) continue;
+        if (nodes[node].id == module){
+          availableNames.push({
+            "name" : nodes[node].data.params["Stage name"].value,
+            "id" : nodes[node].id
+          });
+        }
+      }
+    }
+
+
+    return availableNames;
+  }
+
   selectNode(nodeId : string) {
     this.nodeSource.next(nodeId);
   }
 
   getNode(id : string) : Node {
     return this.editor.getNode(id);
+  }
+
+  getStageName(id : string){
+    for (let module in this.modules["root"].nodes) {
+      if (this.modules["root"].nodes[module].id == id) {
+        return this.modules["root"].nodes[module].data.params["Stage name"].value
+      }
+    }
+    return "";
   }
 
   async deleteNode(id: string) {
@@ -410,7 +444,6 @@ export class GraphEditorService {
     await this.editor.clear(); 
     const data = await JSON.parse(json);
     this.modules = data.modules;
-    console.log(data);
     await this.changeEditor("root", false);
 
   }
@@ -435,6 +468,54 @@ export class GraphEditorService {
       }
     }
     return "General Editor"
+  }
+
+  async linkModule(linked_node: ModuleNode) {
+
+    let origin_id = linked_node.params.link.value;
+
+    for (let c of this.editor.getConnections()) {
+      if (c.source == linked_node.id || c.target == linked_node.id) {
+        await this.editor.removeConnection(c.id);
+      }
+    }
+
+
+    delete this.modules[linked_node.id];
+    for (let node of this.modules['root'].nodes) {
+      if (node.id != origin_id) continue;
+      linked_node.params['Stage name'].value = node.data.params['Stage name'].value + "*";
+      linked_node.params['color'].value = node.data.params['color'].value;
+      let real_node = await this.editor.getNode(node.id) as ModuleNode;
+      linked_node.color = real_node.color;
+      let inputs = this.modules[node.id].inputs;
+      let outputs = this.modules[node.id].outputs;
+      let inputStrings: [string, string][] = [];
+      let outputStrings: [string, string][] = [];
+      for (let input of inputs) {
+        inputStrings.push([input.data.params.key.value, input.data.params.type.value]);
+      }
+      for (let output of outputs) {
+        outputStrings.push([output.data.params.key.value, output.data.params.type.value]);
+      }
+      
+      linked_node.syncPorts(inputStrings, outputStrings);
+      await this.updateNode(linked_node);
+    }
+  }
+
+  async unlinkModule(unlinked_node: ModuleNode) {
+    this.modules[unlinked_node.id] = {
+      'nodes' : [],
+      'connections' : [],
+      'inputs' : [],
+      'outputs' : [],
+    };
+      let inputStrings: [string, string][] = [];
+      let outputStrings: [string, string][] = [];
+      
+      unlinked_node.syncPorts(inputStrings, outputStrings);
+      await this.updateNode(unlinked_node);
   }
 
   private async clearEditor(){
@@ -490,9 +571,16 @@ export class GraphEditorService {
 
     this.currentModule = targetModuleId;
 
+    console.log(this.modules[this.currentModule]);
+
     for (let node of this.modules[this.currentModule].nodes) {
       await this.addNode(node.nodeName, node.id, node.data);
       if (node.nodeName === "Step") {
+        let nodeModule = await this.editor.getNode(node.id) as ModuleNode;
+        if (node.data.params.link && node.data.params.link.value != "") {
+          continue;
+        }
+        console.log(this.modules[node.id]);
         let inputs = this.modules[node.id].inputs;
         let outputs = this.modules[node.id].outputs;
         let inputStrings: [string, string][] = [];
@@ -504,12 +592,23 @@ export class GraphEditorService {
           outputStrings.push([output.data.params.key.value, output.data.params.type.value]);
         }
         
-        let nodeModule = await this.editor.getNode(node.id) as ModuleNode;
         nodeModule.syncPorts(inputStrings, outputStrings);
         await this.updateNode(nodeModule);
       }
     }
 
+    for (let node of this.modules[this.currentModule].nodes) {
+      if (node.nodeName === "Step") {
+        if (node.data.params.link && node.data.params.link.value != "") {
+          let nodeModule = await this.editor.getNode(node.id) as ModuleNode;
+          this.linkModule(nodeModule);
+          await this.updateNode(nodeModule);
+          console.log(node);
+          console.log(nodeModule);
+          continue;
+        }
+      }
+    }
     for (let connection of this.modules[this.currentModule].connections) {
         try{
         let sourceNode = await this.editor.getNode(connection.source);

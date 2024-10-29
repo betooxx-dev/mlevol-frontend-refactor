@@ -75,7 +75,11 @@ export class CustomNode
 
 	setData(data: any) {
         this.info = data.info;
-		this.params = data.params;
+		for (let key in this.params) {
+			if (key in data.params) {
+				this.params[key].value = data.params[key].value;
+			}
+		}
 	}
 
     async update() {

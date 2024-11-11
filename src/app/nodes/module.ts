@@ -43,6 +43,10 @@ extends Classic.Node<
 		return this.params['Stage name'].value;
 	}
 
+	setParam(key : string, value : any){
+		this.params[key].value = value
+	}
+
 	setName(name : string){
 		this.params['Stage name'].value = name
 	}

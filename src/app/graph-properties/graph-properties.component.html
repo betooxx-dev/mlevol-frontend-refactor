@@ -53,8 +53,8 @@
                             <div style="font-size: small;">{{item.label}}</div>
                         </ng-template>
                     </p-selectButton>
-                    <p-inputNumber *ngIf="allNode?.params[key].isParam != 'parameter'"
-                        id="{{key}}" mode="decimal" [(ngModel)]="allNode?.params[key].value" [maxFractionDigits]="2" (input)="updateValue(key, $event)"/>
+                    <input pInputText *ngIf="allNode?.params[key].isParam != 'parameter'"
+                        id="{{key}}" type="number" step="0.01" [value]="allNode?.params[key]?.value" (input)="updateValue(key, $event)"/>
     
                     <input *ngIf="allNode?.params[key].isParam == 'parameter'"
                         pInputText id="{{key}}" type="text" [value]="allNode?.params[key].param_label" (input)="updateParam(key, $event)"/>

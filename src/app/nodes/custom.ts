@@ -77,12 +77,12 @@ export class CustomNode
         this.info = data.info;
 		for (let key in this.params) {
 			if (key in data.params) {
-				if (data.params[key].value) this.params[key].value = data.params[key].value;
-                if (data.params[key].show) this.params[key].show = data.params[key].show;
-                if (data.params[key].isParam) this.params[key].isParam = data.params[key].isParam;
-                if (data.params[key].param_label) this.params[key].param_label = data.params[key].param_label;
-                if (data.params[key].optionId) this.params[key].optionId = data.params[key].optionId;
-                if (data.params[key].type) this.params[key].type = data.params[key].type;
+				if (data.params[key].value)         this.params[key].value          = data.params[key].value;
+                if (data.params[key].show)          this.params[key].show           = data.params[key].show;
+                if (data.params[key].isParam)       this.params[key].isParam        = data.params[key].isParam;
+                if (data.params[key].param_label)   this.params[key].param_label    = data.params[key].param_label;
+                if (data.params[key].optionId)      this.params[key].optionId       = data.params[key].optionId;
+                if (data.params[key].type)          this.params[key].type           = data.params[key].type;
                 
 			}
 		}

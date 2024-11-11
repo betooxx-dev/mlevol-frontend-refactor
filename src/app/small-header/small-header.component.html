@@ -3,12 +3,12 @@
         
         <img src="../../assets/horizontal.png" style="height:5em">
     </div>
+    <div *ngIf="custom_header">
+        <h2 style="margin: 0px;">
+            {{custom_header}}
+        </h2>
+    </div>
     <p-button (onClick)="redirectTo('/home')">
         Home
     </p-button>
-    <div *ngIf="custom_header">
-        <h2 style="margin: 0px;">
-             {{custom_header}}
-        </h2>
-    </div>
 </div>

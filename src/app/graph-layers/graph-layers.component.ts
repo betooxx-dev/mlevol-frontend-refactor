@@ -1,11 +1,7 @@
-import { ParameterNode } from './../nodes/parameter';
 import { Subscription } from 'rxjs';
-import { Schemes } from './../editor';
 import { Component, HostListener } from '@angular/core';
 import { GraphEditorService } from '../graph-editor.service';
-import { NodeEditor } from 'rete';
 import { PanelFocusService } from '../panel-focus.service';
-import { ModuleNode } from '../nodes';
 
 @Component({
   selector: 'app-graph-layers',

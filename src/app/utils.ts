@@ -1,9 +1,6 @@
 import { isDevMode } from "@angular/core";
 import { Node } from "./editor"
-import { ModuleNode, CustomNode,
-ParameterNode,
-InputNode,
-OutputNode} from "./nodes"
+import { ModuleNode, CustomNode, InputNode, OutputNode} from "./nodes"
 
 import { CustomSocket } from "./sockets"
 
@@ -12,7 +9,6 @@ export function getNewNode(nodeName: string, config?: any) : Node {
 	if (nodeName === "Step") node = new ModuleNode();
 	else if (nodeName === "Input") node = new InputNode();
 	else if (nodeName === "Output") node = new OutputNode();
-	else if (nodeName === "Parameter") node = new ParameterNode();
 	else node = new CustomNode(nodeName, config);
 	return node;
 }

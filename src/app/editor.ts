@@ -1,8 +1,8 @@
 import { ClassicPreset as Classic, ClassicPreset, GetSchemes, NodeEditor } from "rete";
 import { CustomSocket } from "./sockets/sockets";
-import { CustomNode, InputNode, ModuleNode, OutputNode, ParameterNode } from "./nodes";
+import { CustomNode, InputNode, ModuleNode, OutputNode } from "./nodes";
 
-export type Node = ModuleNode | ParameterNode | CustomNode | InputNode | OutputNode; 
+export type Node = ModuleNode | CustomNode | InputNode | OutputNode; 
 
 
 type Sockets = CustomSocket;

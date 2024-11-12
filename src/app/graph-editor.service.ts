@@ -1,4 +1,4 @@
-import { ModuleNode, CustomNode, ParameterNode} from './nodes';
+import { ModuleNode } from './nodes';
 // graph-editor.service.ts
 import { Injectable } from '@angular/core';
 import { Schemes, Connection, Node, getConnectionSockets} from './editor';
@@ -6,17 +6,9 @@ import { Schemes, Connection, Node, getConnectionSockets} from './editor';
 import { NodeEditor } from 'rete';
 import { Area2D, AreaExtensions, AreaPlugin } from 'rete-area-plugin';
 import { Injector } from '@angular/core'
-import {
-  AngularPlugin,
-  AngularArea2D,
-  Presets as AngularPresets,
-} from 'rete-angular-plugin/17';
+import { AngularPlugin, AngularArea2D, Presets as AngularPresets } from 'rete-angular-plugin/17';
 
-import {
-  ClassicFlow,
-  ConnectionPlugin,
-  getSourceTarget,
-} from 'rete-connection-plugin';
+import { ClassicFlow, ConnectionPlugin, getSourceTarget } from 'rete-connection-plugin';
 
 import { ConnectionPathPlugin } from "rete-connection-path-plugin";
 
@@ -32,7 +24,6 @@ import { ModelNodeComponent } from './custom-node/model-node.component';
 import { getBaseURL, getNewNode } from './utils';
 import { ConfigurationService } from './configuration.service';
 import modules from '../assets/base_editor.json';
-import { link } from 'd3-shape';
 
 type AreaExtra = Area2D<Schemes> | AngularArea2D<Schemes>  | MinimapExtra;
 
@@ -627,17 +618,6 @@ export class GraphEditorService {
     this.anyChangeSource.next("Editor changed");
 
     this.editorSource.next(this.getModuleTag(targetModuleId))
-  }
-
-  async getParameterNodes() {
-    let nodes = this.editor.getNodes();
-    let parameterNodes = [];
-    for (let node of nodes) {
-      if (node instanceof ParameterNode) {
-        parameterNodes.push(node);
-      }
-    }
-    return parameterNodes;
   }
 
   async generateAndDownloadCode() {

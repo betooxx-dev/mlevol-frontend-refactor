@@ -3,7 +3,7 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { Subscription } from 'rxjs';
 import { GraphEditorService } from '../graph-editor.service';
 import { Node } from '../editor';
-import { ModuleNode, ParameterNode } from '../nodes';
+import { ModuleNode } from '../nodes';
 
 import {ParamOptions} from "../dropbox.options";
 import { PanelFocusService } from '../panel-focus.service';
@@ -53,19 +53,10 @@ export class GraphPropertiesComponent implements OnInit {
       this.selectedNode = this.allNode.label;
       this.nodeInfo = this.allNode.params;
       this.nodeInputKeys = this.nodeInfo ? Object.keys(this.nodeInfo) : [];
-      let availableParameters = await this.data.getParameterNodes();
       this.nodeParamOptions = [];
       this.options = this.configService.getAllOptions();
       this.options_of_options = this.configService.getAllOptionsOfOptions();
       this.stageOptions = this.data.getModuleOptions().filter((option: any) => option.id != this.allNode!.id);
-      for (let i = 0; i < availableParameters.length; i++) {
-        let param = availableParameters[i] as ParameterNode;
-        this.nodeParamOptions.push(
-          {
-            label : param.params.description.value,
-            value : param.id
-          });
-      }
     });
   }
 

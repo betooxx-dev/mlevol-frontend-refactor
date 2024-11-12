@@ -375,7 +375,7 @@ export class GraphEditorService {
     this.cleanModules();
 
     var blob = new Blob([JSON.stringify({modules: this.modules}, null, 2)], {type: "text/plain;charset=utf-8"});
-    saveAs(blob, "editor.json");
+    saveAs(blob, "mls_pipeline.json");
     
   }
 
@@ -708,7 +708,7 @@ export class GraphEditorService {
       throw new Error('Network response was not ok');
     }
     const blob = await response.blob();
-    saveAs(blob, "app.zip");
+    saveAs(blob, "app_pipeline.zip");
   }
   
 }

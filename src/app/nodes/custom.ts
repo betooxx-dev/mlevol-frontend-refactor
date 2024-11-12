@@ -83,7 +83,6 @@ export class CustomNode
                 if (data.params[key].param_label)   this.params[key].param_label    = data.params[key].param_label;
                 if (data.params[key].optionId)      this.params[key].optionId       = data.params[key].optionId;
                 if (data.params[key].type)          this.params[key].type           = data.params[key].type;
-                
 			}
 		}
 	}

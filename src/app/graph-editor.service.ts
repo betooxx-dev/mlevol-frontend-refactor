@@ -23,7 +23,6 @@ import { CustomSocketComponent} from './custom-socket';
 import { ModelNodeComponent } from './custom-node/model-node.component';
 import { getBaseURL, getNewNode } from './utils';
 import { ConfigurationService } from './configuration.service';
-import modules from '../assets/base_editor.json';
 
 type AreaExtra = Area2D<Schemes> | AngularArea2D<Schemes>  | MinimapExtra;
 

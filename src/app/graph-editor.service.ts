@@ -58,6 +58,7 @@ export class GraphEditorService {
   selector = AreaExtensions.selector();
   arrange = new AutoArrangePlugin<Schemes>();
   modules : any;
+  availableTemplates : any;
   currentModule = 'root';
 
   constructor(private injector: Injector,
@@ -65,8 +66,8 @@ export class GraphEditorService {
   ) {
     this.editor = new NodeEditor<Schemes>();
     this.minimap = new MinimapPlugin<Schemes>();
-    this.modules = modules;
-    this.editorSource.next("General Editor");
+    
+    this.loadAvailableTemplates();
   }
 
   async createEditor(container: HTMLElement, injector: Injector) {
@@ -182,11 +183,7 @@ export class GraphEditorService {
       }
     )
 
-    this.loadEditor(
-      JSON.stringify(
-        this.modules
-      )
-    )
+    await this.getBaseEditor();
   }
 
   setEditor(editor: NodeEditor<Schemes>) {
@@ -431,10 +428,9 @@ export class GraphEditorService {
     return outputNodes;
   }
 
-  async loadEditor(json: string) {
-    await this.editor.clear(); 
-    const data = await JSON.parse(json);
-    this.modules = data.modules;
+  async loadEditor(json: any) {
+    await this.editor.clear();
+    this.modules = json["modules"];
     await this.changeEditor("root", false);
 
   }
@@ -691,4 +687,66 @@ export class GraphEditorService {
     saveAs(blob, "app_pipeline.zip");
   }
   
+  async getBaseEditor() {
+    const response = await fetch(getBaseURL('/api/get_base_editor'), { // FIXME: Hardcoded URL
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // CORS disable
+        'Access-Control-Allow-Origin': '*',
+        },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const json = await response.json();
+    console.log(json);
+    this.loadEditor(json);
+    this.editorSource.next("General Editor");
+  }
+
+  async loadAvailableTemplates() {
+    const response = await fetch(getBaseURL('/api/get_available_editor'), { // FIXME: Hardcoded URL
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // CORS disable
+        'Access-Control-Allow-Origin': '*',
+        },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const json = await response.json();
+    this.availableTemplates =  json["editors"];
+    console.log(this.availableTemplates);
+  }
+
+  getAvailableTemplates(): any {
+    return this.availableTemplates;
+  }
+
+  async loadTemplate(path : string) {
+    const response = await fetch(getBaseURL('/api/get_editor'), { // FIXME: Hardcoded URL
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // CORS disable
+        'Access-Control-Allow-Origin': '*',
+        },
+        body: path
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    this.changeEditor("root", true);
+
+    const json = await response.json();
+    console.log(json);
+    this.loadEditor(json);
+    this.editorSource.next("General Editor");
+  }
 }

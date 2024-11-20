@@ -43,7 +43,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
 import { KnobModule } from 'primeng/knob';
-
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 // Sockets
 import { CustomSocketComponent,} from './custom-socket';
@@ -54,6 +54,7 @@ import { MessageService } from 'primeng/api';
 import { CodeAssessFetchingComponent } from './code-assess-fetching/code-assess-fetching.component';
 import { CodeAssessResponseComponent } from './code-assess-response/code-assess-response.component';
 import { GraphFileComponent } from './graph-file/graph-file.component';
+import { TemplateDialogComponent } from './graph-file/template-dialog/template-dialog.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { GraphFileComponent } from './graph-file/graph-file.component';
     CodeAssessFetchingComponent,
     CodeAssessResponseComponent,
     GraphFileComponent,
+    TemplateDialogComponent,
     
   ],
   imports: [
@@ -99,6 +101,7 @@ import { GraphFileComponent } from './graph-file/graph-file.component';
     SplitButtonModule,
     TableModule,
     KnobModule,
+    DynamicDialogModule
   ],
   providers: [
     provideAnimationsAsync(),

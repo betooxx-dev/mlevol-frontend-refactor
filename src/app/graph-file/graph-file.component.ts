@@ -1,14 +1,18 @@
+import { TemplateDialogComponent } from './template-dialog/template-dialog.component';
 import { GraphEditorService } from './../graph-editor.service';
-import { Component } from '@angular/core';
-
+import { Component, OnDestroy} from '@angular/core';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 @Component({
   selector: 'app-graph-file',
   templateUrl: './graph-file.component.html',
-  styleUrl: './graph-file.component.css'
+  styleUrl: './graph-file.component.css',
+  providers: [DialogService]
 })
 export class GraphFileComponent {
 
-  constructor(public graphEditorService: GraphEditorService){
+  ref: DynamicDialogRef | undefined;
+
+  constructor(public graphEditorService: GraphEditorService, public dialogService: DialogService){
   }
 
   importPipeline(){
@@ -44,5 +48,29 @@ export class GraphFileComponent {
 
   downloadEditor(){
     this.graphEditorService.generateJsonOfEditor();
+  }
+
+  showTemplates(){
+    this.ref = this.dialogService.open(TemplateDialogComponent, {
+        header: 'Select a Template',
+        width: '20vw',
+        contentStyle: { overflow: 'auto' },
+        breakpoints: {
+            '960px': '75vw',
+            '640px': '90vw'
+        }
+    });
+
+    this.ref.onClose.subscribe((path: string) => {
+      if (path) {
+        this.graphEditorService.loadTemplate(path);
+      }
+    })
+  }
+
+  ngOnDestroy() {
+    if (this.ref) {
+        this.ref.close();
+    }
   }
 }

@@ -26,7 +26,7 @@ export class GraphFileComponent {
         var file = fileInput!.files[0];
         var reader = new FileReader();
         reader.onload = function() {
-            graphEditorService.loadEditor(reader.result as string);
+            graphEditorService.loadEditor(JSON.parse(reader.result as string));
         };
         reader.readAsText(file);
     });

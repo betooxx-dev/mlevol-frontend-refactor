@@ -176,6 +176,10 @@
     
             </div>
             <div *ngIf="allNode?.params[key]['type'] == 'link'" style="margin: 10px;">
+                <p *ngIf="allNode?.params['link'].value != '';" style="margin-left: 10px; border-top: gray 1px solid; user-select: none; padding-top: 10px;">
+                    {{key}}
+                </p>
+    
                 <p-dropdown
                     [options]="stageOptions"
                     optionLabel="name"

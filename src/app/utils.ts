@@ -4,12 +4,16 @@ import { ModuleNode, CustomNode, InputNode, OutputNode} from "./nodes"
 
 import { CustomSocket } from "./sockets"
 
-export function getNewNode(nodeName: string, config?: any) : Node {
+export function getNewNode(nodeName: string, config?: any) : Node | undefined {
 	let node : Node;
 	if (nodeName === "Step") node = new ModuleNode();
 	else if (nodeName === "Input") node = new InputNode();
 	else if (nodeName === "Output") node = new OutputNode();
-	else node = new CustomNode(nodeName, config);
+	else {
+		if (!config['category']) return;
+		console.log(config);
+		node = new CustomNode(nodeName, config);
+	}
 	return node;
 }
 

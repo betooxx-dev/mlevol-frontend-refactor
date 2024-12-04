@@ -599,6 +599,7 @@ export class GraphEditorService {
         try{
         let sourceNode = await this.editor.getNode(connection.source);
         let targetNode = await this.editor.getNode(connection.target);
+        if (!sourceNode || !targetNode) continue;
         await this.editor.addConnection(new Connection(sourceNode, connection.sourceOutput as never, targetNode, connection.targetInput as never));
       }
       catch (e) {

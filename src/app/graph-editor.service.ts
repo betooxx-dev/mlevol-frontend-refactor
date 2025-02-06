@@ -499,7 +499,11 @@ export class GraphEditorService {
     };
       let inputStrings: [string, string][] = [];
       let outputStrings: [string, string][] = [];
-      
+      const connections = await this.editor.getConnections();
+      connections.forEach((element) => {
+        if (element.source == unlinked_node.id || element.target == unlinked_node.id)
+          this.editor.removeConnection(element.id);
+      })
       unlinked_node.syncPorts(inputStrings, outputStrings);
       await this.updateNode(unlinked_node);
   }

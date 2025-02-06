@@ -298,11 +298,30 @@ export class GraphEditorService {
   async deleteNode(id: string) {
 
     const connections = await this.editor.getConnections();
-    connections.forEach((element) => {
+    for (const element of connections) {
       if (element.source == id || element.target == id)
-        this.editor.removeConnection(element.id);
-    })
+        await this.editor.removeConnection(element.id);
+    }
     await this.editor.removeNode(id);
+    
+    const nodes = await this.editor.getNodes();
+    for (const node of nodes){
+      if (node instanceof ModuleNode){
+        const m_node = node as ModuleNode;
+        if (m_node.params.link.value) {
+          const value = m_node.params.link.value;
+          if (value == id){
+            const connections = await this.editor.getConnections();
+            for (const element of connections){
+              if (element.source == m_node.id || element.target == m_node.id)
+                await this.editor.removeConnection(element.id);
+            }
+            await this.editor.removeNode(m_node.id);
+          } 
+        }
+      }
+    }
+
     this.anyChangeSource.next("Node deleted");
     this.nodeSource.next("");
   }
@@ -316,7 +335,7 @@ export class GraphEditorService {
   }
 
   generateJsonOfEditor() {
-    console.log("Generating JSON of editor");
+    // console.log("Generating JSON of editor");
     let nodes = [];
     let connections = [];
     let inputs = [];
@@ -387,8 +406,24 @@ export class GraphEditorService {
     if (node.nodeName === "Input" || "Output") {
       // TODO USING INHERITANCE
     }
+    
     await this.area?.update("node", node.id);
     await this.area?.nodeViews.get(node.id)?.resize(node.width, node.height);
+    
+    const nodes = await this.editor.getNodes();
+    for (const linked_node of nodes){
+      if (linked_node instanceof ModuleNode){
+        let m_node = linked_node as ModuleNode;
+        if (m_node.params.link.value) {
+          const value = m_node.params.link.value;
+          if (value == node.id){
+            m_node.color = node.color
+            this.updateNode(m_node);
+          } 
+        }
+      }
+    }
+
     this.anyChangeSource.next("Node updated");
   }
 
@@ -567,7 +602,7 @@ export class GraphEditorService {
 
     this.currentModule = targetModuleId;
 
-    console.log(this.modules[this.currentModule]);
+    // console.log(this.modules[this.currentModule]);
 
     for (let node of this.modules[this.currentModule].nodes) {
       await this.addNode(node.nodeName, node.id, node.data);
@@ -576,7 +611,7 @@ export class GraphEditorService {
         if (node.data.params.link && node.data.params.link.value != "") {
           continue;
         }
-        console.log(this.modules[node.id]);
+        // console.log(this.modules[node.id]);
         let inputs = this.modules[node.id].inputs;
         let outputs = this.modules[node.id].outputs;
         let inputStrings: [string, string][] = [];
@@ -599,8 +634,8 @@ export class GraphEditorService {
           let nodeModule = await this.editor.getNode(node.id) as ModuleNode;
           await this.linkModule(nodeModule);
           await this.updateNode(nodeModule);
-          console.log(node);
-          console.log(nodeModule);
+          // console.log(node);
+          // console.log(nodeModule);
           continue;
         }
       }
@@ -628,7 +663,7 @@ export class GraphEditorService {
 
   async generateAndDownloadCode() {
 
-    console.log("Generating JSON of editor");
+    // console.log("Generating JSON of editor");
     let nodes = [];
     let connections = [];
     let inputs = [];
@@ -688,7 +723,7 @@ export class GraphEditorService {
         body: body,
     });
 
-    console.log("Response", response);
+    // console.log("Response", response);
 
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -711,7 +746,9 @@ export class GraphEditorService {
       throw new Error('Network response was not ok');
     }
     const json = await response.json();
-    console.log(json);
+    
+    // console.log(json);
+    
     this.loadEditor(json);
     this.editorSource.next("General Editor");
   }
@@ -731,7 +768,8 @@ export class GraphEditorService {
     }
     const json = await response.json();
     this.availableTemplates =  json["editors"];
-    console.log(this.availableTemplates);
+    
+    // console.log(this.availableTemplates);
   }
 
   getAvailableTemplates(): any {
@@ -755,7 +793,9 @@ export class GraphEditorService {
     this.changeEditor("root", true);
 
     const json = await response.json();
-    console.log(json);
+    
+    // console.log(json);
+    
     this.loadEditor(json);
     this.editorSource.next("General Editor");
   }

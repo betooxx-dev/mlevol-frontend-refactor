@@ -118,12 +118,11 @@ export class GraphPropertiesComponent implements OnInit {
     if (target_id == ""){
       if (this.allNode!.params['link'].value != '') {
         this.allNode!.params['link'].value = "";
-        this.data.unlinkModule(this.allNode! as ModuleNode);
+        await this.data.unlinkModule(this.allNode! as ModuleNode);
       } 
     } else {
-      this.data.unlinkModule(this.allNode! as ModuleNode);
       this.allNode!.params['link'].value = target_id;
-      this.data.linkModule(this.allNode! as ModuleNode);
+      await this.data.linkModule(this.allNode! as ModuleNode);
     }
   }
 

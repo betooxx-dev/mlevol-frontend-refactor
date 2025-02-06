@@ -500,10 +500,12 @@ export class GraphEditorService {
       let inputStrings: [string, string][] = [];
       let outputStrings: [string, string][] = [];
       const connections = await this.editor.getConnections();
-      connections.forEach((element) => {
+      
+      for (const element of connections){
         if (element.source == unlinked_node.id || element.target == unlinked_node.id)
-          this.editor.removeConnection(element.id);
-      })
+          await this.editor.removeConnection(element.id);
+      }
+
       unlinked_node.syncPorts(inputStrings, outputStrings);
       await this.updateNode(unlinked_node);
   }
@@ -551,6 +553,10 @@ export class GraphEditorService {
       };
   
       await this.editor.clear();
+      const editor_connections = await this.editor.getConnections();
+      for (const element of editor_connections) {
+          this.editor.removeConnection(element.id);
+      }
   }
 
   async changeEditor(targetModuleId: string, clear?: boolean) {
@@ -591,7 +597,7 @@ export class GraphEditorService {
       if (node.nodeName === "Step") {
         if (node.data.params.link && node.data.params.link.value != "") {
           let nodeModule = await this.editor.getNode(node.id) as ModuleNode;
-          this.linkModule(nodeModule);
+          await this.linkModule(nodeModule);
           await this.updateNode(nodeModule);
           console.log(node);
           console.log(nodeModule);

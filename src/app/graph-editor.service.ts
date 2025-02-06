@@ -491,9 +491,19 @@ export class GraphEditorService {
     return "General Editor"
   }
 
-  async linkModule(linked_node: ModuleNode) {
+  async linkModule(linked_node: ModuleNode) : Promise<boolean>{
 
     let origin_id = linked_node.params.link.value;
+
+    const nodes = await this.editor.getNodes();
+    for (const node of nodes){
+      if (node instanceof ModuleNode){
+        const m_node = node as ModuleNode;
+        if (m_node.params.link.value && m_node.id == origin_id)
+          return false;
+      }
+    }
+
 
     for (let c of this.editor.getConnections()) {
       if (c.source == linked_node.id || c.target == linked_node.id) {
@@ -523,6 +533,7 @@ export class GraphEditorService {
       linked_node.syncPorts(inputStrings, outputStrings);
       await this.updateNode(linked_node);
     }
+    return true;
   }
 
   async unlinkModule(unlinked_node: ModuleNode) {

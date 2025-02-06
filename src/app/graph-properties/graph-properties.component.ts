@@ -122,7 +122,10 @@ export class GraphPropertiesComponent implements OnInit {
       } 
     } else {
       this.allNode!.params['link'].value = target_id;
-      await this.data.linkModule(this.allNode! as ModuleNode);
+      let result = await this.data.linkModule(this.allNode! as ModuleNode);
+      if (!result){
+        this.allNode!.params['link'].value = ""; // CAN'T CHAIN LINKS
+      }
     }
   }
 

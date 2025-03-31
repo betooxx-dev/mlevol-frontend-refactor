@@ -11,7 +11,7 @@ export function getNewNode(nodeName: string, config?: any) : Node | undefined {
 	else if (nodeName === "Output") node = new OutputNode();
 	else {
 		if (!config['category']) return;
-		console.log(config);
+		// console.log(config);
 		node = new CustomNode(nodeName, config);
 	}
 	return node;

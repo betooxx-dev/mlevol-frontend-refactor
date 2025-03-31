@@ -611,6 +611,8 @@ export class GraphEditorService {
 
     if (clear) await this.clearEditor();
 
+    this.nodeSource.next("");
+
     this.currentModule = targetModuleId;
 
     // console.log(this.modules[this.currentModule]);

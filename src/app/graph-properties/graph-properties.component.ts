@@ -81,9 +81,9 @@ export class GraphPropertiesComponent implements OnInit {
   }
 
   async updateValue(key: string, value: any, field: string = "value") {
-    console.log(key, value, field)
+    // console.log(key, value, field)
     const inputElement = value.target as HTMLInputElement;
-    console.log(inputElement.value)
+    // console.log(inputElement.value)
     this.allNode!.params[key][field] = inputElement.value;
 
     await this.allNode!.update();

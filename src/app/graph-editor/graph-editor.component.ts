@@ -82,7 +82,7 @@ export class GraphEditorComponent implements OnInit {
 	}
 
 	save(severity: string) {
-		console.log(severity);
+		// console.log(severity);
 	}
 
 	addStage() {

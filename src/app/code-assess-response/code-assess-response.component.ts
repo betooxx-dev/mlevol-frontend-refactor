@@ -19,7 +19,7 @@ export class CodeAssessResponseComponent implements OnInit{
   ngOnInit(): void {
     this.headers = Object.keys(this.response[0].message_count);
 
-    console.log(this.headers);
+    // console.log(this.headers);
   }
 
 
@@ -31,7 +31,7 @@ export class CodeAssessResponseComponent implements OnInit{
     fetch(getBaseURL(target_url), {method: "POST", body: formData}).then(( response ) => {
       this.fetching = false;
       response.blob().then((data) => {
-        console.log(data);
+        // console.log(data);
         window.saveAs(data, 'report.txt');
       })
     }).catch((error) => {

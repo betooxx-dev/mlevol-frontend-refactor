@@ -16,7 +16,7 @@ export class CodeAssessComponent {
   constructor(private messageService: MessageService) { }
 
   onFileLoad(event : any) {
-    console.log(event);
+    // (event);
     this.loadEvent = event;
     if (event.target.files && event.target.files.length > 0) {
       this.uploadedFile = event.target.files;
@@ -40,7 +40,7 @@ export class CodeAssessComponent {
       this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Code assessment performed correctly' });
       response.json().then((data) => {
         this.response = data;
-        console.log(this.response);
+        // console.log(this.response);
       })
     }).catch((error) => {
       this.fetching = false;

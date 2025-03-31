@@ -20,9 +20,9 @@ export class GraphFileComponent {
     var element = document.createElement('div');
     element.innerHTML = '<input type="file" accept=".json">';
     var fileInput = element.firstChild as any;
-    console.log(fileInput);
+    // console.log(fileInput);
     fileInput!.addEventListener('change', function() {
-        console.log(fileInput!.files);
+        // console.log(fileInput!.files);
         var file = fileInput!.files[0];
         var reader = new FileReader();
         reader.onload = function() {

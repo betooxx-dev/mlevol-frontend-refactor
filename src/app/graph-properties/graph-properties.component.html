@@ -76,7 +76,7 @@
                 </div>
     
                 <div *ngIf="allNode?.params[key].type == 'option'" style="margin: 10px;">
-                    <p-dropdown [options]="options[allNode?.params[key].optionId]" [filter]="true" (onChange)="updateOption($event, key)" id="{{allNode?.id}}_{{key}}">
+                    <p-dropdown [options]="options[allNode?.params[key].optionId]" [(ngModel)]="allNode?.params[key].value" [filter]="true" (onChange)="updateOption($event, key)" id="{{allNode?.id}}_{{key}}">
                         <ng-template pTemplate="selectedItem">
                             <div class="flex align-items-center gap-2" *ngIf="allNode?.params[key].value">
                                 {{allNode?.params[key].value}}
@@ -98,7 +98,8 @@
                         optionLabel="label"
                         optionValue="value"
                         [filter]="true"
-                        (onChange)="updateOption($event, key)">
+                        (onChange)="updateOption($event, key)"
+                        [(ngModel)]="allNode?.params[key].value">
                         <ng-template pTemplate="selectedItem">
                             <div class="flex align-items-center gap-2" *ngIf="allNode?.params[key].value">
                                 {{allNode?.params[key].value}}

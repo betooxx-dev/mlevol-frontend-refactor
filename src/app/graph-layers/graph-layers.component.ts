@@ -53,19 +53,19 @@ export class GraphLayersComponent {
   }
 
   keyEvent(event: KeyboardEvent){
-    console.log("Event handled from graph layers: " + event.key);
+    // console.log("Event handled from graph layers: " + event.key);
   }
 
   toggleModule(module: string) {
-    console.log("Toggling module: " + module);
+    // console.log("Toggling module: " + module);
     this.graphService.changeEditor(module, true)
   }
 
   async toggleNode(node: any) {
-    console.log("Toggling node: " + node.name);
+    // console.log("Toggling node: " + node.name);
     await this.graphService.changeEditor(await this.graphService.getNodeModule(node.id), true);
     this.graphService.selectNode(node.id);
-    console.log(this.allModules);
+    // console.log(this.allModules);
   }
 
 }

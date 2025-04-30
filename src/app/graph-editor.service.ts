@@ -223,25 +223,31 @@ export class GraphEditorService {
       console.log("Node not found");
       return;
     }
-    if (nodeName === "Step") {
-      this.modules[node.id] = {
-          'nodes' : [],
-          'connections' : [],
-          'inputs' : [],
-          'outputs' : [],
-      };
-    }
-
     if (nodeId) {
       node.id = nodeId;
     }
-    
+    if (nodeName === "Step") {
+      if (!this.modules[node.id]){
+        this.modules[node.id] = {
+            'nodes' : [],
+            'connections' : [],
+            'inputs' : [],
+            'outputs' : [],
+        };
+      }
+
+    }
+
+
+
     if (nodeData) {
       node.setData(nodeData);
     }
 
 
-    node.update();
+    await node.update();
+
+    // console.log(node)
 
     await this.editor.addNode(node);
     let centerOfScreen = this.area.area.pointer;
@@ -463,10 +469,9 @@ export class GraphEditorService {
   }
 
   async loadEditor(json: any) {
-    await this.editor.clear();
+    await this.cleanEditor()
     this.modules = json["modules"];
     await this.changeEditor("root", false);
-
   }
 
   async cleanEditor() {
@@ -607,7 +612,7 @@ export class GraphEditorService {
 
   async changeEditor(targetModuleId: string, clear?: boolean) {
     if ((targetModuleId != 'root') && this.currentModule == targetModuleId) return;
-    
+
 
     if (clear) await this.clearEditor();
 
@@ -641,14 +646,14 @@ export class GraphEditorService {
       }
     }
 
+    // console.log(this.modules[this.currentModule]);
+
     for (let node of this.modules[this.currentModule].nodes) {
       if (node.nodeName === "Step") {
         if (node.data.params.link && node.data.params.link.value != "") {
           let nodeModule = await this.editor.getNode(node.id) as ModuleNode;
           await this.linkModule(nodeModule);
           await this.updateNode(nodeModule);
-          // console.log(node);
-          // console.log(nodeModule);
           continue;
         }
       }
@@ -763,7 +768,6 @@ export class GraphEditorService {
     // console.log(json);
     
     this.loadEditor(json);
-    this.editorSource.next("General Editor");
   }
 
   async loadAvailableTemplates() {
@@ -810,6 +814,5 @@ export class GraphEditorService {
     // console.log(json);
     
     this.loadEditor(json);
-    this.editorSource.next("General Editor");
   }
 }

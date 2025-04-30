@@ -15,23 +15,23 @@ export class GraphFileComponent {
   constructor(public graphEditorService: GraphEditorService, public dialogService: DialogService){
   }
 
-  importPipeline(){
-    let graphEditorService = this.graphEditorService
+  async importPipeline(){
+    const graphEditorService = this.graphEditorService
     var element = document.createElement('div');
     element.innerHTML = '<input type="file" accept=".json">';
     var fileInput = element.firstChild as any;
     // console.log(fileInput);
-    fileInput!.addEventListener('change', function() {
+    fileInput!.addEventListener('change', async function() {
         // console.log(fileInput!.files);
         var file = fileInput!.files[0];
         var reader = new FileReader();
-        reader.onload = function() {
-            graphEditorService.loadEditor(JSON.parse(reader.result as string));
+        reader.onload = async function() {
+            await graphEditorService.cleanEditor();
+            await graphEditorService.loadEditor(JSON.parse(reader.result as string));
         };
         reader.readAsText(file);
     });
     fileInput.click();
-    graphEditorService.cleanModules();
   }
 
   async clearEditor(){
@@ -61,9 +61,9 @@ export class GraphFileComponent {
         }
     });
 
-    this.ref.onClose.subscribe((path: string) => {
+    this.ref.onClose.subscribe(async (path: string) => {
       if (path) {
-        this.graphEditorService.loadTemplate(path);
+        await this.graphEditorService.loadTemplate(path);
       }
     })
   }

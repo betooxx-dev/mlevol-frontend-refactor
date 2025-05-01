@@ -1,6 +1,6 @@
 import { TemplateDialogComponent } from './template-dialog/template-dialog.component';
 import { GraphEditorService } from './../graph-editor.service';
-import { Component, OnDestroy} from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild} from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 @Component({
   selector: 'app-graph-file',
@@ -9,29 +9,35 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
   providers: [DialogService]
 })
 export class GraphFileComponent {
-
+  @ViewChild('fileInput') fileInput!: ElementRef;
   ref: DynamicDialogRef | undefined;
 
   constructor(public graphEditorService: GraphEditorService, public dialogService: DialogService){
+
   }
 
   async importPipeline(){
-    const graphEditorService = this.graphEditorService
-    var element = document.createElement('div');
-    element.innerHTML = '<input type="file" accept=".json">';
-    var fileInput = element.firstChild as any;
-    // console.log(fileInput);
-    fileInput!.addEventListener('change', async function() {
-        // console.log(fileInput!.files);
-        var file = fileInput!.files[0];
-        var reader = new FileReader();
-        reader.onload = async function() {
-            await graphEditorService.cleanEditor();
-            await graphEditorService.loadEditor(JSON.parse(reader.result as string));
-        };
-        reader.readAsText(file);
-    });
-    fileInput.click();
+    this.fileInput.nativeElement.click();
+  }
+
+  onFileSelected(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0){
+      const file: File = target.files[0]; // Get the first file
+      const reader = new FileReader();
+      reader.onload = () => {
+        let fileContent = reader.result as string;
+        // Execute your code here
+        this.processFileContent(fileContent);
+      };
+      reader.readAsText(file);
+      target.value = ''
+    }
+  }
+
+  async processFileContent(content: string) {
+    await this.clearEditor();
+    await this.graphEditorService.loadEditor(JSON.parse(content));
   }
 
   async clearEditor(){

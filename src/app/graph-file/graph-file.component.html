@@ -11,6 +11,13 @@
     </button>
     <div class="separator">
     </div>
+    <input 
+      type="file" 
+      #fileInput
+      style="display:none" 
+      accept=".json,application/json" 
+      (change)="onFileSelected($event)" 
+    />
     <button pButton class="my-button" (click)="importPipeline()">
         Load Pipeline
     </button>

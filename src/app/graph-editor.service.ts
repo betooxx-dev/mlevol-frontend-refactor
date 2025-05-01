@@ -469,7 +469,7 @@ export class GraphEditorService {
   }
 
   async loadEditor(json: any) {
-    await this.cleanEditor()
+    await this.cleanEditor();
     this.modules = json["modules"];
     await this.changeEditor("root", false);
   }

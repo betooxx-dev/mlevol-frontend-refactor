@@ -1,0 +1,190 @@
+.panel {
+  display: flex;
+}
+
+:host {
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 8px 0;
+}
+
+p {
+  margin: 0;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.content {
+  display: flex;
+  margin: 82px auto 32px;
+  padding: 0 16px;
+  max-width: 960px;
+  flex-direction: column;
+  align-items: center;
+}
+
+a,
+a:visited,
+a:hover {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #125699;
+}
+
+.rete {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+  text-align: left;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background: transparent;
+  user-select: none;
+}
+
+.rete ::ng-deep rete-minimap {
+  backdrop-filter: blur(5px);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  border-color: whitesmoke;
+  position: absolute;
+  bottom: 60px;
+  left: 115px;
+  right: auto;
+  transition: all 0.66s ease;
+}
+
+.rete.hide-minimap ::ng-deep rete-minimap {
+  transform: translate(0, 100%);
+  opacity: 0;
+}
+
+.rete ::ng-deep custom_background {
+  display: table;
+  z-index: 0;
+  position: absolute;
+  top: -320000px;
+  left: -320000px;
+  width: 640000px;
+  height: 640000px;
+  background-color: transparent;
+  opacity: 1;
+  background-image: radial-gradient(gray, 1.9px, transparent 2px);
+  background-size: 62px 62px;
+  background-position: 0 0, 31px 31px;
+}
+
+.config-buttons {
+  margin-inline-start: 0;
+  padding-inline-start: 0px;
+  position: absolute;
+  z-index: 3;
+  bottom: 25px;
+  margin-left: 25px;
+  padding: 10px;
+  background-color: transparent;
+  border-style: none;
+}
+
+.node-in {
+  position: inherit;
+  top: 0;
+  z-index: 2;
+  padding: 1em;
+  backdrop-filter: blur(5px);
+  border-width: 0px 1px 1px 0px;
+  border-radius: 0px 0px 10px 0px;
+  border-color: whitesmoke;
+  border-style: solid;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 20px;
+  flex: 0 0 auto;
+  height: fit-content;
+  max-width: 50%;
+  align-items: center;
+}
+
+.node-in h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.node-in button {
+  border-radius: 50%;
+  border-width: 3px;
+  background-color: var(--primary-color);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.5s ease;
+  aspect-ratio: 1;
+  width: fit-content;
+  height: fit-content;
+  border-style: outset;
+  border-color: var(--light-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--light-blue);
+}
+
+.config-buttons li {
+  list-style-type: none;
+}
+
+.config-buttons li button {
+  width: 35px;
+  height: 35px;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset;
+  border-radius: 50%;
+  border-width: 1px;
+  border-color: lightgray;
+  border-style: solid;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+  box-shadow: inset 0px -5px 10px 0px rgba(0, 0, 00, 0.05);
+
+  color: var(--gray-600);
+
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.config-buttons li button:hover {
+  background-color: buttonface;
+}
+
+.config-buttons li button.active {
+  background-color: rgba(255, 192, 203, 0.767);
+}
+
+.config-buttons li button i {
+  font-size: 1.5em;
+}
+
+.actions-container {
+  position: absolute;
+  top: 125px;
+  margin-left: 25px;
+  z-index: 5;
+}

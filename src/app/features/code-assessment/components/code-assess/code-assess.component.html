@@ -1,0 +1,73 @@
+<div class="whole">
+  <app-small-header custom_header="Code Assessment"></app-small-header>
+  <div class="container">
+    <input
+      id="app-file"
+      style="display: none"
+      type="file"
+      accept=".zip"
+      (change)="onFileLoad($event)"
+      #fileinput
+    />
+    <p-button
+      [disabled]="uploadedFile != undefined"
+      (click)="fileinput.click()"
+    >
+      Select your app (.zip)
+    </p-button>
+    <div *ngIf="uploadedFile">
+      <div class="uploaded-file">
+        <p-table [value]="uploadedFile" [tableStyle]="{ 'min-width': '66%' }">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Name</th>
+              <th>Size [kB]</th>
+              <th>Last modified</th>
+              <th>Type</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-product>
+            <tr>
+              <td>{{ product.name }}</td>
+              <td>{{ product.size }}</td>
+              <td>{{ product.lastModifiedDate }}</td>
+              <td>{{ product.type }}</td>
+              <td>
+                <p-button
+                  [disabled]="fetching"
+                  type="button"
+                  (onClick)="deleteFile()"
+                >
+                  Delete
+                </p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-button
+          [style]="{ 'padding-top': '0px', 'padding-bottom': '0px' }"
+          [disabled]="fetching"
+          (click)="uploadFile()"
+        >
+          <p *ngIf="!fetching">Run code assessment</p>
+          <p *ngIf="fetching">Running...</p>
+        </p-button>
+      </div>
+    </div>
+    <div *ngIf="response">
+      <div class="response">
+        <div *ngFor="let test of response | keyvalue">
+          <h2>
+            {{ test.key }}
+          </h2>
+          <app-code-assess-response
+            [response]="[test.value]"
+            [testId]="test.key"
+            [uploadedFile]="uploadedFile![0]"
+          ></app-code-assess-response>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.content {
+  padding: 1em;
+  text-align: center;
+  width: 100%;
+  background-color: white;
+}
+
+.container {
+  background-color: white;
+}
+
+.feature-button {
+  font-size: 2.5em;
+  color: white;
+  background-color: var(--primary-color);
+  border-radius: 20px;
+  box-shadow: none;
+  padding: 0.5em 1em;
+  border-style: solid;
+  box-shadow: 0px 0px 45px -1px rgba(0, 0, 0, 0.2);
+}
+
+.feature-button:hover {
+  background-color: var(--pink-900);
+  box-shadow: 0px 0px 45px -1px rgba(0, 0, 0, 0.4);
+}
+
+.feature-button:hover {
+  transition: background-color 0.5s ease;
+}
+
+.feature-button:active {
+  background-color: var(--primary-color-darker);
+  box-shadow: 0px 0px 45px -1px rgba(0, 0, 0, 0.6);
+}
+
+.features {
+  margin: 5em;
+}
+
+.features-list {
+  display: grid;
+  align-items: center;
+  align-content: center;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(25%, 1fr)
+  ); /* Adjust column width as needed */
+  gap: 10%; /* Adjust gap between items as needed */
+  margin: 2em;
+  padding: 0px;
+  list-style: none;
+}
+
+.features-list li {
+  list-style: none;
+  text-align: center;
+  border: 1px solid var(--primary-color);
+  border-radius: 15px;
+  height: 250px;
+  cursor: pointer;
+  background-color: whitesmoke;
+  transition: background-color 0.5s ease, box-shadow 0.5s ease;
+  list-style: none;
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+  overflow: hidden;
+}
+
+.features-list li:hover {
+  background-color: white;
+  box-shadow: 0px 0px 25px -1px rgba(0, 0, 0, 0.2);
+}

@@ -1,0 +1,19 @@
+<div style="display: flex; flex-direction: column; height: 100%">
+  <app-small-header custom_header="Pipeline Code Generator"></app-small-header>
+  <div class="container">
+    <app-graph-menu
+      (menuExpanded)="expandMenu()"
+      (menuCollapsed)="collapseMenu()"
+      class="menu"
+      [ngClass]="{ expanded: expandedMenu }"
+    ></app-graph-menu>
+
+    <app-graph-editor class="panel"></app-graph-editor>
+    <app-graph-properties
+      class="properties"
+      (propertiesClose)="propertiesShown = !$event"
+      [ngClass]="{ shown: propertiesShown }"
+    ></app-graph-properties>
+    <app-focus-handler></app-focus-handler>
+  </div>
+</div>

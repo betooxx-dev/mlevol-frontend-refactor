@@ -1,49 +1,60 @@
-
 /* css reset */
 body {
-    font-family: var(--font-family);
-    margin: 0;
-    padding: 0;
-    background-color: buttonface;
-    --primary-color : rgb(0, 32, 96);
-    --light-blue : rgb(153,204,204);
-    --yellow-accent : rgb(255, 204, 0);
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  background-color: buttonface;
+  --primary-color: rgb(0, 32, 96);
+  --light-blue: rgb(153, 204, 204);
+  --yellow-accent: rgb(255, 204, 0);
 }
 
-h1, h2, h3, h4, h5, h6, button {
-    --primary-color : rgb(0, 32, 96);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+  --primary-color: rgb(0, 32, 96);
 }
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .p-button {
-    background-color: var(--primary-color);
-    color: var(--light-blue);
+  background-color: var(--primary-color);
+  color: var(--light-blue);
 }
 
 .p-button.p-highlight {
-    background-color: var(--light-blue);
-    color: var(--primary-color);
+  background-color: var(--light-blue);
+  color: var(--primary-color);
 }
 
 /* In your styles.css or component CSS */
 .p-submenu-list {
-    max-height: calc(40px * 10); /* 40px is the default height of each item */
-    overflow-y: auto;
+  max-height: calc(40px * 10); /* 40px is the default height of each item */
+  overflow-y: auto;
 }
 
 /* Optional: If you want to customize the scrollbar */
 .p-submenu-list::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 .p-submenu-list::-webkit-scrollbar-thumb {
-    background-color: #d3d3d3;
-    border-radius: 4px;
+  background-color: #d3d3d3;
+  border-radius: 4px;
 }
 
 .p-submenu-list::-webkit-scrollbar-track {
-    background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }

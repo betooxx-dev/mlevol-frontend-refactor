@@ -1,0 +1,63 @@
+<h2 style="justify-content: center; display: flex">Model Explorer</h2>
+<p-scrollPanel
+  [style]="{ width: '100%', height: '100%' }"
+  styleClass="custombar1"
+>
+  <div *ngFor="let module of modulesKeys">
+    <div class="module-selector">
+      <div
+        class="toggle-button"
+        [style]="{ background: modulesColors[module] }"
+      >
+        <button class="toggle-button-title" (click)="toggleModule(module)">
+          {{ modulesNames[module] }}
+        </button>
+        <button
+          class="down-button"
+          (click)="modulesCollapsed[module] = !modulesCollapsed[module]"
+          [style]="{
+            'box-shadow': modulesCollapsed[module]
+              ? 'inset 5px 0px 15px -12px rgba(0,0,0,0.3)'
+              : 'inset 15px 0px 15px -12px rgba(0,0,0,0.3)',
+            transition: 'all .5s'
+          }"
+        >
+          <i
+            class="pi pi-angle-down"
+            [style]="{
+              transform: modulesCollapsed[module]
+                ? 'rotate(90deg)'
+                : 'rotate(0deg)',
+              transition: 'all 0.5s ease'
+            }"
+          ></i>
+        </button>
+      </div>
+      <div
+        [style]="{
+          overflow: 'hidden',
+          'max-height': modulesCollapsed[module] ? '0px' : 'unset'
+        }"
+      >
+        <div
+          style="display: flex; flex-direction: column"
+          *ngFor="let node of allModules[module].nodes"
+        >
+          <button class="toggle-node" (click)="toggleNode(node)">
+            <p>
+              {{ node.name }}
+            </p>
+            <p *ngIf="node.data.params.description.value">:</p>
+            <p
+              class="toggle-node-description"
+              *ngIf="node.data.params.description"
+            >
+              {{ node.data.params.description.value }}
+            </p>
+          </button>
+        </div>
+      </div>
+      <br />
+    </div>
+  </div>
+</p-scrollPanel>

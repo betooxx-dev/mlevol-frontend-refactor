@@ -1,6 +1,6 @@
 {
-    "/api/create_app": {
+  "/api/create_app": {
     "target": "http://localhost:5000/api/create_app",
     "secure": false
-    }
+  }
 }

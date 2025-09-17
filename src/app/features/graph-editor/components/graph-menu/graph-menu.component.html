@@ -1,0 +1,37 @@
+<div class="whole">
+  <div class="container">
+    <div class="collapse-header">
+      <button (click)="toggleMenu()" class="toggle-button">
+        <i
+          class="pi"
+          [ngClass]="{
+            'pi-angle-double-right': !expandedGraphMenu,
+            'pi-angle-double-left': expandedGraphMenu
+          }"
+        ></i>
+      </button>
+    </div>
+  </div>
+  <div class="tools">
+    <div class="options" id="options">
+      <button
+        pTooltip="File"
+        (click)="openFile()"
+        class="option-button"
+        [ngClass]="{ active: showFile && expandedGraphMenu }"
+      >
+        <i class="pi pi-copy"></i>
+      </button>
+      <button
+        pTooltip="Model Explorer"
+        (click)="openLayers()"
+        class="option-button"
+        [ngClass]="{ active: showLayers && expandedGraphMenu }"
+      >
+        <i class="pi pi-compass"></i>
+      </button>
+    </div>
+    <app-graph-layers *ngIf="showLayers" class="tool"></app-graph-layers>
+    <app-graph-file *ngIf="showFile" class="tool"></app-graph-file>
+  </div>
+</div>

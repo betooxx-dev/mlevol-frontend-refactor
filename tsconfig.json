@@ -2,6 +2,16 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@core/*": ["app/core/*"],
+      "@features/*": ["app/features/*"],
+      "@shared/*": ["app/shared/*"],
+      "@layout/*": ["app/layout/*"],
+      "@environments/*": ["environments/*"],
+      "@assets/*": ["assets/*"]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -19,10 +29,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
+    "lib": ["ES2022", "dom"],
     "resolveJsonModule": true
   },
   "angularCompilerOptions": {
@@ -31,5 +38,5 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     "resolveJsonModule": true
-  },
+  }
 }

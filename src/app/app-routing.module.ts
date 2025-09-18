@@ -1,8 +1,5 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AboutComponent } from "@features/home/components/about/about.component";
-import { HomeComponent } from "@features/home/components/home/home.component";
-
 
 const routes: Routes = [
   {
@@ -11,14 +8,29 @@ const routes: Routes = [
     pathMatch: "full",
     runGuardsAndResolvers: "always",
   },
-  { path: "home", component: HomeComponent },
-  { path: "about", component: AboutComponent },
+  {
+    path: "home",
+    loadChildren: () =>
+      import("./features/home/home.module").then((m) => m.HomeModule),
+  },
+  {
+    path: "about",
+    loadChildren: () =>
+      import("./features/home/about.module").then((m) => m.AboutModule),
+  },
   {
     path: "pipeline_generator",
-    loadChildren:()=>import('./features/graph-editor/graph-editor.module').then(m=>m.GraphEditorModule)
+    loadChildren: () =>
+      import("./features/graph-editor/graph-editor.module").then(
+        (m) => m.GraphEditorModule
+      ),
   },
-  { path: "assess", 
-    loadChildren:()=>import('./features/code-assessment/code-assessment.module').then(m=>m.CodeAssessmentModule)
+  {
+    path: "assess",
+    loadChildren: () =>
+      import("./features/code-assessment/code-assessment.module").then(
+        (m) => m.CodeAssessmentModule
+      ),
   },
 ];
 

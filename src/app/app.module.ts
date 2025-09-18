@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+import { SharedModule } from "./shared/shared.module";
 import { AccordionModule } from "primeng/accordion";
 import { TooltipModule } from "primeng/tooltip";
 import { InputTextModule } from "primeng/inputtext";
@@ -20,6 +21,7 @@ import { MessageService } from "primeng/api";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    SharedModule,
     AccordionModule,
     TooltipModule,
     InputTextModule,

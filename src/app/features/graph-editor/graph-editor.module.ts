@@ -25,7 +25,7 @@ import { InputNumberModule } from "primeng/inputnumber";
 import { ReteModule } from "rete-angular-plugin/17";
 import { FormsModule } from "@angular/forms";
 import {SplitButtonModule} from 'primeng/splitbutton';
-import { SharedModule } from "@app/shared/shared.module";
+import { SharedModule } from "@shared/shared.module";
 @NgModule({
   declarations: [
     GraphComponent,

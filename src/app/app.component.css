@@ -1,0 +1,34 @@
+/* ===================================================================
+   APP COMPONENT - Layout Principal
+   =================================================================== */
+
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-content {
+  height: calc(100vh - 80px); /* Restamos la altura del header */
+  overflow-y: auto;
+  background-color: var(--color-bg-secondary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1440px) {
+  .main-content {
+    height: calc(100vh - 70px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    height: calc(100vh - 60px);
+  }
+}
+
+@media (min-width: 1920px) {
+  .main-content {
+    height: calc(100vh - 90px);
+  }
+}

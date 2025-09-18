@@ -4,13 +4,15 @@ import { RouterModule } from "@angular/router";
 import { SmallHeaderComponent } from "./components/small-header/small-header.component";
 import { HeaderComponent } from "./components/header/header.component";
 import { FeatureButtonComponent } from "./components/feature-button/feature-button.component";
+import { ToolHeaderComponent } from "./components/tool-header/tool-header.component";
 import { ButtonModule } from "primeng/button";
 
 @NgModule({
   declarations: [
     SmallHeaderComponent,
     HeaderComponent,
-    FeatureButtonComponent
+    FeatureButtonComponent,
+    ToolHeaderComponent
   ],
   imports: [
     CommonModule, 
@@ -20,7 +22,8 @@ import { ButtonModule } from "primeng/button";
   exports: [
     SmallHeaderComponent,
     HeaderComponent,
-    FeatureButtonComponent
+    FeatureButtonComponent,
+    ToolHeaderComponent
   ],
 })
 export class SharedModule {}

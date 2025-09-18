@@ -1,59 +1,99 @@
-<div style="display: flex" class="rete" #rete>
-  <div class="node-in">
-    <button (click)="backToRoot()" *ngIf="moduleImIn != 'General Editor'">
-      <i class="pi pi-caret-left"></i>
-    </button>
-    <h3 style="font-size: x-large">
-      {{ moduleImIn }}
-    </h3>
+<div class="graph-editor-layout">
+  <!-- Tool Header -->
+  <app-tool-header
+    [toolName]="'Pipeline Code Generator'"
+    [toolDescription]="'Node-based visual programming for ML pipelines'"
+    [iconClass]="'pi-sitemap'">
+  </app-tool-header>
 
-    <!--div  -->
-  </div>
+  <!-- Graph Editor Content -->
+  <div class="editor-content">
+    <div class="rete" [class.hide-minimap]="!showMap" #rete>
+      <!-- Current Module Navigation -->
+      <div class="module-nav" *ngIf="moduleImIn != 'General Editor'">
+        <button 
+          class="back-button"
+          (click)="backToRoot()"
+          pTooltip="Back to General Editor"
+          tooltipPosition="right"
+        >
+          <i class="pi pi-caret-left"></i>
+          <span>Back to {{ moduleImIn }}</span>
+        </button>
+      </div>
 
-  <ul class="config-buttons">
-    <li>
-      <button pTooltip="Center zoom" (click)="homeZoom()">
-        <i class="pi pi-home"></i>
-      </button>
-    </li>
+      <!-- Control Panel -->
+      <div class="control-panel">
+        <div class="control-group">
+          <button 
+            class="control-btn"
+            pTooltip="Center view" 
+            tooltipPosition="right" 
+            (click)="homeZoom()"
+          >
+            <i class="pi pi-home"></i>
+          </button>
+          
+          <button 
+            class="control-btn"
+            pTooltip="Zoom in" 
+            tooltipPosition="right" 
+            (click)="zoomIn()"
+          >
+            <i class="pi pi-plus"></i>
+          </button>
+          
+          <button 
+            class="control-btn"
+            pTooltip="Zoom out" 
+            tooltipPosition="right" 
+            (click)="zoomOut()"
+          >
+            <i class="pi pi-minus"></i>
+          </button>
+        </div>
+        
+        <div class="control-separator"></div>
+        
+        <div class="control-group">
+          <button 
+            class="control-btn"
+            [class.active]="!showMap"
+            pTooltip="Toggle minimap" 
+            tooltipPosition="right"
+            (click)="toggleMap()"
+          >
+            <i class="pi pi-map"></i>
+          </button>
+          
+          <button 
+            class="control-btn"
+            pTooltip="Auto-arrange nodes" 
+            tooltipPosition="right" 
+            (click)="arrangeNodes()"
+          >
+            <i class="pi pi-share-alt"></i>
+          </button>
+        </div>
+      </div>
 
-    <li>
-      <button pTooltip="Zoom in" (click)="zoomIn()">
-        <i class="pi pi-plus"></i>
-      </button>
-    </li>
-
-    <li>
-      <button pTooltip="Zoom out" (click)="zoomOut()">
-        <i class="pi pi-minus"></i>
-      </button>
-    </li>
-    <li>
-      <button
-        pTooltip="Toggle minimap"
-        (click)="toggleMap()"
-        [ngClass]="{ active: !showMap }"
-      >
-        <i class="pi pi-map"></i>
-      </button>
-    </li>
-    <li>
-      <button pTooltip="Arrange nodes" (click)="arrangeNodes()">
-        <i class="pi pi-share-alt"></i>
-      </button>
-    </li>
-  </ul>
-
-  <div class="actions-container">
-    <p-splitButton
-      label="Add"
-      [model]="items"
-      *ngIf="moduleImIn != 'General Editor'"
-    />
-    <p-button
-      label="Add Stage"
-      (click)="addStage()"
-      *ngIf="moduleImIn === 'General Editor'"
-    />
+      <!-- Actions Panel -->
+      <div class="actions-panel">
+        <p-splitButton
+          *ngIf="moduleImIn != 'General Editor'"
+          label="Add Node"
+          icon="pi pi-plus"
+          [model]="items"
+          class="action-button"
+        />
+        <p-button
+          *ngIf="moduleImIn === 'General Editor'"
+          label="Add Stage"
+          icon="pi pi-plus"
+          (click)="addStage()"
+          class="action-button"
+        />
+      </div>
+    </div>
   </div>
 </div>

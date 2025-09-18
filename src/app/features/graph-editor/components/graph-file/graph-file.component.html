@@ -1,30 +1,72 @@
-<div
-  style="align-items: center; display: flex; flex-direction: column; gap: 10px"
->
-  <h2>File</h2>
+<div class="file-actions-container">
+  <h2>
+    <i class="pi pi-file" style="margin-right: 8px;"></i>
+    Pipeline File
+  </h2>
 
-  <button pButton class="my-button" (click)="clearEditor()">
-    New Empty Pipeline
-  </button>
-  <button pButton class="my-button" (click)="showTemplates()">
-    New Pipeline from Template
-  </button>
+  <!-- New Pipeline Actions -->
+  <div class="action-group">
+    <div class="action-group-label">Create New</div>
+    <button 
+      pButton 
+      class="action-button secondary" 
+      (click)="clearEditor()"
+    >
+      <i class="pi pi-file-plus"></i>
+      Empty Pipeline
+    </button>
+    <button 
+      pButton 
+      class="action-button secondary" 
+      (click)="showTemplates()"
+    >
+      <i class="pi pi-clone"></i>
+      From Template
+    </button>
+  </div>
+
   <div class="separator"></div>
-  <input
-    type="file"
-    #fileInput
-    style="display: none"
-    accept=".json,application/json"
-    (change)="onFileSelected($event)"
-  />
-  <button pButton class="my-button" (click)="importPipeline()">
-    Load Pipeline
-  </button>
-  <button pButton class="my-button" (click)="downloadEditor()">
-    Save Pipeline
-  </button>
+
+  <!-- File Operations -->
+  <div class="action-group">
+    <div class="action-group-label">File Operations</div>
+    <input
+      type="file"
+      #fileInput
+      style="display: none"
+      accept=".json,application/json"
+      (change)="onFileSelected($event)"
+    />
+    <button 
+      pButton 
+      class="action-button primary" 
+      (click)="importPipeline()"
+    >
+      <i class="pi pi-upload"></i>
+      Load Pipeline
+    </button>
+    <button 
+      pButton 
+      class="action-button primary" 
+      (click)="downloadEditor()"
+    >
+      <i class="pi pi-download"></i>
+      Save Pipeline
+    </button>
+  </div>
+
   <div class="separator"></div>
-  <button pButton class="my-button" (click)="generateCode()">
-    Generate Pipeline Code
-  </button>
+
+  <!-- Code Generation -->
+  <div class="action-group">
+    <div class="action-group-label">Export</div>
+    <button 
+      pButton 
+      class="action-button accent" 
+      (click)="generateCode()"
+    >
+      <i class="pi pi-code"></i>
+      Generate Code
+    </button>
+  </div>
 </div>

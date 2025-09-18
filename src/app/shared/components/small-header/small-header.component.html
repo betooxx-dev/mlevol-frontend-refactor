@@ -1,19 +1,23 @@
-<div
-  style="
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
-    margin: 5px;
-  "
->
-  <div class="small-header">
-    <img src="../../assets/horizontal.png" style="height: 5em" />
+<div class="header-container">
+  <div class="logo-section">
+    <img 
+      src="../../assets/horizontal.png" 
+      alt="MLS Toolbox"
+      class="logo-image"
+    />
   </div>
-  <div *ngIf="custom_header">
-    <h2 style="margin: 0px">
-      {{ custom_header }}
-    </h2>
+  
+  <div class="title-section" *ngIf="custom_header">
+    <h2>{{ custom_header }}</h2>
   </div>
-  <p-button (onClick)="redirectTo('/home')"> Home </p-button>
+  
+  <div class="actions-section">
+    <p-button 
+      (onClick)="redirectTo('/home')"
+      class="home-button"
+    >
+      <i class="pi pi-home" style="margin-right: 6px;"></i>
+      Home
+    </p-button>
+  </div>
 </div>

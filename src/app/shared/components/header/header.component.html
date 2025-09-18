@@ -1,20 +1,21 @@
-<header class="container">
-  <div>
-    <a routerLink="/home">
+<header class="header-container">
+  <div class="logo-section">
+    <a routerLink="/home" class="logo-link">
       <img
-        style="display: inline; height: 8em"
+        class="logo-image"
         src="../../assets/horizontal_negativo.png"
+        alt="MLS Toolbox"
       />
     </a>
   </div>
-  <ul class="nav-bar">
-    <li>
-      <a routerLink="/home" routerLinkActive="active" class="nav-item">Home</a>
-    </li>
-    <li>
-      <a routerLink="/about" routerLinkActive="active" class="nav-item"
-        >About</a
-      >
-    </li>
-  </ul>
+  <nav>
+    <ul class="nav-bar">
+      <li>
+        <a routerLink="/home" routerLinkActive="active" class="nav-item-link">Home</a>
+      </li>
+      <li>
+        <a routerLink="/about" routerLinkActive="active" class="nav-item-link">About</a>
+      </li>
+    </ul>
+  </nav>
 </header>

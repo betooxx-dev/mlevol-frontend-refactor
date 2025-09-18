@@ -4,8 +4,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { HeaderComponent } from "./shared";
-import { FeatureButtonComponent } from "./shared";
 import { AccordionModule } from "primeng/accordion";
 import { TooltipModule } from "primeng/tooltip";
 import { InputTextModule } from "primeng/inputtext";
@@ -17,7 +15,7 @@ import { DynamicDialogModule } from "primeng/dynamicdialog";
 import { MessageService } from "primeng/api";
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FeatureButtonComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

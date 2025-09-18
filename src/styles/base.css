@@ -1,0 +1,166 @@
+/* ===================================================================
+   MLS TOOLBOX - BASE STYLES
+   =================================================================== */
+
+/* Import Design Tokens */
+@import './design-tokens.css';
+
+/* ===================================================================
+   CSS RESET - Moderno y limpio
+   =================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ===================================================================
+   TYPOGRAPHY BASE
+   =================================================================== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
+}
+
+h1 { font-size: var(--font-size-4xl); }
+h2 { font-size: var(--font-size-3xl); }
+h3 { font-size: var(--font-size-2xl); }
+h4 { font-size: var(--font-size-xl); }
+h5 { font-size: var(--font-size-lg); }
+h6 { font-size: var(--font-size-base); }
+
+p {
+  margin-bottom: var(--spacing-4);
+  color: var(--color-text-secondary);
+}
+
+/* ===================================================================
+   LINKS & BUTTONS BASE
+   =================================================================== */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-light);
+}
+
+/* ===================================================================
+   LAYOUT UTILITIES
+   =================================================================== */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-6);
+}
+
+/* Responsive containers */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1600px;
+    padding: 0 var(--spacing-8);
+  }
+}
+
+/* ===================================================================
+   RESPONSIVE UTILITIES
+   =================================================================== */
+.hidden { display: none !important; }
+.sr-only { 
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ===================================================================
+   FOCUS STYLES - Para accesibilidad
+   =================================================================== */
+*:focus {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ===================================================================
+   PRIMENG OVERRIDES - Consistencia con design tokens
+   =================================================================== */
+.p-button {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-white) !important;
+  border-radius: var(--radius-md) !important;
+  font-family: var(--font-family-primary) !important;
+  font-weight: var(--font-weight-medium) !important;
+  transition: all var(--transition-base) !important;
+}
+
+.p-button:hover {
+  background-color: var(--color-primary-dark) !important;
+  border-color: var(--color-primary-dark) !important;
+}
+
+.p-button.p-highlight {
+  background-color: var(--color-primary-light) !important;
+  border-color: var(--color-primary-light) !important;
+  color: var(--color-primary) !important;
+}
+
+/* ===================================================================
+   SCROLLBAR CUSTOM - Manteniendo tu estilo actual mejorado
+   =================================================================== */
+.p-submenu-list {
+  max-height: calc(40px * 10);
+  overflow-y: auto;
+}
+
+.p-submenu-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.p-submenu-list::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray-400);
+  border-radius: var(--radius-sm);
+}
+
+.p-submenu-list::-webkit-scrollbar-track {
+  background-color: var(--color-gray-100);
+}

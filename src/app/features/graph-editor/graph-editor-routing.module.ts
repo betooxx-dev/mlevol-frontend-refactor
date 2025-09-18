@@ -1,8 +1,13 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-
-const routes: Routes = [];
-
+import { GraphComponent } from "./components/graph/graph.component";
+const routes: Routes = [
+  {
+    path:"",
+    component:GraphComponent,
+    runGuardsAndResolvers:"always"
+  }
+];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

@@ -2,8 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AboutComponent } from "@features/home/components/about/about.component";
 import { HomeComponent } from "@features/home/components/home/home.component";
-import { GraphComponent } from "@features/graph-editor/components/graph/graph.component";
-import { CodeAssessComponent } from "@features/code-assessment/components/code-assess/code-assess.component";
+
 
 const routes: Routes = [
   {
@@ -16,10 +15,11 @@ const routes: Routes = [
   { path: "about", component: AboutComponent },
   {
     path: "pipeline_generator",
-    component: GraphComponent,
-    runGuardsAndResolvers: "always",
+    loadChildren:()=>import('./features/graph-editor/graph-editor.module').then(m=>m.GraphEditorModule)
   },
-  { path: "assess", component: CodeAssessComponent },
+  { path: "assess", 
+    loadChildren:()=>import('./features/code-assessment/code-assessment.module').then(m=>m.CodeAssessmentModule)
+  },
 ];
 
 @NgModule({
